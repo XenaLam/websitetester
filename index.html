@@ -28,9 +28,9 @@ body{background:#0f0f0f;color:#fff}
 
 /* THIS is the key */
 .header-inner{
-  max-width:1100px;       /* controls width */
+  max-width:1500px;       /* controls width */
   margin:0 auto;          /* centers everything */
-  padding:14px 24px;      /* breathing space */
+  padding:14px 0px;      /* breathing space */
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -41,11 +41,6 @@ body{background:#0f0f0f;color:#fff}
   font-weight:600;
   font-size:22px;
   letter-spacing:0.3px;
-}
-.brand-sub{
-  font-size:14px;
-  color:#a7a7a7;
-  margin-top:2px;
 }
 
 /* ABOUT BUTTON */
@@ -124,6 +119,17 @@ body{background:#0f0f0f;color:#fff}
   .grid{padding:0 16px}
   .section{padding:20px 16px}
 }
+.two-img{
+  display:flex;
+  gap:16px;
+}
+
+.two-img img{
+  width:50%;
+  height:300px;
+  object-fit:cover;
+  border-radius:10px;
+}
 
 /* SHEET PAGE OVERLAY */
 .sheet-page{
@@ -185,8 +191,7 @@ body{background:#0f0f0f;color:#fff}
 
     <!-- LEFT: BRAND -->
     <div class="brand">
-      <div class="brand-title">Ethen Ticketing</div>
-      <div class="brand-sub">豪哥带你看演唱会票务</div>
+      <div class="brand-title">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</div>
     </div>
 
     <!-- RIGHT: ABOUT -->
@@ -214,16 +219,6 @@ body{background:#0f0f0f;color:#fff}
 <div class="section">
   <h2 style ="padding: 0px 100px;">Events</h2>
   <div class="grid">
-
-    <div class="card" onclick="openSheet('cnblue')">
-      <img src="https://my.bookmyshow.com/api/v2/assets/image?image=https%3A%2F%2Fcdn-sea.bookmyshow.com%2Fprod%2Fimages%2F202602%2F9b666101-60ff-4381-bcce-b24c79474918%2Fog%2F1280x500%2FResized_Banner.png&q=80&t=webp&w=2560">
-      <div class="card-content">
-        <div class="title2">CNBLUE</div>
-        <div class="title3">2026 CNBLUE LIVE WORLD TOUR '3LOGY' IN KUALA LUMPUR</div>
-        <div class="info">📅 11 April 2026</div>
-        <div class="info">📍 Mega Star Arena, Sungei Wang Plaza</div>
-      </div>
-    </div>
 
     <div class="card" onclick="openSheet('sammy')">
       <img src="https://media.karousell.com/media/photos/products/2026/1/15/you__mi_sammi_cheng_live_in_ku_1768460435_3de56907_progressive">
@@ -427,10 +422,12 @@ body{background:#0f0f0f;color:#fff}
         <span style="font-weight:bold;font-size:15px">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</span>
         <!-- <span style="color:#555;font-size:13px">Ethen Chin Kar Hao Ticketing Services© 2026 </span> -->
       </div>
-      <div style="color:#555;font-size:13px">...</div>
+      <!-- <div style="color:#555;font-size:13px">...</div> -->
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px">
-      <div style="display:flex;align-items:center;gap:16px">
+    <div class="about-btn" onclick="openAbout()">About Us</div>
+    </div>
+      <!--   <div style="display:flex;align-items:center;gap:16px">
         <a href="https://www.facebook.com/chinethen/posts/pfbid0688Cn3veuqFqBrnZPtnsr9dVmC2qvRJQLAkdH9k4SMJ2H9fS2Ao7yAfLmKCYw74yl?rdid=Mkz2MHLnOCudqoLh#" style="color:#aaa;text-decoration:none">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         </a>
@@ -444,8 +441,8 @@ body{background:#0f0f0f;color:#fff}
         <a href="https://wa.me/60166428520" style="color:#555;font-size:13px;text-decoration:none">Contact Us</a>
         <a href="#" style="color:#555;font-size:13px;text-decoration:none">FAQ</a>
         <a href="#" style="color:#555;font-size:13px;text-decoration:none">Terms</a>
-        <a href="#" style="color:#555;font-size:13px;text-decoration:none">Privacy</a>
-      </div>
+        <a href="#" style="color:#555;font-size:13px;text-decoration:none">Privacy</a> -->
+      <!-- </div> -->
     </div>
   </div>
 </footer>
@@ -555,9 +552,10 @@ body{background:#0f0f0f;color:#fff}
         </a>
       </div>
 
-      <img src="YOUR_IMAGE_3.jpg"
-        style="width:100%;border-radius:10px;">
-    </div>
+              <div class="two-img">
+  <img src="whatsappleft.jpeg">
+  <img src="whatsappright.jpeg">
+</div>
 
   </div>
 </section>
@@ -622,14 +620,6 @@ body{background:#0f0f0f;color:#fff}
 
 <script>
 const sheetData = {
-  all: {
-    label: "All Events",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1158170010&single=true"
-  },
-  cnblue: {
-    label: "CNBLUE",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=703475510&single=true"
-  },
   sammy: {
     label: "郑秀文 Sammi Cheng",
     url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1158170010&single=true"
