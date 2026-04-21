@@ -3,47 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- <link rel="icon" href="logo.png"> -->
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <title>Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Inter', Arial, sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',Arial,sans-serif;}
 body{background:#0f0f0f;color:#fff}
 
 .header{
-  background:#000;
+  background:rgba(0,0,0,0.9);
   position:sticky;
   top:0;
   z-index:1000;
   border-bottom:1px solid #222;
-  background:rgba(0,0,0,0.9);
-  backdrop-filter: blur(6px);
+  backdrop-filter:blur(6px);
 }
-
-/* THIS is the key */
 .header-inner{
-  max-width:1500px;       /* controls width */
-  margin:0 auto;          /* centers everything */
-  padding:14px 0px;      /* breathing space */
+  max-width:1500px;
+  margin:0 auto;
+  padding:14px 40px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
+.brand-title{font-weight:600;font-size:16px;letter-spacing:0.3px;}
 
-/* BRAND */
-.brand-title{
-  font-weight:600;
-  font-size:22px;
-  letter-spacing:0.3px;
-}
-
-/* ABOUT BUTTON */
 .about-btn{
   font-size:13px;
   padding:6px 16px;
@@ -52,177 +36,161 @@ body{background:#0f0f0f;color:#fff}
   color:#ccc;
   cursor:pointer;
   transition:all 0.2s ease;
-}
-
-.about-btn:hover{
-  background:#e63946;
-  color:#fff;
-}
-
-.search{padding:10px 15px}
-.search input{
-  width:100%;
-  padding:10px;
-  border-radius:20px;
   border:none;
-  background:#1c1c1c;
-  color:#fff
 }
+.about-btn:hover{background:#e63946;color:#fff;}
 
-.categories{
+.filter-section{
+  background:#141414;
+  padding:16px clamp(16px,6vw,140px);
+  border-bottom:1px solid #222;
   display:flex;
-  gap:10px;
-  overflow-x:auto;
-  padding:10px 15px
+  flex-direction:column;
+  gap:12px;
 }
+#searchInput{
+  padding:11px 18px;
+  border-radius:30px;
+  border:1px solid #1e1e1e;
+  background:#1c1c1c;
+  color:#fff;
+  font-size:14px;
+  font-family:'Inter',sans-serif;
+  width:100%;
+  transition:border-color 0.2s;
+}
+#searchInput:focus{outline:none;border-color:#444;}
+#searchInput::placeholder{color:#555;}
 
+.country-row{display:flex;gap:10px;overflow-x:auto;}
 .cat{
   background:#1c1c1c;
-  padding:8px 14px;
+  padding:8px 16px;
   border-radius:20px;
   font-size:13px;
+  font-weight:500;
   white-space:nowrap;
   cursor:pointer;
-  transition:background 0.2s, color 0.2s;
+  border:1px solid #2a2a2a;
+  transition:all 0.2s;
   user-select:none;
+  color:#ccc;
 }
-.cat:hover{background:#333}
-.cat.active{background:#e63946;color:#fff}
+.cat:hover{background:#2a2a2a;border-color:#444;}
+.cat.active{background:#e63946;color:#fff;border-color:#e63946;}
 
-.section{padding:20px 40px}
-.section h2{margin-bottom:15px}
+.section{padding:28px 40px;}
+.section-heading{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#555;
+  margin-bottom:20px;
+  padding:0 100px;
+}
 
 .grid{
   display:grid;
-  gap:20px;
-  grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
-  padding:0 100px; /* side borders */
+  gap:16px;
+  grid-template-columns:repeat(auto-fill,minmax(350px,1fr));
+  padding:0 100px;
 }
 
 .card{
-  background:#1a1a1a;
-  border-radius:12px;
-  overflow:hidden;
-  transition:0.3s;
-  cursor:pointer;
-}
-.card:hover{transform:translateY(-5px)}
-.card img{width:100%;height:160px;object-fit:cover;display:block}
-.card-content{padding:12px}
-.title2{font-size:14px;font-weight:bold;margin-bottom:5px}
-.title3{font-size:12px;margin-bottom:5px;color:#ccc}
-.info{font-size:12px;color:#aaa;margin-bottom:3px}
-.price{margin-top:8px;font-weight:bold}
-
-@media (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){
-  .grid{padding:0 16px}
-  .section{padding:20px 16px}
-}
-.two-img{
-  display:flex;
-  gap:16px;
-}
-
-.two-img img{
-  width:50%;
-  height:300px;
-  object-fit:cover;
+  background:#111;
   border-radius:10px;
+  overflow:hidden;
+  transition:transform 0.25s ease,border-color 0.25s ease;
+  cursor:pointer;
+  border:1px solid #1c1c1c;
 }
+.card:hover{transform:translateY(-4px);border-color:#333;}
+.card img{width:100%;height:170px;object-fit:cover;display:block;filter:brightness(0.9);transition:filter 0.25s ease;}
+.card:hover img{filter:brightness(1);}
+.card-content{padding:14px 16px;}
+.title2{font-size:14px;font-weight:600;margin-bottom:4px;letter-spacing:0.2px;}
+.title3{font-size:12px;margin-bottom:8px;color:#666;line-height:1.5;}
+.info{font-size:12px;color:#555;margin-bottom:3px;letter-spacing:0.2px;}
 
-/* SHEET PAGE OVERLAY */
-.sheet-page{
-  display:none;
+/* country badge */
+.badge{
+  display:inline-block;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.8px;
+  padding:3px 8px;
+  border-radius:20px;
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+.badge-MY{background:#1a2e1a;color:#4caf50;}
+.badge-SG{background:#1a1a2e;color:#4c8af5;}
+.badge-TH{background:#2e2a1a;color:#f5c04c;}
+
+@media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);padding:0 20px;}}
+@media(max-width:600px){.grid{grid-template-columns:1fr;padding:0 12px;}}
+
+/* SHEET OVERLAY */
+.sheet-page{display:none;position:fixed;inset:0;background:#0f0f0f;z-index:2000;flex-direction:column;}
+.sheet-page.open{display:flex;}
+.sheet-page-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#000;border-bottom:1px solid #222;position:sticky;top:0;}
+.back-btn{background:#1c1c1c;border:none;color:#fff;padding:8px 14px;border-radius:20px;font-size:13px;cursor:pointer;}
+.back-btn:hover{background:#333;}
+.sheet-page iframe{flex:1;width:100%;border:none;background:#1a1a1a;}
+
+/* ABOUT OVERLAY */
+#about-page{
   position:fixed;
   inset:0;
-  background:#0f0f0f;
-  z-index:2000;
-  flex-direction:column;
+  background:#0a0a0a;
+  z-index:3000;
+  overflow-y:auto;
+  transform:translateX(-100%);
+  transition:transform 0.3s ease;
 }
-.sheet-page.open{display:flex}
-.sheet-page-header{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:12px 16px;
-  background:#000;
-  border-bottom:1px solid #222;
-  position:sticky;
-  top:0;
-}
-.back-btn{
-  background:#1c1c1c;
-  border:none;
-  color:#fff;
-  padding:8px 14px;
-  border-radius:20px;
-  font-size:13px;
-  cursor:pointer;
-}
-.back-btn:hover{background:#333}
-.sheet-page iframe{
-  flex:1;
-  width:100%;
-  border:none;
-  background:#1a1a1a;
-}
+#about-page.open{transform:translateX(0);}
 
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  background:#000;
-  display:flex;
-  justify-content:space-around;
-  padding:10px 0;
-  z-index:1000;
-}
-.bottom-nav div{text-align:center;font-size:12px}
-@media (min-width:768px){.bottom-nav{display:none}}
+.two-img{display:flex;gap:16px;}
+.two-img img{width:50%;height:300px;object-fit:cover;border-radius:10px;}
+
+/* FOOTER */
+footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margin-top:30px;}
+.footer-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.footer-brand{font-size:13px;font-weight:500;color:#555;}
 </style>
 </head>
-
 <body>
 
 <!-- HEADER -->
 <div class="header">
   <div class="header-inner">
-
-    <!-- LEFT: BRAND -->
-    <div class="brand">
-      <div class="brand-title">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</div>
-    </div>
-
-    <!-- RIGHT: ABOUT -->
+    <div class="brand-title">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</div>
     <div class="about-btn" onclick="openAbout()">About Us</div>
-
   </div>
 </div>
 
-</div>  
+<!-- FILTER BAR -->
+<div class="filter-section">
+  <input type="text" id="searchInput" placeholder="Search artist, venue..." oninput="applyFilters()">
+  <div class="country-row">
+    <div class="cat active" onclick="setCountry('all',this)">All</div>
+    <div class="cat" onclick="setCountry('MY',this)">Malaysia</div>
+    <div class="cat" onclick="setCountry('SG',this)">Singapore</div>
+    <div class="cat" onclick="setCountry('TH',this)">Thailand</div>
+  </div>
+</div>
 
-<!-- SEARCH -->
-<!-- <div class="search">
-  <input type="text" placeholder="Search events, movies...">
-</div> -->
-
-<!-- CATEGORIES -->
-<!-- <div class="categories">
-  <div class="cat active" onclick="filterCat('all', this)">All</div>
-  <div class="cat" onclick="filterCat('concerts', this)">Concerts</div>
-  <div class="cat" onclick="filterCat('movies', this)">Movies</div>
-  <div class="cat" onclick="filterCat('sports', this)">Sports</div>
-</div> -->
-
-<!-- EVENTS SECTION -->
+<!-- EVENTS -->
 <div class="section">
-  <h2 style ="padding: 0px 100px;">Events</h2>
+  <div class="section-heading">Events</div>
   <div class="grid">
 
-    <div class="card" onclick="openSheet('yanzi25')">
+    <div class="card" data-country="MY" data-title="孙燕姿 stefanie sun yan zi AUT NIHILO yanzi kuala lumpur 25 april unifi arena bukit jalil" onclick="openSheet('yanzi25')">
       <img src="https://www.jticketing.com/_next/image?url=https%3A%2F%2Fzaonfxpskbeyoutahieb.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fevents%2F%2Fstefanie.png&w=640&q=75">
       <div class="card-content">
+        <span class="badge badge-MY">MY</span>
         <div class="title2">孙燕姿 Stefanie Sun</div>
         <div class="title3">孙燕姿 "AUT NIHILO" — 25 Apr</div>
         <div class="info">📅 25 April 2026</div>
@@ -230,9 +198,10 @@ body{background:#0f0f0f;color:#fff}
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('yanzi26')">
+    <div class="card" data-country="MY" data-title="孙燕姿 stefanie sun yan zi  AUT NIHILO kuala lumpur 26 april unifi arena bukit jalil" onclick="openSheet('yanzi26')">
       <img src="https://www.jticketing.com/_next/image?url=https%3A%2F%2Fzaonfxpskbeyoutahieb.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fevents%2F%2Fstefanie.png&w=640&q=75">
       <div class="card-content">
+        <span class="badge badge-MY">MY</span>
         <div class="title2">孙燕姿 Stefanie Sun</div>
         <div class="title3">孙燕姿 "AUT NIHILO" — 26 Apr</div>
         <div class="info">📅 26 April 2026</div>
@@ -240,9 +209,10 @@ body{background:#0f0f0f;color:#fff}
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('treasuresg')">
+    <div class="card" data-country="SG" data-title="treasure pulse on singapore indoor stadium 3 may" onclick="openSheet('treasuresg')">
       <img src="treasure.jpg">
       <div class="card-content">
+        <span class="badge badge-SG">SG</span>
         <div class="title2">TREASURE 宝石盒</div>
         <div class="title3">2025–26 TREASURE TOUR [PULSE ON] IN SINGAPORE</div>
         <div class="info">📅 03 May 2026</div>
@@ -250,9 +220,10 @@ body{background:#0f0f0f;color:#fff}
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('apink')">
+    <div class="card" data-country="MY" data-title="apink kuala lumpur mega star arena sungei wang 3 may" onclick="openSheet('apink')">
       <img src="apink.jpg">
       <div class="card-content">
+        <span class="badge badge-MY">MY</span>
         <div class="title2">APINK</div>
         <div class="title3">APINK 8th CONCERT [The Origin: APINK] in Kuala Lumpur</div>
         <div class="info">📅 03 May 2026</div>
@@ -260,66 +231,76 @@ body{background:#0f0f0f;color:#fff}
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('ive')">
+    <div class="card" data-country="SG" data-title="ive world tour show what i am singapore indoor stadium 9 may" onclick="openSheet('ive')">
       <img src="ive.webp">
       <div class="card-content">
+        <span class="badge badge-SG">SG</span>
         <div class="title2">IVE 芙</div>
-        <div class="title3">IVE WORLD TOUR <SHOW WHAT I AM> IN SINGAPORE</div>
+        <div class="title3">IVE WORLD TOUR &lt;SHOW WHAT I AM&gt; IN SINGAPORE</div>
         <div class="info">📅 09 May 2026</div>
         <div class="info">📍 Singapore Indoor Stadium</div>
       </div>
     </div>
-    <div class="card" onclick="openSheet('ghostsg')">
+
+    <div class="card" data-country="SG" data-title="ghost xiaogui wang linkai singapore arena expo 15 may" onclick="openSheet('ghostsg')">
       <img src="ghostsg.webp">
       <div class="card-content">
-        <div class="title2">王琳凯(小鬼)</div>
-        <div class="title3">小鬼-王琳凯 GHOST THE ASCENDANT TOUR 2026 [魁] 巡回演唱会 新加坡站</div>
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">王琳凯 (小鬼)</div>
+        <div class="title3">小鬼-王琳凯 GHOST THE ASCENDANT TOUR 2026 [魁] 新加坡站</div>
         <div class="info">📅 15 May 2026</div>
         <div class="info">📍 ARENA @ EXPO</div>
       </div>
     </div>
-    <div class="card" onclick="openSheet('danielsg')">
+
+    <div class="card" data-country="SG" data-title="daniel caesar son of spergy tour singapore indoor stadium 16 17 may" onclick="openSheet('danielsg')">
       <img src="daniel.jpg">
       <div class="card-content">
-        <div class="title2"> Daniel Caesar</div>
-        <div class="title3"> Daniel Caesar - Son of Spergy Tour in Singapore</div>
-        <div class="info">📅 16-17 May 2026</div>
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">Daniel Caesar</div>
+        <div class="title3">Daniel Caesar — Son of Spergy Tour in Singapore</div>
+        <div class="info">📅 16–17 May 2026</div>
         <div class="info">📍 Singapore Indoor Stadium</div>
       </div>
     </div>
-    <div class="card" onclick="openSheet('ghostmy')">
+
+    <div class="card" data-country="MY" data-title="ghost xiaogui wang linkai kuala lumpur mega star arena 17 may" onclick="openSheet('ghostmy')">
       <img src="ghostmy.webp">
       <div class="card-content">
-        <div class="title2">王琳凯(小鬼)</div>
-        <div class="title3">小鬼-王琳凯 GHOST THE ASCENDANT TOUR 2026 [魁] 巡回演唱会 吉隆玻站</div>
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">王琳凯 (小鬼)</div>
+        <div class="title3">小鬼-王琳凯 GHOST THE ASCENDANT TOUR 2026 [魁] 吉隆坡站</div>
         <div class="info">📅 17 May 2026</div>
         <div class="info">📍 Mega Star Arena, Sungei Wang Plaza</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('gemsg')">
+    <div class="card" data-country="SG" data-title="gem deng ziqi gloria singapore national stadium 23 may" onclick="openSheet('gemsg')">
       <img src="gem.webp">
       <div class="card-content">
-        <div class="title2"> 邓紫棋 G.E.M</div>
-        <div class="title3">G.E.M. 邓紫棋 I AM GLORIA 世界巡回演唱会2.0-新加坡站</div>
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">邓紫棋 G.E.M</div>
+        <div class="title3">G.E.M. 邓紫棋 I AM GLORIA 世界巡回演唱会2.0 新加坡站</div>
         <div class="info">📅 23 May 2026</div>
         <div class="info">📍 Singapore National Stadium</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('danielmy')">
+    <div class="card" data-country="MY" data-title="daniel caesar son of spergy tour kuala lumpur idea live arena 25 may" onclick="openSheet('danielmy')">
       <img src="daniel.jpg">
       <div class="card-content">
-        <div class="title2"> Daniel Caesar</div>
-        <div class="title3"> Daniel Caesar - Son of Spergy Tour in Kuala Lumpur</div>
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">Daniel Caesar</div>
+        <div class="title3">Daniel Caesar — Son of Spergy Tour in Kuala Lumpur</div>
         <div class="info">📅 25 May 2026</div>
         <div class="info">📍 Idea Live Arena, Kuala Lumpur</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('treasuremy')">
+    <div class="card" data-country="MY" data-title="treasure pulse on kuala lumpur unifi arena bukit jalil 30 may" onclick="openSheet('treasuremy')">
       <img src="treasure.jpg">
       <div class="card-content">
+        <span class="badge badge-MY">MY</span>
         <div class="title2">TREASURE 宝石盒</div>
         <div class="title3">2025–26 TREASURE TOUR [PULSE ON] IN KUALA LUMPUR</div>
         <div class="info">📅 30 May 2026</div>
@@ -327,122 +308,134 @@ body{background:#0f0f0f;color:#fff}
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('laufey')">
+    <div class="card" data-country="MY" data-title="laufey matter of time tour kuala lumpur unifi arena bukit jalil 2 june" onclick="openSheet('laufey')">
       <img src="laufey.webp">
       <div class="card-content">
+        <span class="badge badge-MY">MY</span>
         <div class="title2">Laufey</div>
-        <div class="title3">Layfey: A Matter of Time Tour</div>
+        <div class="title3">Laufey: A Matter of Time Tour</div>
         <div class="info">📅 02 June 2026</div>
         <div class="info">📍 Unifi Arena, Bukit Jalil</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('yanren')">
+    <div class="card" data-country="SG" data-title="ele yan yanren moment singapore indoor stadium 6 june" onclick="openSheet('yanren')">
       <img src="eleyan.webp">
       <div class="card-content">
+        <span class="badge badge-SG">SG</span>
         <div class="title2">颜人中 Ele Yan</div>
-        <div class="title3">颜人中 [MOMENT] 2026 世界巡回演唱会-新加坡站</div>
+        <div class="title3">颜人中 [MOMENT] 2026 世界巡回演唱会 新加坡站</div>
         <div class="info">📅 06 June 2026</div>
         <div class="info">📍 Singapore Indoor Stadium</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('gemmy')">
+    <div class="card" data-country="MY" data-title="gem deng ziqi gloria kuala lumpur tm national stadium bukit jalil 6 june" onclick="openSheet('gemmy')">
       <img src="gem.webp">
       <div class="card-content">
-        <div class="title2"> 邓紫棋 G.E.M</div>
-        <div class="title3">G.E.M. 邓紫棋 I AM GLORIA 世界巡回演唱会2.0-吉隆玻站</div>
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">邓紫棋 G.E.M</div>
+        <div class="title3">G.E.M. 邓紫棋 I AM GLORIA 世界巡回演唱会2.0 吉隆坡站</div>
         <div class="info">📅 06 June 2026</div>
-        <div class="info">📍 TM National Stadium Bukit Jalil， Kuala Lumpur</div>
+        <div class="info">📍 TM National Stadium Bukit Jalil, KL</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('lisa')">
+    <div class="card" data-country="MY" data-title="lisa live smile always kuala lumpur tm national stadium bukit jalil 7 june" onclick="openSheet('lisa')">
       <img src="lisa.webp">
       <div class="card-content">
+        <span class="badge badge-MY">MY</span>
         <div class="title2">LISA</div>
-        <div class="title3">LISA ASIA TOUR 2026 - LiVE is Smile Always ~15~ in Kuala Lumpur</div>
+        <div class="title3">LISA ASIA TOUR 2026 — LiVE is Smile Always ~15~ KL</div>
         <div class="info">📅 07 June 2026</div>
-        <div class="info">📍 TM National Stadium Bukit Jalil, Kuala Lumpur</div>
+        <div class="info">📍 TM National Stadium Bukit Jalil, KL</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('gareth')">
+    <div class="card" data-country="MY" data-title="gareth tong tang lingshan prince nothing genting arena of stars 13 june" onclick="openSheet('gareth')">
       <img src="gareth.webp">
       <div class="card-content">
+        <span class="badge badge-MY">MY</span>
         <div class="title2">汤令山 Gareth Tong</div>
-        <div class="title3">《Gareth.T - Prince of NotHING 汤令山 - 心零王子》马来西亚</div>
+        <div class="title3">Gareth.T — Prince of NotHING 心零王子 马来西亚</div>
         <div class="info">📅 13 June 2026</div>
         <div class="info">📍 Arena of Stars, Genting</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('idle')">
+    <div class="card" data-country="SG" data-title="gidle idle syncopation singapore indoor stadium 13 june" onclick="openSheet('idle')">
       <img src="idlesg.jpg">
       <div class="card-content">
+        <span class="badge badge-SG">SG</span>
         <div class="title2">i-dle 女娃</div>
-        <div class="title3">2026 i-dle WORLD TOUR[Syncopation] IN SINGAPORE</div>
+        <div class="title3">2026 (G)I-DLE WORLD TOUR [Syncopation] IN SINGAPORE</div>
         <div class="info">📅 13 June 2026</div>
         <div class="info">📍 Singapore Indoor Stadium</div>
       </div>
     </div>
-    
-    <div class="card" onclick="openSheet('nmixx')">
+
+    <div class="card" data-country="SG" data-title="nmixx zero frontier singapore star theatre 20 june" onclick="openSheet('nmixx')">
       <img src="nmixx.jpg">
       <div class="card-content">
-        <div class="title2"> NMIXX</div>
-        <div class="title3"> NMIXX 1ST WORLD TOUR <EPISODE 1: ZERO FRONTIER> IN SINGAPORE</div>
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">NMIXX</div>
+        <div class="title3">NMIXX 1ST WORLD TOUR &lt;EPISODE 1: ZERO FRONTIER&gt; SINGAPORE</div>
         <div class="info">📅 20 June 2026</div>
         <div class="info">📍 The Star Theatre</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('exomy')">
+    <div class="card" data-country="MY" data-title="exo planet exhorizon kuala lumpur national hockey stadium 20 june" onclick="openSheet('exomy')">
       <img src="exmy.jpg">
       <div class="card-content">
+        <span class="badge badge-MY">MY</span>
         <div class="title2">EXO</div>
-        <div class="title3">EXO PLANET#6-EXhOrizon in KUALA LUMPUR</div>
+        <div class="title3">EXO PLANET #6 — EXhOrizon in KUALA LUMPUR</div>
         <div class="info">📅 20 June 2026</div>
-        <div class="info">📍 National Hockey Stadium</div>
+        <div class="info">📍 National Hockey Stadium, KL</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('exosg')">
+    <div class="card" data-country="SG" data-title="exo planet exhorizon singapore indoor stadium 26 june" onclick="openSheet('exosg')">
       <img src="exosg.webp">
       <div class="card-content">
+        <span class="badge badge-SG">SG</span>
         <div class="title2">EXO</div>
-        <div class="title3">EXO PLANET#6-EXhOrizon in SINGAPORE</div>
+        <div class="title3">EXO PLANET #6 — EXhOrizon in SINGAPORE</div>
         <div class="info">📅 26 June 2026</div>
         <div class="info">📍 Singapore Indoor Stadium</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('post')">
+    <div class="card" data-country="MY" data-title="post malone big stadium world tour kuala lumpur tm national stadium bukit jalil 27 september" onclick="openSheet('post')">
       <img src="post.jpg">
       <div class="card-content">
+        <span class="badge badge-MY">MY</span>
         <div class="title2">Post Malone</div>
-        <div class="title3">Post Malone Presents The BIG Stadium World Tour</div>
+        <div class="title3">Post Malone — The BIG Stadium World Tour</div>
         <div class="info">📅 27 September 2026</div>
-        <div class="info">📍 TM National Stadium Bukit Jalil, Kuala Lumpur</div>
+        <div class="info">📍 TM National Stadium Bukit Jalil, KL</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('chemical')">
+    <div class="card" data-country="MY" data-title="my chemical romance mcr south east asia kuala lumpur tm national stadium bukit jalil 19 20 november" onclick="openSheet('chemical')">
       <img src="chemical.webp">
       <div class="card-content">
+        <span class="badge badge-MY">MY</span>
         <div class="title2">My Chemical Romance</div>
         <div class="title3">MY CHEMICAL ROMANCE SOUTH EAST ASIA 2026</div>
-        <div class="info">📅 19-20 November 2026</div>
-        <div class="info">📍 TM National Stadium Bukit Jalil, Kuala Lumpur</div>
+        <div class="info">📅 19–20 November 2026</div>
+        <div class="info">📍 TM National Stadium Bukit Jalil, KL</div>
       </div>
     </div>
 
-    <div class="card" onclick="openSheet('tomorrow')">
+    <div class="card" data-country="TH" data-title="tomorrowland thailand wisdom valley 11 12 13 december" onclick="openSheet('tomorrow')">
       <img src="tomorrowland.jpg">
       <div class="card-content">
+        <span class="badge badge-TH">TH</span>
         <div class="title2">TOMORROWLAND</div>
-        <div class="title3">Tomorrowland Thailand WISDOM VALLEY, THAILAND</div>
-        <div class="info">📅 11-13 December 2026</div>
+        <div class="title3">Tomorrowland Thailand — WISDOM VALLEY</div>
+        <div class="info">📅 11–13 December 2026</div>
         <div class="info">📍 Wisdom Valley, Thailand</div>
       </div>
     </div>
@@ -451,349 +444,186 @@ body{background:#0f0f0f;color:#fff}
 </div>
 
 <!-- FOOTER -->
-<footer style="background:#000;padding:24px 20px 80px;border-top:1px solid #222;margin-top:20px;">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;max-width:1400px;margin:0 auto;">
-    <div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-        <!-- <span style="font-size:20px">🎫</span> -->
-        <span style="font-weight:bold;font-size:15px">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</span>
-        <!-- <span style="color:#555;font-size:13px">Ethen Chin Kar Hao Ticketing Services© 2026 </span> -->
-      </div>
-      <!-- <div style="color:#555;font-size:13px">...</div> -->
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px">
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</div>
     <div class="about-btn" onclick="openAbout()">About Us</div>
-    </div>
-      <!--   <div style="display:flex;align-items:center;gap:16px">
-        <a href="https://www.facebook.com/chinethen/posts/pfbid0688Cn3veuqFqBrnZPtnsr9dVmC2qvRJQLAkdH9k4SMJ2H9fS2Ao7yAfLmKCYw74yl?rdid=Mkz2MHLnOCudqoLh#" style="color:#aaa;text-decoration:none">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/gogoservicesmy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" style="color:#aaa;text-decoration:none">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-        </a>
-        <a href="https://www.xiaohongshu.com/explore/68f4a0370000000007033628?app_platform=ios&app_version=9.19.5&share_from_user_hidden=true&xsec_source=app_share&type=normal&xsec_token=CBG5zG7lEx_i8wWOTlBUReaAUl6HulrD8nEvAxz6f1EG4=&author_share=1&xhsshare=CopyLink&shareRedId=OD47NjNIRkw2NzUyOTgwNjg7OTo1PUpB&apptime=1772737353&share_id=9be505f0d61e4329a8da4e54f01804a6" style="color:#aaa;text-decoration:none;font-size:13px;font-weight:bold;letter-spacing:1px">小红书</a>
-      </div>
-      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:flex-end">
-        <a href="#" style="color:#555;font-size:13px;text-decoration:none">About Us</a>
-        <a href="https://wa.me/60166428520" style="color:#555;font-size:13px;text-decoration:none">Contact Us</a>
-        <a href="#" style="color:#555;font-size:13px;text-decoration:none">FAQ</a>
-        <a href="#" style="color:#555;font-size:13px;text-decoration:none">Terms</a>
-        <a href="#" style="color:#555;font-size:13px;text-decoration:none">Privacy</a> -->
-      <!-- </div> -->
-    </div>
   </div>
 </footer>
 
-<!-- SHEET FULL-PAGE OVERLAY -->
+<!-- SHEET OVERLAY -->
 <div class="sheet-page" id="sheet-page">
   <div class="sheet-page-header">
     <button class="back-btn" onclick="closeSheet()">← Back</button>
-    <span id="sheet-label" style="font-size:15px;font-weight:bold"></span>
+    <span id="sheet-label" style="font-size:15px;font-weight:600;"></span>
   </div>
   <iframe id="sheet-frame" src=""></iframe>
 </div>
 
-<!-- <div class="bottom-nav">
-  <div>🏠<br>Home</div>
-  <div>🎫<br>Tickets</div>
-  <div>❤️<br>Saved</div>
-  <div>👤<br>Profile</div>
-</div> -->
-
 <!-- ABOUT PAGE OVERLAY -->
-<div id="about-page" style="
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#0a0a0a;
-  z-index:3000;
-  overflow-y:auto;
-  flex-direction:column;
-">
+<div id="about-page">
 
-  <!-- Header bar -->
-  <div style="
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:12px 16px;
-    background:#000;
-    border-bottom:1px solid #222;
-    position:sticky;
-    top:0;
-    z-index:10;
-  ">
-    <button onclick="closeAbout()" style="
-      background:#1c1c1c;
-      border:none;
-      color:#fff;
-      padding:8px 14px;
-      border-radius:20px;
-      font-size:13px;
-      cursor:pointer;
-    ">← Back</button>
-    <span style="font-size:15px;font-weight:bold">About</span>
+  <div style="display:flex;align-items:center;gap:12px;padding:12px 20px;background:#000;border-bottom:1px solid #222;position:sticky;top:0;z-index:10;">
+    <button onclick="closeAbout()" class="back-btn">← Back</button>
+    <span style="font-size:15px;font-weight:600;">About Us</span>
   </div>
 
-  <section style="padding:50px 20px;background:#0f0f0f;">
-  <div style="max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:30px;">
+  <!-- Legit Check Section -->
+  <section style="padding:40px 20px;background:#0f0f0f;">
+    <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:24px;">
 
-    <h2 style="font-size:22px;">Legit Check & Community</h2>
+      <h2 style="font-size:20px;font-weight:600;">Legit Check &amp; Community</h2>
 
-    <!-- CARD 1 -->
-    <div style="background:#111;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:15px;">
-
-      <!-- TEXT + LINK -->
-      <div>
-        <div style="font-size:16px;margin-bottom:6px;">
-          脸书诚信帖子 | Facebook Legit Check Post
-        </div>
-        <a href="https://www.facebook.com/share/p/1Axgy161Gw/" target="_blank"
-          style="color:#4cafef;font-size:14px;">
-          View Post →
-        </a>
+      <div style="background:#111;border-radius:12px;padding:24px;border:1px solid #1c1c1c;display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:15px;font-weight:500;">脸书诚信帖子 | Facebook Legit Check Post</div>
+        <a href="https://www.facebook.com/share/p/1Axgy161Gw/" target="_blank" style="color:#4cafef;font-size:13px;text-decoration:none;">View Post →</a>
+        <img src="fblegit.jpeg" style="width:60%;border-radius:10px;object-fit:cover;">
       </div>
 
-      <!-- IMAGE -->
-      <img src="fblegit.jpeg"
-        style="width:60%;border-radius:10px;object-fit:cover;">
-    </div>
-
-    <!-- CARD 2 -->
-    <div style="background:#111;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:15px;">
-
-      <div>
-        <div style="font-size:16px;margin-bottom:6px;">
-          小红书诚信帖子 | XHS Legit Check Post
-        </div>
-        <a href="http://xhslink.com/o/AgAtZgW300" target="_blank"
-          style="color:#4cafef;font-size:14px;">
-          View Post →
-        </a>
+      <div style="background:#111;border-radius:12px;padding:24px;border:1px solid #1c1c1c;display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:15px;font-weight:500;">小红书诚信帖子 | XHS Legit Check Post</div>
+        <a href="http://xhslink.com/o/AgAtZgW300" target="_blank" style="color:#4cafef;font-size:13px;text-decoration:none;">View Post →</a>
+        <img src="xhslegit.jpeg" style="width:60%;border-radius:10px;">
       </div>
 
-      <img src="xhslegit.jpeg"
-        style="width:60%;border-radius:10px;">
-    </div>
-
-    <!-- CARD 3 -->
-    <div style="background:#111;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:15px;">
-
-      <div>
-        <div style="font-size:16px;margin-bottom:6px;">
-          Whatsapp 社群 | Whatsapp Community
+      <div style="background:#111;border-radius:12px;padding:24px;border:1px solid #1c1c1c;display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:15px;font-weight:500;">Whatsapp 社群 | Whatsapp Community</div>
+        <a href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank" style="color:#4cafef;font-size:13px;text-decoration:none;">Join Community →</a>
+        <div class="two-img">
+          <img src="whatsappleft.jpeg">
+          <img src="whatsappright.jpeg">
         </div>
-        <a href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank"
-          style="color:#4cafef;font-size:14px;">
-          Join Community →
-        </a>
       </div>
 
-              <div class="two-img">
-  <img src="whatsappleft.jpeg">
-  <img src="whatsappright.jpeg">
-</div>
-
-  </div>
-</section>
-
-  <!-- Content -->
-<div style="padding:30px 20px;max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:50px;">
-
-  <!-- SOCIAL -->
-  <div>
-    <h2 style="font-size:22px;margin-bottom:20px;">Connect With Us</h2>
-    <div style="display:flex;gap:16px;flex-wrap:wrap;">
-
-      <a href="https://www.facebook.com/chinethen" target="_blank"
-        style="flex:1;min-width:200px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;">
-        <div style="font-size:16px;margin-bottom:6px;">📘 Facebook</div>
-        <div style="color:#aaa;font-size:13px;">Ethen Chin Kar Hao</div>
-      </a>
-
-      <a href="https://www.instagram.com/gogoservicesmy" target="_blank"
-        style="flex:1;min-width:200px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;">
-        <div style="font-size:16px;margin-bottom:6px;">📸 Instagram (Business)</div>
-        <div style="color:#aaa;font-size:13px;">@gogoservicesmy</div>
-      </a>
-
-      <a href="https://www.instagram.com/ethenchin_supbro" target="_blank"
-        style="flex:1;min-width:200px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;">
-        <div style="font-size:16px;margin-bottom:6px;">📸 Instagram (Personal)</div>
-        <div style="color:#aaa;font-size:13px;">@ethenchin_supbro</div>
-      </a>
-
-      <a href="https://xhslink.com/m/ABvuAnUze68" target="_blank"
-        style="flex:1;min-width:200px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;">
-        <div style="font-size:16px;margin-bottom:6px;">📕 小红书</div>
-        <div style="color:#aaa;font-size:13px;">豪哥带你看演唱会票务</div>
-      </a>
-
-      <a href="https://m.tb.cn/h.iMehKQE?tk=UE7Q5UTuyCk" target="_blank"
-        style="flex:1;min-width:200px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;">
-        <div style="font-size:16px;margin-bottom:6px;">🟡 闲鱼</div>
-        <div style="color:#aaa;font-size:13px;">豪哥带你看演唱会</div>
-    </a>
-
     </div>
-  </div>
+  </section>
 
-  <!-- WHATSAPP -->
-  <div>
-    <h2 style="font-size:22px;margin-bottom:20px;">Need Help?</h2>
+  <!-- Socials + Contact -->
+  <div style="padding:30px 20px 60px;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:40px;">
 
-    <div style="background:#111;padding:25px;border-radius:12px;display:flex;flex-direction:column;gap:10px;">
-      <div style="font-size:18px;">💬 WhatsApp Support</div>
-      <div style="color:#aaa;">+60 16-642 8520</div>
+    <div>
+      <h2 style="font-size:20px;font-weight:600;margin-bottom:16px;">Connect With Us</h2>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
 
-      <a href="https://wa.me/60166428520" target="_blank"
-        style="margin-top:10px;display:inline-block;background:#25D366;color:#000;padding:12px 20px;border-radius:8px;font-weight:bold;text-decoration:none;width:fit-content;">
-        Chat Now
-      </a>
+        <a href="https://www.facebook.com/chinethen" target="_blank" style="flex:1;min-width:180px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;border:1px solid #1c1c1c;">
+          <div style="font-size:14px;font-weight:500;margin-bottom:5px;">📘 Facebook</div>
+          <div style="color:#555;font-size:12px;">Ethen Chin Kar Hao</div>
+        </a>
+
+        <a href="https://www.instagram.com/gogoservicesmy" target="_blank" style="flex:1;min-width:180px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;border:1px solid #1c1c1c;">
+          <div style="font-size:14px;font-weight:500;margin-bottom:5px;">📸 Instagram (Business)</div>
+          <div style="color:#555;font-size:12px;">@gogoservicesmy</div>
+        </a>
+
+        <a href="https://www.instagram.com/ethenchin_supbro" target="_blank" style="flex:1;min-width:180px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;border:1px solid #1c1c1c;">
+          <div style="font-size:14px;font-weight:500;margin-bottom:5px;">📸 Instagram (Personal)</div>
+          <div style="color:#555;font-size:12px;">@ethenchin_supbro</div>
+        </a>
+
+        <a href="https://xhslink.com/m/ABvuAnUze68" target="_blank" style="flex:1;min-width:180px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;border:1px solid #1c1c1c;">
+          <div style="font-size:14px;font-weight:500;margin-bottom:5px;">📕 小红书</div>
+          <div style="color:#555;font-size:12px;">豪哥带你看演唱会票务</div>
+        </a>
+
+        <a href="https://m.tb.cn/h.iMehKQE?tk=UE7Q5UTuyCk" target="_blank" style="flex:1;min-width:180px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;border:1px solid #1c1c1c;">
+          <div style="font-size:14px;font-weight:500;margin-bottom:5px;">🟡 闲鱼</div>
+          <div style="color:#555;font-size:12px;">豪哥带你看演唱会</div>
+        </a>
+
+      </div>
     </div>
-  </div>
 
+    <div>
+      <h2 style="font-size:20px;font-weight:600;margin-bottom:16px;">Need Help?</h2>
+      <div style="background:#111;padding:24px;border-radius:12px;border:1px solid #1c1c1c;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:16px;font-weight:500;">💬 WhatsApp Support</div>
+        <div style="color:#555;font-size:13px;">+60 16-642 8520</div>
+        <a href="https://wa.me/60166428520" target="_blank" style="margin-top:8px;display:inline-block;background:#25D366;color:#000;padding:11px 20px;border-radius:8px;font-weight:600;text-decoration:none;font-size:14px;width:fit-content;">Chat Now</a>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <script>
 const sheetData = {
-  day6: {
-    label: "DAY6",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1935844680&single=true"
-  },
-  yanzi25: {
-    label: "孙燕姿 Stefanie Sun",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1700757657&single=true"
-  },
-  yanzi26: {
-    label: "孙燕姿 Stefanie Sun",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1623939774&single=true"
-  },
-  treasuresg: {
-    label: "TREASURE 宝石盒",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1792413735&single=true"
-  },
-  treasuremy: {
-    label: "TREASURE 宝石盒",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1635144197&single=true"
-  },
-  apink: {
-    label: "APINK",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=874010043&single=true"
-  },
-  ive: {
-    label: "IVE 芙",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1872894113&single=true"
-  },
-  gemsg: {
-    label: "邓紫棋 G.E.M",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1400963097&single=true"
-  },
-  laufey: {
-    label: "Laufey",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1817011281&single=true"
-  },
-  yanren: {
-    label: "颜人中 Ele Yan",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1251571219&single=true"
-  },
-  gemmy: {
-    label: "邓紫棋 G.E.M",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=448258580&single=true"
-  },
-  lisa: {
-    label: "LISA",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=523619804&single=true"
-  },
-  gareth: {
-    label: "汤令山 Gareth Tong",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=739406462&single=true"
-  },
-  idle: {
-    label: "i-dle 女娃",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=2044995919&single=true"
-  },
-  exosg: {
-    label: "EXO SG",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=566113631&single=true"
-  },
-  post: {
-    label: "Post Malone",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=494980325&single=true"
-  },
-  chemical: {
-    label: "My Chemical Romance",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=892561140&single=true"
-  },
-  tomorrow: {
-    label: "TOMORROWLAND",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1966464514&single=true"
-  },
-  danielmy: {
-    label: "Daniel Caesar MY",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=2035149464&single=true"
-  },
-  danielsg: {
-    label: "Daniel Caesar SG",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=346757515&single=true"
-  },
-  nmixx: {
-    label: "NMIXX",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1162156115&single=true"
-  },
-  exomy: {
-    label: "EXO MY",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=64007859&single=true"
-  },
-  ghostmy: {
-    label: "王琳凯(小鬼) MY",
-    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=944199940&single=true"
-  },
+  yanzi25:{label:"孙燕姿 Stefanie Sun (25 Apr)",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1700757657&single=true"},
+  yanzi26:{label:"孙燕姿 Stefanie Sun (26 Apr)",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1623939774&single=true"},
+  treasuresg:{label:"TREASURE 宝石盒 — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1792413735&single=true"},
+  apink:{label:"APINK — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=874010043&single=true"},
+  ive:{label:"IVE 芙 — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1872894113&single=true"},
+  ghostsg:{label:"王琳凯 小鬼 — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=346757515&single=true"},
+  danielsg:{label:"Daniel Caesar — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=346757515&single=true"},
+  ghostmy:{label:"王琳凯 小鬼 — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=944199940&single=true"},
+  gemsg:{label:"邓紫棋 G.E.M — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1400963097&single=true"},
+  danielmy:{label:"Daniel Caesar — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=2035149464&single=true"},
+  treasuremy:{label:"TREASURE 宝石盒 — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1635144197&single=true"},
+  laufey:{label:"Laufey — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1817011281&single=true"},
+  yanren:{label:"颜人中 Ele Yan — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1251571219&single=true"},
+  gemmy:{label:"邓紫棋 G.E.M — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=448258580&single=true"},
+  lisa:{label:"LISA — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=523619804&single=true"},
+  gareth:{label:"汤令山 Gareth Tong — Genting",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=739406462&single=true"},
+  idle:{label:"(G)I-DLE 女娃 — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=2044995919&single=true"},
+  nmixx:{label:"NMIXX — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1162156115&single=true"},
+  exomy:{label:"EXO — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=64007859&single=true"},
+  exosg:{label:"EXO — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=566113631&single=true"},
+  post:{label:"Post Malone — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=494980325&single=true"},
+  chemical:{label:"My Chemical Romance — KL",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=892561140&single=true"},
+  tomorrow:{label:"TOMORROWLAND — Thailand",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1966464514&single=true"},
 };
 
-function openSheet(key) {
-  const data = sheetData[key];
-  if (!data) return;
-  document.getElementById('sheet-frame').src = data.url;
-  document.getElementById('sheet-label').textContent = data.label;
+function openSheet(key){
+  const data=sheetData[key];
+  if(!data)return;
+  document.getElementById('sheet-frame').src=data.url;
+  document.getElementById('sheet-label').textContent=data.label;
   document.getElementById('sheet-page').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
-
-function closeSheet() {
+function closeSheet(){
   document.getElementById('sheet-page').classList.remove('open');
-  document.getElementById('sheet-frame').src = '';
-  document.body.style.overflow = '';
+  document.getElementById('sheet-frame').src='';
+  document.body.style.overflow='';
 }
 
-function filterCat(key, el) {
-  document.querySelectorAll('.cat').forEach(c => c.classList.remove('active'));
+function openAbout(){
+  document.getElementById('about-page').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeAbout(){
+  document.getElementById('about-page').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+let currentCountry="all";
+function setCountry(country,el){
+  currentCountry=country;
+  document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
+  applyFilters();
 }
-// Auto refresh iframe every 30 seconds (ONLY when sheet is open)
-setInterval(() => {
-  const sheetPage = document.getElementById("sheet-page");
-  const iframe = document.getElementById("sheet-frame");
+function applyFilters(){
+  const raw = document.getElementById('searchInput').value.toLowerCase().trim();
+  const terms = raw.split(/\s+/).filter(Boolean); // split by spaces
 
-  // only refresh when user is viewing the sheet
-  if (sheetPage.classList.contains("open") && iframe.src) {
-    iframe.src = iframe.src;
-  }
-}, 180000);
+  document.querySelectorAll('.card').forEach(card => {
+    const dataTitle = (card.dataset.title || "").toLowerCase();
+    const cardText = (card.innerText || card.textContent || "").toLowerCase();
+    const combined = dataTitle + " " + cardText;
+    const country = card.dataset.country || "";
 
-function openAbout() {
-  const el = document.getElementById('about-page');
-  el.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+    // Every word must match somewhere in the combined text
+    const matchSearch = !raw || terms.every(term => combined.includes(term));
+    const matchCountry = (currentCountry === "all" || country === currentCountry);
+    card.style.display = (matchSearch && matchCountry) ? "block" : "none";
+  });
 }
 
-function closeAbout() {
-  const el = document.getElementById('about-page');
-  el.style.display = 'none';
-  document.body.style.overflow = '';
-}
+setInterval(()=>{
+  const sp=document.getElementById("sheet-page");
+  const iframe=document.getElementById("sheet-frame");
+  if(sp.classList.contains("open")&&iframe.src){iframe.src=iframe.src;}
+},180000);
 </script>
-
-
 </body>
 </html>
