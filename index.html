@@ -440,6 +440,18 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       </div>
     </div>
 
+    <div class="card" data-country="TH" data-title="tomorrowland thailand wisdom valley 11 12 13 december" onclick="openSheet('test')">
+      <img src="tomorrowland.jpg">
+      <div class="card-content">
+        <span class="badge badge-TH">TH</span>
+        <div class="title2">TOMORROWLAND</div>
+        <div class="title3">Tomorrowland Thailand — WISDOM VALLEY</div>
+        <div class="info">📅 11–13 December 2026</div>
+        <div class="info">📍 Wisdom Valley, Thailand</div>
+      </div>
+    </div>
+
+
   </div>
 </div>
 
@@ -457,7 +469,12 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
     <button class="back-btn" onclick="closeSheet()">← Back</button>
     <span id="sheet-label" style="font-size:15px;font-weight:600;"></span>
   </div>
-  <iframe id="sheet-frame" src=""></iframe>
+  <!-- Google Sheet iframe -->
+  <iframe id="sheet-frame" src="" style="flex:1;width:100%;border:none;background:#1a1a1a;display:none;"></iframe>
+  <!-- Photo viewer -->
+  <div id="photo-viewer" style="display:none;flex:1;overflow-y:auto;background:#111;padding:20px;flex-direction:column;gap:16px;"></div>
+  <!-- Drive folder embed (used to scrape file IDs without API) -->
+  <iframe id="drive-scraper" style="display:none;"></iframe>
 </div>
 
 <!-- ABOUT PAGE OVERLAY -->
@@ -570,22 +587,77 @@ const sheetData = {
   post:{label:"Post Malone — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=494980325&single=true"},
   chemical:{label:"My Chemical Romance — KL",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=892561140&single=true"},
   tomorrow:{label:"TOMORROWLAND — Thailand",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1966464514&single=true"},
+  test:{label:"test",folder:"1pDNWRAhPlC6tpCq2UpJ0qo6a7PTaz8hY"}
 };
 
-function openSheet(key){
-  const data=sheetData[key];
-  if(!data)return;
-  document.getElementById('sheet-frame').src=data.url;
-  document.getElementById('sheet-label').textContent=data.label;
+async function loadFolderPhotos(folderId, label) {
+  document.getElementById('sheet-label').textContent = label;
   document.getElementById('sheet-page').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeSheet(){
-  document.getElementById('sheet-page').classList.remove('open');
-  document.getElementById('sheet-frame').src='';
-  document.body.style.overflow='';
+  document.body.style.overflow = 'hidden';
+
+  const frame = document.getElementById('sheet-frame');
+  const viewer = document.getElementById('photo-viewer');
+  frame.style.display = 'none';
+  viewer.style.display = 'flex';
+
+  // Just embed the Drive folder directly — no API, no proxy, no scraping
+  viewer.innerHTML = '';
+  viewer.style.padding = '0';
+  viewer.style.flexDirection = 'column';
+
+  const driveEmbed = document.createElement('iframe');
+  driveEmbed.src = `https://drive.google.com/embeddedfolderview?id=${folderId}#list`;
+  driveEmbed.style.cssText = 'width:100%;flex:1;border:none;min-height:calc(100vh - 60px);background:#111;';
+  viewer.appendChild(driveEmbed);
 }
 
+function openSheet(key) {
+  const data = sheetData[key];
+  if (!data) return;
+
+  document.getElementById('sheet-label').textContent = data.label;
+  document.getElementById('sheet-page').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  const frame = document.getElementById('sheet-frame');
+  const viewer = document.getElementById('photo-viewer');
+
+  if (data.folder) {
+    loadFolderPhotos(data.folder, data.label);
+
+  } else if (data.photos) {
+    frame.style.display = 'none';
+    viewer.style.display = 'flex';
+    viewer.innerHTML = '';
+    data.photos.forEach((url, i) => {
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = 'position:relative;width:100%;';
+      const img = document.createElement('img');
+      img.src = url;
+      img.style.cssText = 'width:100%;border-radius:10px;object-fit:contain;background:#0a0a0a;display:block;';
+      const num = document.createElement('div');
+      num.style.cssText = 'position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.65);color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;';
+      num.textContent = `${i + 1} / ${data.photos.length}`;
+      wrapper.appendChild(img);
+      wrapper.appendChild(num);
+      viewer.appendChild(wrapper);
+    });
+
+  } else if (data.url) {
+    viewer.style.display = 'none';
+    frame.style.display = 'flex';
+    frame.src = data.url;
+  }
+}
+
+function closeSheet() {
+  document.getElementById('sheet-page').classList.remove('open');
+  document.getElementById('sheet-frame').src = '';
+  document.getElementById('sheet-frame').style.display = 'none';
+  document.getElementById('photo-viewer').style.display = 'none';
+  document.getElementById('photo-viewer').innerHTML = '';
+  document.body.style.overflow = '';
+}
 function openAbout(){
   document.getElementById('about-page').classList.add('open');
   document.body.style.overflow='hidden';
