@@ -601,11 +601,15 @@ async function loadFolderPhotos(folderId, label) {
   const viewer = document.getElementById('photo-viewer');
 
   frame.style.display = 'none';
-  viewer.style.display = 'flex';
-  viewer.style.flexDirection = 'column';
-  viewer.style.padding = '20px';
-  viewer.style.gap = '16px';
-  viewer.style.overflowY = 'auto';
+
+  // ✅ GRID LAYOUT (MAIN CHANGE)
+  viewer.style.display = 'grid';
+  viewer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(500px, 1fr))';
+  viewer.style.gap = '10px';
+  viewer.style.padding = '12px 16px';
+  viewer.style.width = '100%';  
+  viewer.style.maxWidth = 'none';
+
   viewer.innerHTML = '<div style="color:#555;text-align:center;padding:60px;">⏳ Loading photos...</div>';
 
   try {
@@ -636,35 +640,48 @@ async function loadFolderPhotos(folderId, label) {
 
     files.forEach((file, i) => {
       const wrapper = document.createElement('div');
-      wrapper.style.cssText = 'position:relative;width:100%;';
+
+      // ✅ CARD STYLE
+      wrapper.style.cssText = `
+        width:100%;
+        background:#0a0a0a;
+        border-radius:10px;
+        overflow:hidden;
+        position:relative;
+      `;
 
       const img = document.createElement('img');
-
-      // ✅ FIXED IMAGE SOURCE (THIS IS THE KEY)
       img.src = `https://lh3.googleusercontent.com/d/${file.id}`;
 
+      // ✅ IMAGE STYLE (GRID FRIENDLY)
       img.style.cssText = `
         width:100%;
-        border-radius:10px;
-        object-fit:contain;
-        background:#0a0a0a;
+        object-fit:cover;
         display:block;
+        transition:0.3s;
+        cursor:pointer;
       `;
 
       img.loading = 'lazy';
       img.alt = file.name;
 
-      img.onerror = () => {
-        wrapper.style.display = 'none';
-      };
+      // 🔥 hover effect (makes it feel premium)
+      img.onmouseover = () => img.style.transform = 'scale(1.05)';
+      img.onmouseout = () => img.style.transform = 'scale(1)';
 
-      // counter
+      // 🔍 click to zoom
+      img.onclick = () => openImageZoom(img.src);
+
+      // ❌ hide broken images
+      img.onerror = () => wrapper.style.display = 'none';
+
+      // 📊 counter badge
       const num = document.createElement('div');
       num.style.cssText = `
         position:absolute;
         top:10px;
         right:10px;
-        background:rgba(0,0,0,0.65);
+        background:rgba(0,0,0,0.6);
         color:#fff;
         font-size:11px;
         padding:4px 10px;
@@ -683,7 +700,6 @@ async function loadFolderPhotos(folderId, label) {
     </div>`;
   }
 }
-
 function openSheet(key) {
   const data = sheetData[key];
   if (!data) return;
@@ -703,17 +719,27 @@ function openSheet(key) {
   } else if (data.photos) {
     // MANUAL PHOTOS array
     frame.style.display = 'none';
-    viewer.style.display = 'flex';
-    viewer.style.flexDirection = 'column';
-    viewer.style.padding = '20px';
+    viewer.style.display = 'grid';
+    viewer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(260px, 1fr))';
     viewer.style.gap = '16px';
+    viewer.style.padding = '20px';
     viewer.innerHTML = '';
     data.photos.forEach((url, i) => {
       const wrapper = document.createElement('div');
-      wrapper.style.cssText = 'position:relative;width:100%;';
+      wrapper.style.cssText = `
+      width:100%;
+      background:#0a0a0a;
+      border-radius:10px;
+      overflow:hidden;
+      `;
       const img = document.createElement('img');
       img.src = url;
-      img.style.cssText = 'width:100%;border-radius:10px;object-fit:contain;background:#0a0a0a;display:block;';
+      img.style.cssText = `
+      width:100%;
+      height:220px;
+      object-fit:cover;
+      display:block;
+      `;
       img.loading = 'lazy';
       const num = document.createElement('div');
       num.style.cssText = 'position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.65);color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;';
@@ -730,6 +756,99 @@ function openSheet(key) {
     frame.style.display = 'flex';
     frame.src = data.url;
   }
+}
+
+function openImageZoom(src){
+  const overlay = document.createElement("div");
+
+  overlay.style.cssText = `
+    position:fixed;
+    inset:0;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    overflow:hidden;
+  `;
+
+  // ❌ CLOSE BUTTON
+  const closeBtn = document.createElement("div");
+  closeBtn.innerHTML = "✕";
+  closeBtn.style.cssText = `
+    position:absolute;
+    top:16px;
+    right:20px;
+    font-size:22px;
+    color:#fff;
+    cursor:pointer;
+    z-index:10;
+  `;
+
+  const img = document.createElement("img");
+  img.src = src;
+
+  img.style.cssText = `
+    max-width:none;
+    max-height:none;
+    cursor:grab;
+    user-select:none;
+    transition:0.1s;
+  `;
+
+  let scale = 1;
+  let posX = 0, posY = 0;
+  let isDragging = false;
+  let startX, startY;
+
+  // 🔥 ZOOM WITH SCROLL
+  overlay.onwheel = (e) => {
+    e.preventDefault();
+    scale += e.deltaY * -0.0015;
+    scale = Math.min(Math.max(1, scale), 5); // zoom range
+    updateTransform();
+  };
+
+  // 🔥 DRAG
+  img.onmousedown = (e) => {
+    isDragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+    img.style.cursor = "grabbing";
+  };
+
+  window.onmouseup = () => {
+    isDragging = false;
+    img.style.cursor = "grab";
+  };
+
+  window.onmousemove = (e) => {
+    if(!isDragging) return;
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+    updateTransform();
+  };
+
+  function updateTransform(){
+    img.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  }
+
+  // 🔥 DOUBLE CLICK TO ZOOM IN
+  img.ondblclick = () => {
+    scale = scale === 1 ? 2 : 1;
+    posX = 0;
+    posY = 0;
+    updateTransform();
+  };
+
+  closeBtn.onclick = () => overlay.remove();
+  overlay.onclick = (e) => {
+    if(e.target === overlay) overlay.remove();
+  };
+
+  overlay.appendChild(closeBtn);
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
 }
 
 function closeSheet() {
