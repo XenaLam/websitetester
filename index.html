@@ -590,6 +590,8 @@ const sheetData = {
   test:{label:"test",folder:"1pDNWRAhPlC6tpCq2UpJ0qo6a7PTaz8hY"}
 };
 
+const DRIVE_API_KEY = 'AIzaSyChKGiFIRlWRrarAZlbBaLQQJKCWIthN54';
+
 async function loadFolderPhotos(folderId, label) {
   document.getElementById('sheet-label').textContent = label;
   document.getElementById('sheet-page').classList.add('open');
@@ -597,18 +599,89 @@ async function loadFolderPhotos(folderId, label) {
 
   const frame = document.getElementById('sheet-frame');
   const viewer = document.getElementById('photo-viewer');
+
   frame.style.display = 'none';
   viewer.style.display = 'flex';
-
-  // Just embed the Drive folder directly — no API, no proxy, no scraping
-  viewer.innerHTML = '';
-  viewer.style.padding = '0';
   viewer.style.flexDirection = 'column';
+  viewer.style.padding = '20px';
+  viewer.style.gap = '16px';
+  viewer.style.overflowY = 'auto';
+  viewer.innerHTML = '<div style="color:#555;text-align:center;padding:60px;">⏳ Loading photos...</div>';
 
-  const driveEmbed = document.createElement('iframe');
-  driveEmbed.src = `https://drive.google.com/embeddedfolderview?id=${folderId}#list`;
-  driveEmbed.style.cssText = 'width:100%;flex:1;border:none;min-height:calc(100vh - 60px);background:#111;';
-  viewer.appendChild(driveEmbed);
+  try {
+    const query = encodeURIComponent(
+      `'${folderId}' in parents and mimeType contains 'image/' and trashed=false`
+    );
+
+    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&key=${DRIVE_API_KEY}&fields=files(id,name)&orderBy=createdTime desc&pageSize=50`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.error) {
+      viewer.innerHTML = `<div style="color:#e63946;text-align:center;padding:60px;">
+        Error: ${data.error.message}
+      </div>`;
+      return;
+    }
+
+    const files = data.files;
+
+    if (!files || files.length === 0) {
+      viewer.innerHTML = '<div style="color:#555;text-align:center;padding:60px;">No photos found.</div>';
+      return;
+    }
+
+    viewer.innerHTML = '';
+
+    files.forEach((file, i) => {
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = 'position:relative;width:100%;';
+
+      const img = document.createElement('img');
+
+      // ✅ FIXED IMAGE SOURCE (THIS IS THE KEY)
+      img.src = `https://lh3.googleusercontent.com/d/${file.id}`;
+
+      img.style.cssText = `
+        width:100%;
+        border-radius:10px;
+        object-fit:contain;
+        background:#0a0a0a;
+        display:block;
+      `;
+
+      img.loading = 'lazy';
+      img.alt = file.name;
+
+      img.onerror = () => {
+        wrapper.style.display = 'none';
+      };
+
+      // counter
+      const num = document.createElement('div');
+      num.style.cssText = `
+        position:absolute;
+        top:10px;
+        right:10px;
+        background:rgba(0,0,0,0.65);
+        color:#fff;
+        font-size:11px;
+        padding:4px 10px;
+        border-radius:20px;
+      `;
+      num.textContent = `${i + 1} / ${files.length}`;
+
+      wrapper.appendChild(img);
+      wrapper.appendChild(num);
+      viewer.appendChild(wrapper);
+    });
+
+  } catch (err) {
+    viewer.innerHTML = `<div style="color:#e63946;text-align:center;padding:60px;">
+      Failed to load photos<br>${err.message}
+    </div>`;
+  }
 }
 
 function openSheet(key) {
@@ -623,11 +696,17 @@ function openSheet(key) {
   const viewer = document.getElementById('photo-viewer');
 
   if (data.folder) {
+    // FOLDER MODE — auto loads all photos from Drive folder
+    frame.style.display = 'none';
     loadFolderPhotos(data.folder, data.label);
 
   } else if (data.photos) {
+    // MANUAL PHOTOS array
     frame.style.display = 'none';
     viewer.style.display = 'flex';
+    viewer.style.flexDirection = 'column';
+    viewer.style.padding = '20px';
+    viewer.style.gap = '16px';
     viewer.innerHTML = '';
     data.photos.forEach((url, i) => {
       const wrapper = document.createElement('div');
@@ -635,6 +714,7 @@ function openSheet(key) {
       const img = document.createElement('img');
       img.src = url;
       img.style.cssText = 'width:100%;border-radius:10px;object-fit:contain;background:#0a0a0a;display:block;';
+      img.loading = 'lazy';
       const num = document.createElement('div');
       num.style.cssText = 'position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.65);color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;';
       num.textContent = `${i + 1} / ${data.photos.length}`;
@@ -644,7 +724,9 @@ function openSheet(key) {
     });
 
   } else if (data.url) {
+    // GOOGLE SHEET
     viewer.style.display = 'none';
+    viewer.innerHTML = '';
     frame.style.display = 'flex';
     frame.src = data.url;
   }
@@ -658,6 +740,7 @@ function closeSheet() {
   document.getElementById('photo-viewer').innerHTML = '';
   document.body.style.overflow = '';
 }
+
 function openAbout(){
   document.getElementById('about-page').classList.add('open');
   document.body.style.overflow='hidden';
