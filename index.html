@@ -778,12 +778,29 @@ function openImageZoom(src) {
   const closeBtn = document.createElement("div");
   closeBtn.innerHTML = "✕";
   closeBtn.style.cssText = `
-    position:absolute;top:16px;right:20px;font-size:18px;
-    color:#fff;cursor:pointer;z-index:10000;
-    background:rgba(255,255,255,0.15);width:40px;height:40px;
-    border-radius:50%;display:flex;align-items:center;justify-content:center;
-    backdrop-filter:blur(4px);
+    position:absolute;top:12px;right:12px;
+    font-size:20px;color:#fff;cursor:pointer;
+    z-index:10000;
+    background:rgba(255,255,255,0.2);
+    width:52px;height:52px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+    border:2px solid rgba(255,255,255,0.3);
   `;
+
+  // Make touch area even bigger with padding trick
+  closeBtn.addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    closeOverlay();
+  }, { passive: false });
+
+  closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeOverlay();
+  });
 
   const hint = document.createElement("div");
   hint.innerHTML = "Scroll to zoom · Drag to pan · Double-click to reset";
