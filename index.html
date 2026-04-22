@@ -767,95 +767,159 @@ function openSheet(key) {
   }
 }
 
-function openImageZoom(src){
+function openImageZoom(src) {
   const overlay = document.createElement("div");
-
   overlay.style.cssText = `
-    position:fixed;
-    inset:0;
-    background:#000;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-    overflow:hidden;
+    position:fixed;inset:0;background:rgba(0,0,0,0.95);
+    display:flex;justify-content:center;align-items:center;
+    z-index:9999;overflow:hidden;touch-action:none;
   `;
 
-  // ❌ CLOSE BUTTON
   const closeBtn = document.createElement("div");
   closeBtn.innerHTML = "✕";
   closeBtn.style.cssText = `
-    position:absolute;
-    top:16px;
-    right:20px;
-    font-size:22px;
-    color:#fff;
-    cursor:pointer;
-    z-index:10;
+    position:absolute;top:16px;right:20px;font-size:22px;
+    color:#fff;cursor:pointer;z-index:10;
+    background:rgba(0,0,0,0.5);width:36px;height:36px;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
   `;
+
+  // Zoom hint
+  const hint = document.createElement("div");
+  hint.innerHTML = "Scroll to zoom · Drag to pan · Double-tap to reset";
+  hint.style.cssText = `
+    position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+    font-size:11px;color:#555;white-space:nowrap;pointer-events:none;
+    transition:opacity 0.5s;
+  `;
+  setTimeout(() => hint.style.opacity = '0', 2000);
 
   const img = document.createElement("img");
   img.src = src;
-
   img.style.cssText = `
-    max-width:none;
-    max-height:none;
-    cursor:grab;
-    user-select:none;
-    transition:0.1s;
+    max-width:90vw;max-height:90vh;
+    cursor:grab;user-select:none;
+    transform-origin:center center;
+    transition:none;
+    display:block;
   `;
 
   let scale = 1;
   let posX = 0, posY = 0;
   let isDragging = false;
-  let startX, startY;
+  let lastX, lastY;
+  // Pinch
+  let lastDist = null;
 
-  // 🔥 ZOOM WITH SCROLL
-  overlay.onwheel = (e) => {
-    e.preventDefault();
-    scale += e.deltaY * -0.0015;
-    scale = Math.min(Math.max(1, scale), 5); // zoom range
-    updateTransform();
-  };
+  function clampPos() {
+    if (scale <= 1) { posX = 0; posY = 0; return; }
+    const maxX = (img.naturalWidth * scale - window.innerWidth) / 2;
+    const maxY = (img.naturalHeight * scale - window.innerHeight) / 2;
+    posX = Math.max(-maxX, Math.min(maxX, posX));
+    posY = Math.max(-maxY, Math.min(maxY, posY));
+  }
 
-  // 🔥 DRAG
-  img.onmousedown = (e) => {
-    isDragging = true;
-    startX = e.clientX - posX;
-    startY = e.clientY - posY;
-    img.style.cursor = "grabbing";
-  };
-
-  window.onmouseup = () => {
-    isDragging = false;
-    img.style.cursor = "grab";
-  };
-
-  window.onmousemove = (e) => {
-    if(!isDragging) return;
-    posX = e.clientX - startX;
-    posY = e.clientY - startY;
-    updateTransform();
-  };
-
-  function updateTransform(){
+  function applyTransform(smooth = false) {
+    img.style.transition = smooth ? 'transform 0.2s ease' : 'none';
     img.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
   }
 
-  // 🔥 DOUBLE CLICK TO ZOOM IN
-  img.ondblclick = () => {
-    scale = scale === 1 ? 2 : 1;
-    posX = 0;
-    posY = 0;
-    updateTransform();
-  };
+  // ── MOUSE WHEEL ZOOM ──
+  overlay.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    scale = Math.min(Math.max(1, scale * delta), 6);
+    clampPos();
+    applyTransform();
+  }, { passive: false });
 
-  closeBtn.onclick = () => overlay.remove();
-  overlay.onclick = (e) => {
-    if(e.target === overlay) overlay.remove();
+  // ── MOUSE DRAG ──
+  img.addEventListener('mousedown', (e) => {
+    if (scale <= 1) return;
+    isDragging = true;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    img.style.cursor = 'grabbing';
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    posX += e.clientX - lastX;
+    posY += e.clientY - lastY;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    clampPos();
+    applyTransform();
+  });
+
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+    img.style.cursor = scale > 1 ? 'grab' : 'default';
+  });
+
+  // ── DOUBLE CLICK RESET ──
+  img.addEventListener('dblclick', () => {
+    scale = 1; posX = 0; posY = 0;
+    applyTransform(true);
+    img.style.cursor = 'default';
+  });
+
+  // ── TOUCH PINCH + PAN ──
+  overlay.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2) {
+      lastDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+    } else if (e.touches.length === 1 && scale > 1) {
+      isDragging = true;
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+    }
+    e.preventDefault();
+  }, { passive: false });
+
+  overlay.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 2 && lastDist !== null) {
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      scale = Math.min(Math.max(1, scale * (dist / lastDist)), 6);
+      lastDist = dist;
+      clampPos();
+      applyTransform();
+    } else if (e.touches.length === 1 && isDragging) {
+      posX += e.touches[0].clientX - lastX;
+      posY += e.touches[0].clientY - lastY;
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+      clampPos();
+      applyTransform();
+    }
+    e.preventDefault();
+  }, { passive: false });
+
+  overlay.addEventListener('touchend', (e) => {
+    if (e.touches.length < 2) lastDist = null;
+    if (e.touches.length === 0) isDragging = false;
+  });
+
+  // ── CLOSE ──
+  closeBtn.onclick = () => {
+    overlay.remove();
+    window.onmousemove = null;
+    window.onmouseup = null;
   };
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.remove();
+    }
+  });
 
   overlay.appendChild(closeBtn);
+  overlay.appendChild(hint);
   overlay.appendChild(img);
   document.body.appendChild(overlay);
 }
