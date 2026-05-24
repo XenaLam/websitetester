@@ -872,16 +872,17 @@ grid.innerHTML=
 
 console.log("Fetching:",API_URL);
 
-const response=await fetch(API_URL);
+const response = await fetch(API_URL, {
+  method: "GET",
+  mode: "cors",
+  redirect: "follow"
+});
 
-console.log("Status:",response.status);
-console.log("URL:",response.url);
+const text = await response.text();
 
-const text=await response.text();
+console.log(text);
 
-console.log("Response:",text);
-
-const data=JSON.parse(text);
+const data = JSON.parse(text);
 
 grid.innerHTML='';
 
