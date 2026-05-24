@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <title>Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</title>
+<meta property="og:image" content="https://www.jticketing.com/tickets/gem-kl-26">
+
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',Arial,sans-serif;}
@@ -127,6 +129,8 @@ body{background:#0f0f0f;color:#fff}
 .badge-MY{background:#1a2e1a;color:#4caf50;}
 .badge-SG{background:#1a1a2e;color:#4c8af5;}
 .badge-TH{background:#2e2a1a;color:#f5c04c;}
+.badge-KR{background:#2e2a1a;color:#d322f7;}
+.badge-ID{background:#2e2a1a;color:#e64a4a;}
 
 @media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);padding:0 20px;}}
@@ -161,6 +165,15 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
 .footer-brand{font-size:13px;font-weight:500;color:#555;}
 </style>
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0CNDXRJ252"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0CNDXRJ252');
+</script>
 <body>
 
 <!-- HEADER -->
@@ -179,6 +192,8 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
     <div class="cat" onclick="setCountry('MY',this)">Malaysia</div>
     <div class="cat" onclick="setCountry('SG',this)">Singapore</div>
     <div class="cat" onclick="setCountry('TH',this)">Thailand</div>
+    <div class="cat" onclick="setCountry('KR',this)">Korea</div>
+    <div class="cat" onclick="setCountry('ID',this)">Indonesia</div>
   </div>
 </div>
 
@@ -187,117 +202,18 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
   <div class="section-heading">Events</div>
   <div class="grid">
 
-    <div class="card" data-country="MY" data-title="孙燕姿 stefanie sun yan zi AUT NIHILO yanzi kuala lumpur 25 april unifi arena bukit jalil" onclick="openSheet('yanzi25')">
-      <img src="https://www.jticketing.com/_next/image?url=https%3A%2F%2Fzaonfxpskbeyoutahieb.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fevents%2F%2Fstefanie.png&w=640&q=75">
-      <div class="card-content">
-        <span class="badge badge-MY">MY</span>
-        <div class="title2">孙燕姿 Stefanie Sun</div>
-        <div class="title3">孙燕姿 "AUT NIHILO" — 25 Apr</div>
-        <div class="info">📅 25 April 2026</div>
-        <div class="info">📍 Unifi Arena, Bukit Jalil</div>
-      </div>
-    </div>
-
-    <div class="card" data-country="MY" data-title="孙燕姿 stefanie sun yan zi  AUT NIHILO kuala lumpur 26 april unifi arena bukit jalil" onclick="openSheet('yanzi26')">
-      <img src="https://www.jticketing.com/_next/image?url=https%3A%2F%2Fzaonfxpskbeyoutahieb.supabase.co%2Fstorage%2Fv1%2Fobject%2Fpublic%2Fevents%2F%2Fstefanie.png&w=640&q=75">
-      <div class="card-content">
-        <span class="badge badge-MY">MY</span>
-        <div class="title2">孙燕姿 Stefanie Sun</div>
-        <div class="title3">孙燕姿 "AUT NIHILO" — 26 Apr</div>
-        <div class="info">📅 26 April 2026</div>
-        <div class="info">📍 Unifi Arena, Bukit Jalil</div>
-      </div>
-    </div>
-
-    <div class="card" data-country="SG" data-title="treasure pulse on singapore indoor stadium 3 may" onclick="openSheet('treasuresg')">
-      <img src="treasure.jpg">
-      <div class="card-content">
-        <span class="badge badge-SG">SG</span>
-        <div class="title2">TREASURE 宝石盒</div>
-        <div class="title3">2025–26 TREASURE TOUR [PULSE ON] IN SINGAPORE</div>
-        <div class="info">📅 03 May 2026</div>
-        <div class="info">📍 Singapore Indoor Stadium</div>
-      </div>
-    </div>
-
-    <div class="card" data-country="MY" data-title="apink kuala lumpur mega star arena sungei wang 3 may" onclick="openSheet('apink')">
-      <img src="apink.jpg">
-      <div class="card-content">
-        <span class="badge badge-MY">MY</span>
-        <div class="title2">APINK</div>
-        <div class="title3">APINK 8th CONCERT [The Origin: APINK] in Kuala Lumpur</div>
-        <div class="info">📅 03 May 2026</div>
-        <div class="info">📍 Mega Star Arena, Sungei Wang Plaza</div>
-      </div>
-    </div>
-
-    <div class="card" data-country="SG" data-title="ive world tour show what i am singapore indoor stadium 9 may" onclick="openSheet('ive')">
-      <img src="ive.webp">
-      <div class="card-content">
-        <span class="badge badge-SG">SG</span>
-        <div class="title2">IVE 芙</div>
-        <div class="title3">IVE WORLD TOUR &lt;SHOW WHAT I AM&gt; IN SINGAPORE</div>
-        <div class="info">📅 09 May 2026</div>
-        <div class="info">📍 Singapore Indoor Stadium</div>
-      </div>
-    </div>
-
-    <div class="card" data-country="SG" data-title="ghost xiaogui wang linkai singapore arena expo 15 may" onclick="openSheet('ghostsg')">
-      <img src="ghostsg.webp">
-      <div class="card-content">
-        <span class="badge badge-SG">SG</span>
-        <div class="title2">王琳凯 (小鬼)</div>
-        <div class="title3">小鬼-王琳凯 GHOST THE ASCENDANT TOUR 2026 [魁] 新加坡站</div>
-        <div class="info">📅 15 May 2026</div>
-        <div class="info">📍 ARENA @ EXPO</div>
-      </div>
-    </div>
-
-    <div class="card" data-country="SG" data-title="daniel caesar son of spergy tour singapore indoor stadium 16 17 may" onclick="openSheet('danielsg')">
-      <img src="daniel.jpg">
-      <div class="card-content">
-        <span class="badge badge-SG">SG</span>
-        <div class="title2">Daniel Caesar</div>
-        <div class="title3">Daniel Caesar — Son of Spergy Tour in Singapore</div>
-        <div class="info">📅 16–17 May 2026</div>
-        <div class="info">📍 Singapore Indoor Stadium</div>
-      </div>
-    </div>
-
-    <div class="card" data-country="MY" data-title="ghost xiaogui wang linkai kuala lumpur mega star arena 17 may" onclick="openSheet('ghostmy')">
-      <img src="ghostmy.webp">
-      <div class="card-content">
-        <span class="badge badge-MY">MY</span>
-        <div class="title2">王琳凯 (小鬼)</div>
-        <div class="title3">小鬼-王琳凯 GHOST THE ASCENDANT TOUR 2026 [魁] 吉隆坡站</div>
-        <div class="info">📅 17 May 2026</div>
-        <div class="info">📍 Mega Star Arena, Sungei Wang Plaza</div>
-      </div>
-    </div>
-
-    <div class="card" data-country="SG" data-title="gem deng ziqi gloria singapore national stadium 23 may" onclick="openSheet('gemsg')">
-      <img src="gem.webp">
-      <div class="card-content">
-        <span class="badge badge-SG">SG</span>
-        <div class="title2">邓紫棋 G.E.M</div>
-        <div class="title3">G.E.M. 邓紫棋 I AM GLORIA 世界巡回演唱会2.0 新加坡站</div>
-        <div class="info">📅 23 May 2026</div>
-        <div class="info">📍 Singapore National Stadium</div>
-      </div>
-    </div>
-
-    <div class="card" data-country="MY" data-title="daniel caesar son of spergy tour kuala lumpur idea live arena 25 may" onclick="openSheet('danielmy')">
+    <div class="card" data-country="MY" data-title="daniel caesar son of spergy tour kuala lumpur idea live arena 25 may 2026 malaysia" onclick="openSheet('danielmy')">
       <img src="daniel.jpg">
       <div class="card-content">
         <span class="badge badge-MY">MY</span>
         <div class="title2">Daniel Caesar</div>
         <div class="title3">Daniel Caesar — Son of Spergy Tour in Kuala Lumpur</div>
-        <div class="info">📅 25 May 2026</div>
+        <div class="info">📅 24-26 May 2026</div>
         <div class="info">📍 Idea Live Arena, Kuala Lumpur</div>
       </div>
     </div>
 
-    <div class="card" data-country="MY" data-title="treasure pulse on kuala lumpur unifi arena bukit jalil 30 may" onclick="openSheet('treasuremy')">
+    <div class="card" data-country="MY" data-title="宝石盒 treasure pulse on kuala lumpur unifi arena bukit jalil 30 may 2026 2025-26 malaysia" onclick="openSheet('treasuremy')">
       <img src="treasure.jpg">
       <div class="card-content">
         <span class="badge badge-MY">MY</span>
@@ -308,18 +224,40 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       </div>
     </div>
 
-    <div class="card" data-country="MY" data-title="laufey matter of time tour kuala lumpur unifi arena bukit jalil 2 june" onclick="openSheet('laufey')">
+    <div class="card" data-country="MY" data-title="asia top music festival kuala lumpur malaysia sepang international circuit 30 31 may malaysia" onclick="openSheet('asiatop')">
+      <img src="asiatopmusicfestival.webp">
+      <div class="card-content">
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">Asia Top Music Festival </div>
+        <div class="title3">Asia Top Music Festival 2026 Malaysia</div>
+        <div class="info">📅 30-31 May 2026</div>
+        <div class="info">📍 Sepang International Circuit</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="KR" data-title="korea dxs serenade on stage daegu 30 31 may exco east wing hall 2026" onclick="openSheet('dxs')">
+      <img src="dxs.png">
+      <div class="card-content">
+        <span class="badge badge-KR">KR</span>
+        <div class="title2">DxS </div>
+        <div class="title3">DxS [SERENADE] On Stage - Daegu</div>
+        <div class="info">📅 30-31 May 2026</div>
+        <div class="info">📍 EXCO East Wing Hall</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="MY" data-title="laufey matter of time tour kuala lumpur unifi arena bukit jalil 2 june malaysia 2026" onclick="openSheet('laufey')">
       <img src="laufey.webp">
       <div class="card-content">
         <span class="badge badge-MY">MY</span>
-        <div class="title2">Laufey</div>
+        <div class="title2">Laufey 淋冰</div>
         <div class="title3">Laufey: A Matter of Time Tour</div>
         <div class="info">📅 02 June 2026</div>
         <div class="info">📍 Unifi Arena, Bukit Jalil</div>
       </div>
     </div>
 
-    <div class="card" data-country="SG" data-title="ele yan yanren moment singapore indoor stadium 6 june" onclick="openSheet('yanren')">
+    <div class="card" data-country="SG" data-title="ele yan yanren moment 2026 世界巡回演唱会 新加坡站 singapore indoor stadium 6 june 2026" onclick="openSheet('yanren')">
       <img src="eleyan.webp">
       <div class="card-content">
         <span class="badge badge-SG">SG</span>
@@ -330,7 +268,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       </div>
     </div>
 
-    <div class="card" data-country="MY" data-title="gem deng ziqi gloria kuala lumpur tm national stadium bukit jalil 6 june" onclick="openSheet('gemmy')">
+    <div class="card" data-country="MY" data-title="gem deng ziqi gloria kuala lumpur tm national stadium bukit jalil 6 june 世界巡回演唱会2.0 吉隆坡站 2026 malaysia" onclick="openSheet('gemmy')">
       <img src="gem.webp">
       <div class="card-content">
         <span class="badge badge-MY">MY</span>
@@ -341,29 +279,51 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       </div>
     </div>
 
-    <div class="card" data-country="MY" data-title="lisa live smile always kuala lumpur tm national stadium bukit jalil 7 june" onclick="openSheet('lisa')">
+    <div class="card" data-country="ID" data-title="daying dior 大颖 2026 kampung girl普通人 lotus pond gwk cultural park 6 june indonesia bali 站 世界巡回演唱会 2026" onclick="openSheet('diorbali')">
+      <img src="diorbali.jpg">
+      <div class="card-content">
+        <span class="badge badge-ID">ID</span> 
+        <div class="title2">大颖 Diorlying</div>
+        <div class="title3">Dior 大颖 2026 《Kampung Girl普通人》世界巡回演唱会 【Bali 站】</div>
+        <div class="info">📅 06 June 2026</div>
+        <div class="info">📍 Lotus Pond, GWK Cultural Park</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="MY" data-title="lisa live smile always kuala lumpur tm national stadium bukit jalil 7 june 2026 malaysia" onclick="openSheet('lisa')">
       <img src="lisa.webp">
       <div class="card-content">
         <span class="badge badge-MY">MY</span>
-        <div class="title2">LISA</div>
+        <div class="title2">LISA 织部里沙</div>
         <div class="title3">LISA ASIA TOUR 2026 — LiVE is Smile Always ~15~ KL</div>
         <div class="info">📅 07 June 2026</div>
         <div class="info">📍 TM National Stadium Bukit Jalil, KL</div>
       </div>
     </div>
 
-    <div class="card" data-country="MY" data-title="gareth tong tang lingshan prince nothing genting arena of stars 13 june" onclick="openSheet('gareth')">
+    <div class="card" data-country="KR" data-title="bts world tour arirang in busan asiad main stadium korea  12 june 2026 korea" onclick="openSheet('btskr')">
+      <img src="bts.gif">
+      <div class="card-content">
+        <span class="badge badge-KR">KR</span>
+        <div class="title2">BTS 防弹少年团</div>
+        <div class="title3">BTS WORLD TOUR 'ARIRANG' IN BUSAN</div>
+        <div class="info">📅 12-13 June 2026</div>
+        <div class="info">📍 Busan Asiad Main Stadium</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="MY" data-title="gareth tong tang lingshan prince nothing genting arena of stars 13 june 2026 心零王子 马来西亚 malaysia" onclick="openSheet('gareth')">
       <img src="gareth.webp">
       <div class="card-content">
         <span class="badge badge-MY">MY</span>
         <div class="title2">汤令山 Gareth Tong</div>
-        <div class="title3">Gareth.T — Prince of NotHING 心零王子 马来西亚</div>
+        <div class="title3">Gareth.T — Prince of Nothing 心零王子 马来西亚</div>
         <div class="info">📅 13 June 2026</div>
         <div class="info">📍 Arena of Stars, Genting</div>
       </div>
     </div>
 
-    <div class="card" data-country="SG" data-title="gidle idle syncopation singapore indoor stadium 13 june" onclick="openSheet('idle')">
+    <div class="card" data-country="SG" data-title="女娃 gidle idle syncopation singapore indoor stadium 13 june 2026" onclick="openSheet('idle')">
       <img src="idlesg.jpg">
       <div class="card-content">
         <span class="badge badge-SG">SG</span>
@@ -374,7 +334,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       </div>
     </div>
 
-    <div class="card" data-country="SG" data-title="nmixx zero frontier singapore star theatre 20 june" onclick="openSheet('nmixx')">
+    <div class="card" data-country="SG" data-title="nmixx zero frontier singapore star theatre 20 june 2026" onclick="openSheet('nmixx')">
       <img src="nmixx.jpg">
       <div class="card-content">
         <span class="badge badge-SG">SG</span>
@@ -385,7 +345,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       </div>
     </div>
 
-    <div class="card" data-country="MY" data-title="exo planet exhorizon kuala lumpur national hockey stadium 20 june" onclick="openSheet('exomy')">
+    <div class="card" data-country="MY" data-title="exo planet exhorizon kuala lumpur national hockey stadium 20 june 2026 malaysia" onclick="openSheet('exomy')">
       <img src="exmy.jpg">
       <div class="card-content">
         <span class="badge badge-MY">MY</span>
@@ -396,29 +356,161 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       </div>
     </div>
 
-    <div class="card" data-country="SG" data-title="exo planet exhorizon singapore indoor stadium 26 june" onclick="openSheet('exosg')">
+    <div class="card" data-country="KR" data-title="seventeen 2026 svt 10th fan meeting seventeen in carat land incheon asiad main stadium 20 21 june 2026 korea" onclick="openSheet('seventeen')">
+      <img src="seventeen.gif">
+      <div class="card-content">
+        <span class="badge badge-KR">KR</span>
+        <div class="title2">Seventeen</div>
+        <div class="title3">2026 SVT 10th Fan Meeting [SEVENTEEN in CARAT LAND]</div>
+        <div class="info">📅 20-21 June 2026</div>
+        <div class="info">📍 Incheon Asiad Main Stadium</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="MY" data-title="daying dior 大颖 2026 kampung girl普通人 setia spice arena penang 27 june malaysia penang 站 世界巡回演唱会 2026" onclick="openSheet('diorpenang')">
+      <img src="diorpenang.png">
+      <div class="card-content">
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">大颖 Diorlying</div>
+        <div class="title3">Dior 大颖 2026 《Kampung Girl普通人》世界巡回演唱会 【槟城站】</div>
+        <div class="info">📅 27 June 2026</div>
+        <div class="info">📍 Setia Spice Arena Penang</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="SG" data-title="singapore indoor stadium 张杰 jason zhang 2026 张杰未 live 开往1982 世界巡回演唱会 新加坡站 27 june" onclick="openSheet('zhangjiesg')">
+      <img src="zhangjie.jpg">
+      <div class="card-content">
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">张杰 Jason Zhang</div>
+        <div class="title3">2026 张杰未•LIVE—「开往1982」世界巡回演唱会 – 新加坡站</div>
+        <div class="info">📅 27 June 2026</div>
+        <div class="info">📍 Singapore Indoor Stadium</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="SG" data-title="irene 2026 irene asia tour i-will in singapore 4 july the theatre at mediacorp" onclick="openSheet('irenesg')">
+      <img src="irenesg.jpg">
+      <div class="card-content">
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">IRENE 裴珠泫</div>
+        <div class="title3">2026 IRENE ASIA TOUR [ I-WILL ] in SINGAPORE</div>
+        <div class="info">📅 4 July 2026</div>
+        <div class="info">📍 The Theatre at Mediacorp</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="SG" data-title="nexz global showcase event not typical in singapore capitol theatre 12 june 2026"  onclick="openSheet('nexz')">
+      <img src="nexz.webp">
+      <div class="card-content">
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">NEXZ</div>
+        <div class="title3">NEXZ GLOBAL SHAOWCASE EVENT <Mmchk:Not Typical> in SINGAPORE</div>
+        <div class="info">📅 12 July 2026</div>
+        <div class="info">📍 Capitol Theatre</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="SG" data-title="万物安生时 李健世界巡回演唱会 singapore indoor stadium 17 june 2026"  onclick="openSheet('lijian')">
+      <img src="lijian.jpg">
+      <div class="card-content">
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">李健</div>
+        <div class="title3">“万物安生时“李健世界巡回演唱会</div>
+        <div class="info">📅 17 July 2026</div>
+        <div class="info">📍 Singapore Indoor Stadium</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="SG" data-title="exo planet exhorizon singapore indoor stadium 24 june 2026"  onclick="openSheet('exosg24')">
+      <img src="exosg.webp">
+      <div class="card-content">
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">EXO</div>
+        <div class="title3">EXO PLANET#6-EXhOrizon in SINGAPORE</div>
+        <div class="info">📅 24 July 2026</div>
+        <div class="info">📍 Singapore Indoor Stadium</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="MY" data-title="李克 李克群马来西亚演唱会2026 2026 kuala lumpur 25 26 july 2026 malaysia " onclick="openSheet('hacken')">
+      <img src="hacken.jpg">
+      <div class="card-content">
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">李克勤 Hacken</div>
+        <div class="title3">李克勤马来西亚演唱会2026</div>
+        <div class="info">📅 25-26 July 2026</div>
+        <div class="info">📍 Arena of Stars, Genting</div>
+      </div>
+    </div>  
+
+    <div class="card" data-country="SG" data-title="exo planet exhorizon singapore indoor stadium 26 june 2026" onclick="openSheet('exosg26')">
       <img src="exosg.webp">
       <div class="card-content">
         <span class="badge badge-SG">SG</span>
         <div class="title2">EXO</div>
         <div class="title3">EXO PLANET #6 — EXhOrizon in SINGAPORE</div>
-        <div class="info">📅 26 June 2026</div>
+        <div class="info">📅 26 July 2026</div>
         <div class="info">📍 Singapore Indoor Stadium</div>
       </div>
     </div>
 
-    <div class="card" data-country="MY" data-title="post malone big stadium world tour kuala lumpur tm national stadium bukit jalil 27 september" onclick="openSheet('post')">
+    <div class="card" data-country="SG" data-title="exo planet exhorizon singapore indoor stadium 26 june 2026" onclick="openSheet('dogsg')">
+      <img src="dog.jpg">
+      <div class="card-content">
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">二狗</div>
+        <div class="title3">一条名叫爱情的狗 A DOG NAMED LOVE</div>
+        <div class="info">📅 30-31 July 2026</div>
+        <div class="info">📍 UCC Ho Bee Auditorium, NUS</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="MY" data-title="草蜢 草蜢演唱会 2026 马来西亚站 malaysia unifi arena bukit jalil 29 august 2026 kuala lumpur" onclick="openSheet('grasshopper')">
+      <img src="grasshopper.jpg">
+      <div class="card-content">
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">草蜢 Grasshopper</div>
+        <div class="title3">草蜢演唱会 2026-马来西亚站</div>
+        <div class="info">📅 29 August 2026</div>
+        <div class="info">📍 Unifi Arena, Bukit Jalil</div>
+      </div>
+    </div>  
+
+    <div class="card" data-country="MY" data-title="郭富城 aaron kwok iconic 世界巡回演唱会 马来西亚站 malaysia unifi arena bukit jalil 12 september 2026 kuala lumpur" onclick="openSheet('aaronkwok')">
+      <img src="aaronkwok.jpg">
+      <div class="card-content">
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">郭富城 Aaron Kwok</div>
+        <div class="title3">郭富城 《ICONIC世界巡回演唱会-马来西亚站》</div>
+        <div class="info">📅 12 September 2026</div>
+        <div class="info">📍 Unifi Arena, Bukit Jalil</div>
+      </div>
+    </div>  
+
+    <div class="card" data-country="MY" data-title="post malone big stadium world tour kuala lumpur tm national stadium bukit jalil 27 september 2026 malaysia" onclick="openSheet('post')">
       <img src="post.jpg">
       <div class="card-content">
         <span class="badge badge-MY">MY</span>
-        <div class="title2">Post Malone</div>
+        <div class="title2">Post Malone 马龙</div>
         <div class="title3">Post Malone — The BIG Stadium World Tour</div>
         <div class="info">📅 27 September 2026</div>
         <div class="info">📍 TM National Stadium Bukit Jalil, KL</div>
       </div>
     </div>
 
-    <div class="card" data-country="MY" data-title="my chemical romance mcr south east asia kuala lumpur tm national stadium bukit jalil 19 20 november" onclick="openSheet('chemical')">
+    <div class="card" data-country="MY" data-title="the weeknd after hours till dawn tour 4 november 2026 tm national stadium bukit jalil kl kuala lumpur malaysia" onclick="openSheet('weeknd')">
+      <img src="weeknd.png">
+      <div class="card-content">
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">The Weeknd</div>
+        <div class="title3">The Weeknd: After Hours Till Dawn Tour</div>
+        <div class="info">📅 4 November 2026</div>
+        <div class="info">📍 TM National Stadium Bukit Jalil, KL</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="MY" data-title="my chemical romance mcr south east asia kuala lumpur tm national stadium bukit jalil 19 20 november 2026 malaysia" onclick="openSheet('chemical')">
       <img src="chemical.webp">
       <div class="card-content">
         <span class="badge badge-MY">MY</span>
@@ -429,7 +521,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       </div>
     </div>
 
-    <div class="card" data-country="TH" data-title="tomorrowland thailand wisdom valley 11 12 13 december" onclick="openSheet('tomorrow')">
+    <div class="card" data-country="TH" data-title="tomorrowland thailand wisdom valley 11 12 13 december 2026" onclick="openSheet('tomorrow')">
       <img src="tomorrowland.jpg">
       <div class="card-content">
         <span class="badge badge-TH">TH</span>
@@ -440,17 +532,51 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       </div>
     </div>
 
-    <div class="card" data-country="TH" data-title="tomorrowland thailand wisdom valley 11 12 13 december" onclick="openSheet('test')">
-      <img src="tomorrowland.jpg">
+    <div class="card" data-country="MY" data-title="bts WORLD TOUR ARIRANG IN kuala lumpur bts 防弹少年团 singapore sg tm national stadium bukit jalil kuala lumpur malaysia 12 13 december 2026" onclick="openSheet('btsmy')">
+      <img src="bts.gif">
       <div class="card-content">
-        <span class="badge badge-TH">TH</span>
-        <div class="title2">TOMORROWLAND</div>
-        <div class="title3">Tomorrowland Thailand — WISDOM VALLEY</div>
-        <div class="info">📅 11–13 December 2026</div>
-        <div class="info">📍 Wisdom Valley, Thailand</div>
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">BTS 防弹少年团</div>
+        <div class="title3">BTS WORLD TOUR 'ARIRANG' IN KUALA LUMPUR</div>
+        <div class="info">📅 12-13 December 2026</div>
+        <div class="info">📍 TM National Stadium Bukit Jalil, KL</div>
       </div>
     </div>
 
+    <div class="card" data-country="SG" data-title="bts WORLD TOUR ARIRANG IN singapore bts 防弹少年团 singapore sg national stadium singapore 17 19 20 22 december 2026" onclick="openSheet('btssg')">
+      <img src="bts.gif">
+      <div class="card-content">
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">BTS 防弹少年团</div>
+        <div class="title3">BTS WORLD TOUR 'ARIRANG' IN SINGAPORE</div>
+        <div class="info">📅 17,19-20,22 December 2026</div>
+        <div class="info">📍 National Stadium, Singapore</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="SG" data-title="周杰伦 jay chou jay carnival ii world tour 2027 in singapore singapore national stadium 8 9 10 january 晴天 新加坡 嘉年华 ii 2027 周杰伦世界巡回演唱会" onclick="openSheet('jaychousg')">
+      <img src="jaychousg.jpg">
+      <div class="card-content">
+        <span class="badge badge-SG">SG</span>
+        <div class="title2">周杰伦 Jay Chou</div>
+        <div class="title3">Jay Chou "Carnival II" World Tour 2027 in Singapore </div>
+        <div class="title3">「晴天 新加坡 嘉年华 II」2027 周杰伦世界巡回演唱会</div>
+        <div class="info">📅 8-10 January 2027</div>
+        <div class="info">📍 Singapore National Stadium</div>
+      </div>
+    </div>
+
+    <div class="card" data-country="MY" data-title="23 january 2027 周杰伦 jay chou jay carnival ii world tour 2027 in malaysia tm national stadium bukit jalil kl kuala lumpur malaysia 晴天 马来西亚 嘉年华 ii 2027 周杰伦世界巡回演唱会" onclick="openSheet('jaychoumy')">
+      <img src="jaychoumy.jpeg">
+      <div class="card-content">
+        <span class="badge badge-MY">MY</span>
+        <div class="title2">周杰伦 Jay Chou</div>
+        <div class="title3">Jay Chou "Carnival II" World Tour 2027 in Malaysia </div>
+        <div class="title3">「晴天 马来西亚 嘉年华 II」2027 周杰伦世界巡回演唱会</div>
+        <div class="info">📅 23 January 2027</div>
+        <div class="info">📍 TM National Stadium Bukit Jalil, KL</div>
+      </div>
+    </div>
 
   </div>
 </div>
@@ -555,7 +681,10 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       <div style="background:#111;padding:24px;border-radius:12px;border:1px solid #1c1c1c;display:flex;flex-direction:column;gap:10px;">
         <div style="font-size:16px;font-weight:500;">💬 WhatsApp Support</div>
         <div style="color:#555;font-size:13px;">+60 16-642 8520</div>
-        <a href="https://wa.me/60166428520" target="_blank" style="margin-top:8px;display:inline-block;background:#25D366;color:#000;padding:11px 20px;border-radius:8px;font-weight:600;text-decoration:none;font-size:14px;width:fit-content;">Chat Now</a>
+        <a href="https://wa.me/60166428520" target="_blank" style="margin-top:8px;display:inline-block;background:#25D366;color:#000;padding:11px 20px;border-radius:8px;font-weight:600;text-decoration:none;font-size:14px;width:fit-content;" onclick="gtag('event', 'whatsapp_click', {
+  event_category: 'contact',
+  event_label: 'main_whatsapp'
+});">Chat Now</a>
       </div>
     </div>
 
@@ -564,29 +693,108 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
 
 <script>
 const sheetData = {
-  yanzi25:{label:"孙燕姿 Stefanie Sun (25 Apr)",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1700757657&single=true"},
-  yanzi26:{label:"孙燕姿 Stefanie Sun (26 Apr)",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1623939774&single=true"},
-  treasuresg:{label:"TREASURE 宝石盒 — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1792413735&single=true"},
-  apink:{label:"APINK — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=874010043&single=true"},
-  ive:{label:"IVE 芙 — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1872894113&single=true"},
-  ghostsg:{label:"王琳凯 小鬼 — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=346757515&single=true"},
-  danielsg:{label:"Daniel Caesar — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=346757515&single=true"},
-  ghostmy:{label:"王琳凯 小鬼 — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=944199940&single=true"},
   gemsg:{label:"邓紫棋 G.E.M — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1400963097&single=true"},
   danielmy:{label:"Daniel Caesar — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=2035149464&single=true"},
   treasuremy:{label:"TREASURE 宝石盒 — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1635144197&single=true"},
-  laufey:{label:"Laufey — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1817011281&single=true"},
+  laufey:{label:"Laufey 淋冰 — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1817011281&single=true"},
   yanren:{label:"颜人中 Ele Yan — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1251571219&single=true"},
   gemmy:{label:"邓紫棋 G.E.M — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=448258580&single=true"},
-  lisa:{label:"LISA — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=523619804&single=true"},
+  lisa:{label:"LISA 织部里沙 — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=523619804&single=true"},
   gareth:{label:"汤令山 Gareth Tong — Genting",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=739406462&single=true"},
   idle:{label:"(G)I-DLE 女娃 — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=2044995919&single=true"},
   nmixx:{label:"NMIXX — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1162156115&single=true"},
   exomy:{label:"EXO — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=64007859&single=true"},
-  exosg:{label:"EXO — Singapore",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=566113631&single=true"},
-  post:{label:"Post Malone — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=494980325&single=true"},
-  chemical:{label:"My Chemical Romance — KL",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=892561140&single=true"},
+ exosg26: {
+    label: "EXO - Singapore (26 July) ",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1763269164&single=true"
+  },
+  exosg24: {
+    label: "EXO - Singapore (24 July)",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=566113631&single=true"
+  },
+  post:{label:"Post Malone 马龙 — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=494980325&single=true"},
+  chemical:{label:"My Chemical Romance — Kuala Lumpur",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=892561140&single=true"},
   tomorrow:{label:"TOMORROWLAND — Thailand",url:"https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1966464514&single=true"},
+  asiatop: {
+    label: "Asia Top Music Festival Malaysia",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1236745277&single=true"
+  },
+  btskr: {
+    label: "BTS 防弹少年团 - Busan",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=109392331&single=true"
+  },
+  diorbali: {
+    label: "大颖 Diorlying - Bali",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1051355674&single=true"
+  },
+  dxs: {
+    label: "DxS - Daegu (30 - 31 May)",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1648988165&single=true"
+  },
+  zhangjiesg: {
+    label: "张杰 Jason Zhang - Singapore",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=971173033&single=true"
+  },
+  irenesg: {
+    label: "IRENE 裴珠泫 - Singapore",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1035309690&single=true"
+  },
+  jaychousg: {
+    label: "周杰伦 Jay Chou - Singapore",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=2105050939&single=true"
+  },
+  jaychoumy: {
+    label: "周杰伦 Jay Chou - Malaysia",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=296793438&single=true"
+  },
+  diorpenang: {
+    label: "大颖 Diorlying - Penang",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=2047857726&single=true"
+  },
+  aaronkwok: {
+    label: "郭富城 Aaron Kwok - Kuala Lumpur",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=778557331&single=true"
+  },
+  weeknd: {
+    label: "The Weeknd - Kuala Lumpur",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1293173811&single=true"
+  },
+  lijian: {
+    label: "李健 - Singapore",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1545490868&single=true"
+  },
+  nexz: {
+    label: "NEXZ - Singapore",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1972399845&single=true"
+  },
+  grasshopper: {
+    label: "草蜢 Grasshopper - Malaysia",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1195979776&single=true"
+  },
+  hacken: {
+    label: "李克勤 Hacken - Malaysia",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1944691857&single=true"
+  },
+  seventeen: {
+    label: "Seventeen - Incheon",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=582598894&single=true"
+  },
+  btsmy: {
+    label: "BTS 防弹少年团 - Malaysia",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1724669723&single=true"
+  },
+  btssg: {
+    label: "BTS 防弹少年团 - Singapore",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=1120015208&single=true"
+  },
+  dogsg: {
+    label: "二狗 - Singapore",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSwhwtuuz2YMdy47PyqWi3uLbGPzOgHdYYrjcNbcK32GUnbP-93zq-DrQD9vORPWkkijY40V6IA-sAs/pubhtml?gid=113657673&single=true"
+  },
+  a: {
+    label: "a",
+    url: "a"
+  },
   test:{label:"test",folder:"1pDNWRAhPlC6tpCq2UpJ0qo6a7PTaz8hY"}
 };
 
@@ -710,6 +918,10 @@ async function loadFolderPhotos(folderId, label) {
   }
 }
 function openSheet(key) {
+  gtag('event', 'event_open', {
+  event_category: 'concert',
+  event_label: key
+});
   const data = sheetData[key];
   if (!data) return;
 
