@@ -833,6 +833,7 @@ function renderEvent(event) {
   content.appendChild(descEl);
 
   if (date) {
+    console.log("Adding date");
     const dateEl = document.createElement("div");
     dateEl.className = "info";
     dateEl.textContent = `📅 ${date}`;
@@ -840,6 +841,7 @@ function renderEvent(event) {
   }
 
   if (venue) {
+    console.log("Adding venue");
     const venueEl = document.createElement("div");
     venueEl.className = "info";
     venueEl.textContent = `📍 ${venue}`;
