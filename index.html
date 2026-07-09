@@ -828,18 +828,23 @@ function renderEvent(event) {
   descEl.className = "title3";
   descEl.textContent = description;
 
-  if (date)
-    content.insertAdjacentHTML("beforeend", `<div class="info">📅 ${date}</div>`);
-
-if (venue)
-    content.insertAdjacentHTML("beforeend", `<div class="info">📍 ${venue}</div>`);
-
-
   content.appendChild(badge);
   content.appendChild(titleEl);
   content.appendChild(descEl);
-  content.appendChild(dateEl);
-  content.appendChild(venueEl);
+
+  if (date) {
+    const dateEl = document.createElement("div");
+    dateEl.className = "info";
+    dateEl.textContent = `📅 ${date}`;
+    content.appendChild(dateEl);
+  }
+
+  if (venue) {
+    const venueEl = document.createElement("div");
+    venueEl.className = "info";
+    venueEl.textContent = `📍 ${venue}`;
+    content.appendChild(venueEl);
+  }
 
   card.appendChild(img);
   card.appendChild(content);
