@@ -131,6 +131,9 @@ body{background:#0f0f0f;color:#fff}
 .badge-TH{background:#2e2a1a;color:#f5c04c;}
 .badge-KR{background:#2e2a1a;color:#d322f7;}
 .badge-ID{background:#2e2a1a;color:#e64a4a;}
+.badge-PH{background:#2e2a1a;color:#e8e8e8;}
+.badge-FR{background:#2e2a1a;color:#04fad1;}
+.badge-HK{background:#2e2a1a;color:#ff0000;}
 
 @media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);padding:0 20px;}}
@@ -194,6 +197,9 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
     <div class="cat" onclick="setCountry('TH',this)">Thailand</div>
     <div class="cat" onclick="setCountry('KR',this)">Korea</div>
     <div class="cat" onclick="setCountry('ID',this)">Indonesia</div>
+    <div class="cat" onclick="setCountry('PH',this)">Philippines</div>
+    <div class="cat" onclick="setCountry('FR',this)">France</div>
+    <div class="cat" onclick="setCountry('HK',this)">Hong Kong</div>
   </div>
 </div>
 
@@ -744,7 +750,9 @@ function normalizeCountry(country) {
     THAILAND: "TH",
     KOREA: "KR",
     "SOUTH KOREA": "KR",
-    INDONESIA: "ID"
+    INDONESIA: "ID",
+    France: "FR",
+    PHILIPPINES: "PH",
   };
 
   return countryMap[upper] || upper;
