@@ -339,7 +339,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
 const API_URL =
 "https://script.google.com/macros/s/AKfycbyFuh-_5l0A5XNOKQyepSYQkr8l6d9Ap7fXtEgwnZoghj8KT4GxSWZRv0gZSUDvKLM/exec";
 
-const CARD_IMAGE_FOLDER = "https://drive.google.com/drive/folders/14f7DQ0_NgqwWsWodjsYPQPM2Frsz89YG?usp=drive_link";
+const CARD_IMAGE_FOLDER = "14f7DQ0_NgqwWsWodjsYPQPM2Frsz89YG";
 
 let sheetData={};
 
@@ -833,11 +833,12 @@ function renderEvent(event) {
   ].filter(Boolean).join(" ").toLowerCase();
   card.onclick = () => openEventSheet(sheet, label);
 
-  const img = document.createElement("img");
-  img.src = image;
+ const img = document.createElement("img");
   img.alt = title;
   img.loading = "lazy";
 
+  img.src = imageMap[image] || "placeholder.jpg";
+  
   const content = document.createElement("div");
   content.className = "card-content";
 
