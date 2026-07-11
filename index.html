@@ -1032,8 +1032,7 @@ async function loadCardImages() {
     );
 
     const url =
-        `https://www.googleapis.com/drive/v3/files` +
-        `?q=${query}` +
+        `https://www.googleapis.com/drive/v3/files?q=${query}` +
         `&key=${DRIVE_API_KEY}` +
         `&fields=files(id,name)` +
         `&pageSize=1000`;
@@ -1041,14 +1040,16 @@ async function loadCardImages() {
     const res = await fetch(url);
     const data = await res.json();
 
-    data.files.forEach(file => {
+    console.log(data);
 
+    data.files.forEach(file => {
         imageMap[file.name.toLowerCase()] =
             `https://lh3.googleusercontent.com/d/${file.id}`;
-
     });
 
+    console.log(imageMap);
 }
+
 </script>
 </body>
 </html>
