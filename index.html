@@ -340,6 +340,7 @@ const API_URL =
 "https://script.google.com/macros/s/AKfycbyFuh-_5l0A5XNOKQyepSYQkr8l6d9Ap7fXtEgwnZoghj8KT4GxSWZRv0gZSUDvKLM/exec";
 
 const CARD_IMAGE_FOLDER = "14f7DQ0_NgqwWsWodjsYPQPM2Frsz89YG";
+const imageMap = {};
 
 let sheetData={};
 
@@ -838,7 +839,7 @@ function renderEvent(event) {
   img.loading = "lazy";
 
   img.src = imageMap[image] || "placeholder.jpg";
-  
+
   const content = document.createElement("div");
   content.className = "card-content";
 
@@ -1023,6 +1024,30 @@ async function getCardImage(filename) {
   }
 
   return "placeholder.jpg";
+}
+async function loadCardImages() {
+
+    const query = encodeURIComponent(
+        `'${CARD_IMAGE_FOLDER}' in parents and mimeType contains 'image/' and trashed=false`
+    );
+
+    const url =
+        `https://www.googleapis.com/drive/v3/files` +
+        `?q=${query}` +
+        `&key=${DRIVE_API_KEY}` +
+        `&fields=files(id,name)` +
+        `&pageSize=1000`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    data.files.forEach(file => {
+
+        imageMap[file.name.toLowerCase()] =
+            `https://lh3.googleusercontent.com/d/${file.id}`;
+
+    });
+
 }
 </script>
 </body>
