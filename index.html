@@ -134,6 +134,12 @@ body{background:#0f0f0f;color:#fff}
 .badge-PH{background:#2e2a1a;color:#e8e8e8;}
 .badge-FR{background:#2e2a1a;color:#04fad1;}
 .badge-HK{background:#2e2a1a;color:#ff0000;}
+.badge-Rent{background:#2e2a1a;color:#444343;}
+.badge-Currency{background:#2e2a1a;color:#d0f309;}
+.badge-Genting{background:#2e2a1a;color:#00b7ff;}
+.badge-AU{background:#2e2a1a;color:#5eff00;}
+.badge-US{background:#2e2a1a;color:#8400ff;}
+.badge-MO{background:#2e2a1a;color:#01743a;}
 
 @media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);padding:0 20px;}}
@@ -200,12 +206,15 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
     <div class="cat" onclick="setCountry('PH',this)">Philippines</div>
     <div class="cat" onclick="setCountry('FR',this)">France</div>
     <div class="cat" onclick="setCountry('HK',this)">Hong Kong</div>
+    <div class="cat" onclick="setCountry('AU',this)">Australia</div>
+    <div class="cat" onclick="setCountry('US',this)">United States</div>
+    <div class="cat" onclick="setCountry('MO',this)">Macau</div>
   </div>
 
   <div class="country-row">
-    <div class="cat">Rent Phone</div>
-    <div class="cat">Currency Exchange</div>
-    <div class="cat">Genting Concert Tickets</div>
+    <div class="cat" onclick="setCountry('Rent',this)">Rent Phone</div>
+    <div class="cat" onclick="setCountry('Currency',this)">Currency Exchange</div>
+    <div class="cat" onclick="setCountry('Genting',this)">Genting Concert Tickets</div>
   </div>
 </div>
 
@@ -329,6 +338,8 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
 <script>
 const API_URL =
 "https://script.google.com/macros/s/AKfycbyFuh-_5l0A5XNOKQyepSYQkr8l6d9Ap7fXtEgwnZoghj8KT4GxSWZRv0gZSUDvKLM/exec";
+
+const CARD_IMAGE_FOLDER = "https://drive.google.com/drive/folders/14f7DQ0_NgqwWsWodjsYPQPM2Frsz89YG?usp=drive_link";
 
 let sheetData={};
 
@@ -558,7 +569,14 @@ function openImageZoom(src) {
   setTimeout(() => hint.style.opacity = '0', 2500);
 
   const img = document.createElement("img");
-  img.src = src;
+  img.alt = title;
+  img.loading = "lazy";
+
+  img.src = "placeholder.jpg"; // optional loading image
+
+  getCardImage(image).then(url => {
+      img.src = url;
+  });
   img.style.cssText = `
     max-width:90vw;max-height:90vh;
     cursor:grab;user-select:none;-webkit-user-drag:none;
@@ -759,6 +777,13 @@ function normalizeCountry(country) {
     INDONESIA: "ID",
     France: "FR",
     PHILIPPINES: "PH",
+    "Hong Kong": "HK",
+    "Rent Phone": "Rent",
+    "Currency Exchange": "Currency",
+    "Genting Concert Tickets": "Genting",
+    AUSTRALIA: "AU",
+    "United States of America": "US",
+    MACAU: "MO",
   };
 
   return countryMap[upper] || upper;
@@ -833,7 +858,6 @@ function renderEvent(event) {
   content.appendChild(descEl);
 
   if (date) {
-    console.log("Adding date");
     const dateEl = document.createElement("div");
     dateEl.className = "info";
     dateEl.textContent = `📅 ${date}`;
@@ -841,7 +865,6 @@ function renderEvent(event) {
   }
 
   if (venue) {
-    console.log("Adding venue");
     const venueEl = document.createElement("div");
     venueEl.className = "info";
     venueEl.textContent = `📍 ${venue}`;
@@ -947,6 +970,59 @@ ${err}
 }
 
 loadEvents();
+
+data.forEach(event => {
+    sheetData[event.id] = {
+        label: event.label,
+        url: event.sheet
+    };
+
+    grid.appendChild(renderEvent(event));
+});
+
+updateFilterButtons();
+applyFilters();
+function updateFilterButtons() {
+    const available = new Set();
+
+    document.querySelectorAll(".card").forEach(card => {
+        available.add(card.dataset.country);
+    });
+
+    document.querySelectorAll(".cat").forEach(btn => {
+        const value = btn.getAttribute("onclick")
+            ?.match(/'([^']+)'/)?.[1];
+
+        if (!value || value === "all") return;
+
+        btn.style.display = available.has(value) ? "" : "none";
+    });
+}
+async function getCardImage(filename) {
+  try {
+    const query = encodeURIComponent(
+      `'${CARD_IMAGE_FOLDER}' in parents and name='${filename}' and trashed=false`
+    );
+
+    const url =
+      `https://www.googleapis.com/drive/v3/files` +
+      `?q=${query}` +
+      `&key=${DRIVE_API_KEY}` +
+      `&fields=files(id)` +
+      `&pageSize=1`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.files && data.files.length > 0) {
+      return `https://lh3.googleusercontent.com/d/${data.files[0].id}`;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+
+  return "placeholder.jpg";
+}
 </script>
 </body>
 </html>
