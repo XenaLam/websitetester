@@ -978,6 +978,18 @@ ${err}
 
 }
 
+const response = await fetch(API_URL, {
+  method: "GET",
+  mode: "cors",
+  redirect: "follow"
+});
+
+const text = await response.text();
+console.log("RAW API RESPONSE:", text);   // ← add this, check it's real JSON
+
+const data = JSON.parse(text);
+console.log("PARSED EVENTS:", data);
+
 }
 
 function updateFilterButtons() {
