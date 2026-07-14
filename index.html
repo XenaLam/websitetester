@@ -906,6 +906,8 @@ function getApiErrorMessage(text) {
 
 async function loadEvents(){
 
+ await loadCardImages();
+
 const grid=document.getElementById("eventsGrid");
 
 if(!grid)return;
@@ -971,19 +973,6 @@ ${err}
 
 }
 
-loadEvents();
-
-data.forEach(event => {
-    sheetData[event.id] = {
-        label: event.label,
-        url: event.sheet
-    };
-
-    grid.appendChild(renderEvent(event));
-});
-
-updateFilterButtons();
-applyFilters();
 function updateFilterButtons() {
     const available = new Set();
 
