@@ -838,7 +838,7 @@ function renderEvent(event) {
   img.alt = title;
   img.loading = "lazy";
 
-  img.src = imageMap[image] || "placeholder.jpg";
+  img.src = imageMap[image.toLowerCase()] || "no-image.png";
 
   const content = document.createElement("div");
   content.className = "card-content";
