@@ -834,18 +834,11 @@ function renderEvent(event) {
   ].filter(Boolean).join(" ").toLowerCase();
   card.onclick = () => openEventSheet(sheet, label);
 
-  const img = document.createElement("img");
+ const img = document.createElement("img");
   img.alt = title;
   img.loading = "lazy";
 
-  const key = (image || "").trim().toLowerCase();
-  const resolvedSrc = imageMap[key];
-
-  if (!resolvedSrc) {
-    console.warn(`No image match for "${image}" (looked up key: "${key}")`);
-  }
-
-  img.src = resolvedSrc || "no-image.png";
+  img.src = imageMap[image.toLowerCase()] || "no-image.png";
 
   const content = document.createElement("div");
   content.className = "card-content";
@@ -977,18 +970,6 @@ ${err}
 `;
 
 }
-
-const response = await fetch(API_URL, {
-  method: "GET",
-  mode: "cors",
-  redirect: "follow"
-});
-
-const text = await response.text();
-console.log("RAW API RESPONSE:", text);   // ← add this, check it's real JSON
-
-const data = JSON.parse(text);
-console.log("PARSED EVENTS:", data);
 
 }
 
