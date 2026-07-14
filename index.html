@@ -838,7 +838,8 @@ function renderEvent(event) {
   img.alt = title;
   img.loading = "lazy";
 
-  img.src = imageMap[image.toLowerCase()] || "no-image.png";
+  const key = (image || "").trim().toLowerCase();
+img.src = imageMap[key] || "placeholder.jpg";
 
   const content = document.createElement("div");
   content.className = "card-content";
@@ -905,6 +906,7 @@ function getApiErrorMessage(text) {
 }
 
 async function loadEvents(){
+  await loadCardImages(); 
 
 const grid=document.getElementById("eventsGrid");
 
@@ -973,17 +975,6 @@ ${err}
 
 loadEvents();
 
-data.forEach(event => {
-    sheetData[event.id] = {
-        label: event.label,
-        url: event.sheet
-    };
-
-    grid.appendChild(renderEvent(event));
-});
-
-updateFilterButtons();
-applyFilters();
 function updateFilterButtons() {
     const available = new Set();
 
