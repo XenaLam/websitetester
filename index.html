@@ -838,7 +838,18 @@ function renderEvent(event) {
   img.alt = title;
   img.loading = "lazy";
 
-  img.src = imageMap[image.toLowerCase()] || "no-image.png";
+  const img = document.createElement("img");
+  img.alt = title;
+  img.loading = "lazy";
+
+  const key = (image || "").trim().toLowerCase();
+  const resolvedSrc = imageMap[key];
+
+  if (!resolvedSrc) {
+    console.warn(`No image match for "${image}" (looked up key: "${key}")`);
+  }
+
+  img.src = resolvedSrc || "no-image.png";
 
   const content = document.createElement("div");
   content.className = "card-content";
@@ -1015,28 +1026,40 @@ async function getCardImage(filename) {
   return "placeholder.jpg";
 }
 async function loadCardImages() {
-
+  try {
     const query = encodeURIComponent(
-        `'${CARD_IMAGE_FOLDER}' in parents and mimeType contains 'image/' and trashed=false`
+      `'${CARD_IMAGE_FOLDER}' in parents and mimeType contains 'image/' and trashed=false`
     );
-
     const url =
-        `https://www.googleapis.com/drive/v3/files?q=${query}` +
-        `&key=${DRIVE_API_KEY}` +
-        `&fields=files(id,name)` +
-        `&pageSize=1000`;
+      `https://www.googleapis.com/drive/v3/files?q=${query}` +
+      `&key=${DRIVE_API_KEY}` +
+      `&fields=files(id,name)` +
+      `&pageSize=1000`;
 
     const res = await fetch(url);
     const data = await res.json();
 
-    console.log(data);
+    console.log("Card image folder response:", data);
+
+    if (data.error) {
+      console.error("Drive API error:", data.error.message);
+      return;
+    }
+    if (!data.files) {
+      console.warn("No files array in response");
+      return;
+    }
 
     data.files.forEach(file => {
-        imageMap[file.name.toLowerCase()] =
-            `https://lh3.googleusercontent.com/d/${file.id}`;
+      imageMap[file.name.toLowerCase()] =
+        `https://lh3.googleusercontent.com/d/${file.id}`;
     });
 
-    console.log(imageMap);
+    console.log("imageMap built:", imageMap);
+  } catch (e) {
+    console.error("loadCardImages failed:", e);
+    // don't rethrow — let event loading continue with fallback images
+  }
 }
 
 </script>
