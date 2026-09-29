@@ -50,7 +50,7 @@ body{background:#0f0f0f;color:#fff}
 .service-page{min-height:calc(100vh - 53px);display:flex;align-items:center;padding:48px 40px;background:#101010;}
 .service-page.hidden{display:none;}
 .service-inner{width:min(100%,1040px);margin:0 auto;}
-.service-kicker{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#555;margin-bottom:14px;}
+.service-kicker{font-size:14px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#808080;margin-bottom:14px;}
 .service-title{font-size:32px;font-weight:600;margin-bottom:30px;}
 .service-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
 .service-option{min-height:220px;padding:24px;background:#111;border:1px solid #292929;border-radius:8px;color:#fff;text-align:left;cursor:pointer;transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;font:inherit;display:flex;flex-direction:column;justify-content:space-between;}
@@ -235,7 +235,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
     <h1 class="service-title">Choose a ticket option</h1>
     <div class="service-options">
       <button class="service-option htb" type="button" onclick="openService('htb')">
-        <span class="service-option-type">HTB</span>
+        <span class="service-option-type">Need help getting tickets?</span>
         <span class="service-option-label">Help to Buy</span>
         <span class="service-option-bottom">
           <span class="service-option-count" id="htb-count">Loading listings</span>
@@ -243,7 +243,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
         </span>
       </button>
       <button class="service-option ready" type="button" onclick="openService('ready')">
-        <span class="service-option-type">Ready</span>
+        <span class="service-option-type">Tickets ready to purchase</span>
         <span class="service-option-label">Ready Stock</span>
         <span class="service-option-bottom">
           <span class="service-option-count" id="ready-count">Loading listings</span>
