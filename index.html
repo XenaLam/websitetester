@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://www.googleapis.com">
+<link rel="preconnect" href="https://lh3.googleusercontent.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <title>Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</title>
 <meta property="og:image" content="https://www.jticketing.com/tickets/gem-kl-26">
@@ -41,6 +46,34 @@ body{background:#0f0f0f;color:#fff}
   border:none;
 }
 .about-btn:hover{background:#e63946;color:#fff;}
+
+.service-page{min-height:calc(100vh - 53px);display:flex;align-items:center;padding:48px 40px;background:#101010;}
+.service-page.hidden{display:none;}
+.service-inner{width:min(100%,1040px);margin:0 auto;}
+.service-kicker{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#555;margin-bottom:14px;}
+.service-title{font-size:32px;font-weight:600;margin-bottom:30px;}
+.service-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.service-option{min-height:220px;padding:24px;background:#111;border:1px solid #292929;border-radius:8px;color:#fff;text-align:left;cursor:pointer;transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;font:inherit;display:flex;flex-direction:column;justify-content:space-between;}
+.service-option.htb{border-top:3px solid #e63946;}
+.service-option.ready{border-top:3px solid #4caf50;}
+.service-option:hover{transform:translateY(-3px);background:#171717;box-shadow:0 12px 24px rgba(0,0,0,.22);}
+.service-option.htb:hover{border-color:#e63946;}
+.service-option.ready:hover{border-color:#4caf50;}
+.service-option:focus-visible{outline:2px solid #fff;outline-offset:3px;}
+.service-option-type{display:block;font-size:11px;font-weight:600;color:#777;letter-spacing:2px;text-transform:uppercase;}
+.service-option-label{display:block;font-size:23px;font-weight:600;margin-top:8px;}
+.service-option-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.service-option-count{font-size:13px;color:#8a8a8a;}
+.service-option-arrow{width:36px;height:36px;border:1px solid #3a3a3a;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:15px;color:#fff;transition:background .2s ease,border-color .2s ease;}
+.service-option.htb:hover .service-option-arrow{background:#e63946;border-color:#e63946;}
+.service-option.ready:hover .service-option-arrow{background:#4caf50;border-color:#4caf50;}
+.catalog-shell{display:none;}
+.catalog-shell.open{display:block;}
+.catalog-bar{display:flex;align-items:center;gap:14px;padding:12px clamp(16px,6vw,140px);background:#0f0f0f;border-bottom:1px solid #222;}
+.catalog-label{font-size:14px;font-weight:600;}
+.catalog-back{min-height:42px;padding:10px 16px;background:#e63946;border:1px solid #e63946;border-radius:6px;color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s ease,border-color .2s ease;}
+.catalog-back:hover{background:#ca2f3b;border-color:#ca2f3b;}
+.catalog-back:focus-visible{outline:2px solid #fff;outline-offset:3px;}
 
 .filter-section{
   background:#141414;
@@ -106,9 +139,11 @@ body{background:#0f0f0f;color:#fff}
   transition:transform 0.25s ease,border-color 0.25s ease;
   cursor:pointer;
   border:1px solid #1c1c1c;
+  content-visibility:auto;
+  contain-intrinsic-size:auto 320px;
 }
 .card:hover{transform:translateY(-4px);border-color:#333;}
-.card img{width:100%;height:170px;object-fit:cover;display:block;filter:brightness(0.9);transition:filter 0.25s ease;}
+.card img{width:100%;height:170px;object-fit:cover;display:block;background:#1c1c1c;filter:brightness(0.9);transition:filter 0.25s ease;}
 .card:hover img{filter:brightness(1);}
 .card-content{padding:14px 16px;}
 .title2{font-size:14px;font-weight:600;margin-bottom:4px;letter-spacing:0.2px;}
@@ -140,10 +175,11 @@ body{background:#0f0f0f;color:#fff}
 .badge-AU{background:#2e2a1a;color:#5eff00;}
 .badge-US{background:#2e2a1a;color:#8400ff;}
 .badge-MO{background:#2e2a1a;color:#01743a;}
+.badge-VN{background:#2e2a1a;color:#fffb00;}
 
 @media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);padding:0 20px;}}
-@media(max-width:600px){.grid{grid-template-columns:1fr;padding:0 12px;}}
+@media(max-width:600px){.grid{grid-template-columns:1fr;padding:0 12px;}.header-inner{padding:14px 16px;}.brand-title{font-size:13px;}.service-page{min-height:calc(100vh - 49px);padding:32px 16px;align-items:flex-start;}.service-title{font-size:25px;}.service-options{grid-template-columns:1fr;}.service-option{min-height:170px;}.section{padding:24px 12px;}.section-heading{padding:0 12px;}.catalog-bar{padding:12px 16px;}.catalog-back{min-height:46px;padding:11px 16px;}}
 
 /* SHEET OVERLAY */
 .sheet-page{display:none;position:fixed;inset:0;background:#0f0f0f;z-index:2000;flex-direction:column;}
@@ -193,6 +229,37 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
   </div>
 </div>
 
+<main class="service-page" id="service-page">
+  <div class="service-inner">
+    <div class="service-kicker">Ticket Services</div>
+    <h1 class="service-title">Choose a ticket option</h1>
+    <div class="service-options">
+      <button class="service-option htb" type="button" onclick="openService('htb')">
+        <span class="service-option-type">HTB</span>
+        <span class="service-option-label">Help to Buy</span>
+        <span class="service-option-bottom">
+          <span class="service-option-count" id="htb-count">Loading listings</span>
+          <span class="service-option-arrow" aria-hidden="true">-&gt;</span>
+        </span>
+      </button>
+      <button class="service-option ready" type="button" onclick="openService('ready')">
+        <span class="service-option-type">Ready</span>
+        <span class="service-option-label">Ready Stock</span>
+        <span class="service-option-bottom">
+          <span class="service-option-count" id="ready-count">Loading listings</span>
+          <span class="service-option-arrow" aria-hidden="true">-&gt;</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</main>
+
+<div class="catalog-shell" id="catalog-shell">
+  <div class="catalog-bar">
+    <button class="catalog-back" type="button" onclick="showServicePicker()">Back to services</button>
+    <div class="catalog-label" id="catalog-label"></div>
+  </div>
+
 <!-- FILTER BAR -->
 <div class="filter-section">
   <input type="text" id="searchInput" placeholder="Search artist, venue..." oninput="applyFilters()">
@@ -209,6 +276,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
     <div class="cat" onclick="setCountry('AU',this)">Australia</div>
     <div class="cat" onclick="setCountry('US',this)">United States</div>
     <div class="cat" onclick="setCountry('MO',this)">Macau</div>
+    <div class="cat" onclick="setCountry('VN',this)">Vietnam</div>
   </div>
 
   <div class="country-row">
@@ -232,6 +300,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
     <div class="about-btn" onclick="openAbout()">About Us</div>
   </div>
 </footer>
+</div>
 
 <!-- SHEET OVERLAY -->
 <div class="sheet-page" id="sheet-page">
@@ -264,21 +333,21 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       <div style="background:#111;border-radius:12px;padding:24px;border:1px solid #1c1c1c;display:flex;flex-direction:column;gap:14px;">
         <div style="font-size:15px;font-weight:500;">脸书诚信帖子 | Facebook Legit Check Post</div>
         <a href="https://www.facebook.com/share/p/1Axgy161Gw/" target="_blank" style="color:#4cafef;font-size:13px;text-decoration:none;">View Post →</a>
-        <img src="fblegit.jpeg" style="width:60%;border-radius:10px;object-fit:cover;">
+        <img src="fblegit.jpeg" loading="lazy" decoding="async" style="width:60%;border-radius:10px;object-fit:cover;">
       </div>
 
       <div style="background:#111;border-radius:12px;padding:24px;border:1px solid #1c1c1c;display:flex;flex-direction:column;gap:14px;">
         <div style="font-size:15px;font-weight:500;">小红书诚信帖子 | XHS Legit Check Post</div>
         <a href="http://xhslink.com/o/AgAtZgW300" target="_blank" style="color:#4cafef;font-size:13px;text-decoration:none;">View Post →</a>
-        <img src="xhslegit.jpeg" style="width:60%;border-radius:10px;">
+        <img src="xhslegit.jpeg" loading="lazy" decoding="async" style="width:60%;border-radius:10px;">
       </div>
 
       <div style="background:#111;border-radius:12px;padding:24px;border:1px solid #1c1c1c;display:flex;flex-direction:column;gap:14px;">
         <div style="font-size:15px;font-weight:500;">Whatsapp 社群 | Whatsapp Community</div>
         <a href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank" style="color:#4cafef;font-size:13px;text-decoration:none;">Join Community →</a>
         <div class="two-img">
-          <img src="whatsappleft.jpeg">
-          <img src="whatsappright.jpeg">
+          <img src="whatsappleft.jpeg" loading="lazy" decoding="async">
+          <img src="whatsappright.jpeg" loading="lazy" decoding="async">
         </div>
       </div>
 
@@ -302,9 +371,9 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
           <div style="color:#555;font-size:12px;">@gogoservicesmy</div>
         </a>
 
-        <a href="https://www.instagram.com/ethenchin_supbro" target="_blank" style="flex:1;min-width:180px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;border:1px solid #1c1c1c;">
+        <a href="https://www.instagram.com/ethenchin_ticketing" target="_blank" style="flex:1;min-width:180px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;border:1px solid #1c1c1c;">
           <div style="font-size:14px;font-weight:500;margin-bottom:5px;">📸 Instagram (Personal)</div>
-          <div style="color:#555;font-size:12px;">@ethenchin_supbro</div>
+          <div style="color:#555;font-size:12px;">@ethenchin_ticketing</div>
         </a>
 
         <a href="https://xhslink.com/m/ABvuAnUze68" target="_blank" style="flex:1;min-width:180px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;border:1px solid #1c1c1c;">
@@ -570,14 +639,8 @@ function openImageZoom(src) {
   setTimeout(() => hint.style.opacity = '0', 2500);
 
   const img = document.createElement("img");
-  img.alt = title;
-  img.loading = "lazy";
-
-  img.src = "placeholder.jpg"; // optional loading image
-
-  getCardImage(image).then(url => {
-      img.src = url;
-  });
+  img.alt = "Enlarged event image";
+  img.src = src;
   img.style.cssText = `
     max-width:90vw;max-height:90vh;
     cursor:grab;user-select:none;-webkit-user-drag:none;
@@ -737,6 +800,30 @@ function closeAbout(){
 }
 
 let currentCountry="all";
+let currentService=null;
+
+function openService(service) {
+  currentService = service;
+  document.getElementById("service-page").classList.add("hidden");
+  document.getElementById("catalog-shell").classList.add("open");
+  document.getElementById("catalog-label").textContent = service === "htb" ? "Help to Buy" : "Ready Stock";
+  updateFilterButtons();
+  applyFilters();
+  window.scrollTo(0, 0);
+}
+
+function showServicePicker() {
+  currentService = null;
+  currentCountry = "all";
+  document.getElementById("searchInput").value = "";
+  document.querySelectorAll(".cat").forEach(button => button.classList.remove("active"));
+  document.querySelector(".cat")?.classList.add("active");
+  document.getElementById("catalog-shell").classList.remove("open");
+  document.getElementById("service-page").classList.remove("hidden");
+  updateFilterButtons();
+  window.scrollTo(0, 0);
+}
+
 function setCountry(country,el){
   currentCountry=country;
   document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active'));
@@ -752,11 +839,13 @@ function applyFilters(){
     const cardText = (card.innerText || card.textContent || "").toLowerCase();
     const combined = dataTitle + " " + cardText;
     const country = card.dataset.country || "";
+    const service = card.dataset.service || "";
 
     // Every word must match somewhere in the combined text
     const matchSearch = !raw || terms.every(term => combined.includes(term));
     const matchCountry = (currentCountry === "all" || country === currentCountry);
-    card.style.display = (matchSearch && matchCountry) ? "block" : "none";
+    const matchService = !currentService || service === currentService;
+    card.style.display = (matchSearch && matchCountry && matchService) ? "block" : "none";
   });
 }
 
@@ -785,9 +874,15 @@ function normalizeCountry(country) {
     AUSTRALIA: "AU",
     "United States of America": "US",
     MACAU: "MO",
+    VIETNAM: "VN",
   };
 
   return countryMap[upper] || upper;
+}
+
+function getEventService(event) {
+  const type = String(event.type || "").trim().toLowerCase();
+  return type === "htb" || type === "ready" ? type : "";
 }
 
 function openEventSheet(sheet, label) {
@@ -812,6 +907,7 @@ function openEventSheet(sheet, label) {
 
 function renderEvent(event) {
   const country = normalizeCountry(event.country);
+  const service = getEventService(event);
   const title = event.title || "";
   const description = event.description || "";
   const date = event.date || "";
@@ -823,6 +919,7 @@ function renderEvent(event) {
   const card = document.createElement("div");
   card.className = "card";
   card.dataset.country = country;
+  card.dataset.service = service;
   card.dataset.title = [
     event.id,
     title,
@@ -837,9 +934,11 @@ function renderEvent(event) {
  const img = document.createElement("img");
   img.alt = title;
   img.loading = "lazy";
+  img.decoding = "async";
 
   const key = (image || "").trim().toLowerCase();
-img.src = imageMap[key] || "placeholder.jpg";
+  img.dataset.imageKey = key;
+  if (imageMap[key]) img.src = imageMap[key];
 
   const content = document.createElement("div");
   content.className = "card-content";
@@ -888,7 +987,11 @@ function getEventsFromResponse(data) {
   return [];
 }
 
-function showEventsMessage(message) {
+const EVENTS_CACHE_KEY = "ticketing-events-v2";
+const EVENTS_CACHE_TTL = 10 * 60 * 1000;
+const EVENTS_REQUEST_TIMEOUT = 12 * 1000;
+
+function showEventsMessage(message, onRetry) {
   const grid = document.getElementById("eventsGrid");
   if (!grid) return;
 
@@ -897,125 +1000,168 @@ function showEventsMessage(message) {
   state.style.cssText = "grid-column:1/-1;color:#777;text-align:center;padding:50px 16px;font-size:13px;line-height:1.6;";
   state.textContent = message;
   grid.appendChild(state);
+
+  if (onRetry) {
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.className = "back-btn";
+    retry.textContent = "Retry";
+    retry.addEventListener("click", onRetry);
+    state.appendChild(document.createElement("br"));
+    state.appendChild(retry);
+  }
 }
 
-function getApiErrorMessage(text) {
-  const html = new DOMParser().parseFromString(text, "text/html");
-  const message = (html.body.textContent || "").replace(/\s+/g, " ").trim();
-  return message || "Event API is not returning JSON. Check your Google Apps Script deployment.";
+function getCachedEvents() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(EVENTS_CACHE_KEY));
+    if (cached && Date.now() - cached.savedAt < EVENTS_CACHE_TTL && Array.isArray(cached.events)) {
+      return cached.events;
+    }
+  } catch (error) {
+    console.warn("Event cache could not be read.", error);
+  }
+  return null;
+}
+
+function cacheEvents(events) {
+  try {
+    localStorage.setItem(EVENTS_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), events }));
+  } catch (error) {
+    console.warn("Event cache could not be saved.", error);
+  }
+}
+
+function updateServiceCounts(events) {
+  const counts = { htb: 0, ready: 0 };
+  events.forEach(event => {
+    const service = getEventService(event);
+    if (service) counts[service] += 1;
+  });
+
+  Object.entries(counts).forEach(([service, count]) => {
+    const element = document.getElementById(`${service}-count`);
+    if (element) element.textContent = `${count} ${count === 1 ? "listing" : "listings"}`;
+  });
+}
+
+function renderEvents(events) {
+  const grid = document.getElementById("eventsGrid");
+  if (!grid) return;
+
+  grid.innerHTML = "";
+  sheetData = {};
+  updateServiceCounts(events);
+
+  if (!events.length) {
+    showEventsMessage("No events are available right now.");
+    return;
+  }
+
+  const cards = document.createDocumentFragment();
+  events.forEach(event => {
+    sheetData[event.id] = {
+      label: event.label,
+      url: event.sheet
+    };
+    cards.appendChild(renderEvent(event));
+  });
+
+  grid.appendChild(cards);
+  updateFilterButtons();
+  applyFilters();
 }
 
 async function loadEvents(){
-  await loadCardImages(); 
+  const cardImagesPromise = loadCardImages().catch(error => {
+    console.warn("Card image map could not be loaded.", error);
+  });
 
-const grid=document.getElementById("eventsGrid");
+  const cachedEvents = getCachedEvents();
+  if (cachedEvents) {
+    renderEvents(cachedEvents);
+  } else {
+    showEventsMessage("Loading events...");
+  }
 
-if(!grid)return;
+  cardImagesPromise.then(updateCardImages);
 
-try{
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), EVENTS_REQUEST_TIMEOUT);
 
-grid.innerHTML=
-'<div style="padding:50px;text-align:center;">Loading...</div>';
-
-console.log("Fetching:",API_URL);
+  try {
 
 const response = await fetch(API_URL, {
   method: "GET",
   mode: "cors",
-  redirect: "follow"
+  redirect: "follow",
+  signal: controller.signal
 });
 
-const text = await response.text();
+if (!response.ok) throw new Error(`Event API returned ${response.status}.`);
 
-console.log(text);
+const data = await response.json();
+const events = getEventsFromResponse(data);
+cacheEvents(events);
 
-const data = JSON.parse(text);
+renderEvents(events);
+updateCardImages();
 
-grid.innerHTML='';
-
-sheetData={};
-
-data.forEach(event=>{
-
-sheetData[event.id]={
-
-label:event.label,
-url:event.sheet
-
-};
-
-grid.appendChild(
-renderEvent(event)
-);
-
-});
-
-applyFilters();
-
-}catch(err){
-
-console.error("FULL ERROR:",err);
-
-grid.innerHTML=`
-
-<div style="
-padding:50px;
-text-align:center;
-color:red">
-
-${err}
-
-</div>
-
-`;
-
-}
+  } catch (error) {
+    console.error("Event API failed.", error);
+    if (!cachedEvents) {
+      const message = error.name === "AbortError"
+        ? "Events are taking too long to respond."
+        : "Events could not be loaded. Check your connection and try again.";
+      showEventsMessage(message, loadEvents);
+    }
+  } finally {
+    clearTimeout(timeout);
+  }
 
 }
 
 loadEvents();
 
 function updateFilterButtons() {
-    const available = new Set();
+  const available = new Set();
+  let allButton;
 
-    document.querySelectorAll(".card").forEach(card => {
-        available.add(card.dataset.country);
-    });
-
-    document.querySelectorAll(".cat").forEach(btn => {
-        const value = btn.getAttribute("onclick")
-            ?.match(/'([^']+)'/)?.[1];
-
-        if (!value || value === "all") return;
-
-        btn.style.display = available.has(value) ? "" : "none";
-    });
-}
-async function getCardImage(filename) {
-  try {
-    const query = encodeURIComponent(
-      `'${CARD_IMAGE_FOLDER}' in parents and name='${filename}' and trashed=false`
-    );
-
-    const url =
-      `https://www.googleapis.com/drive/v3/files` +
-      `?q=${query}` +
-      `&key=${DRIVE_API_KEY}` +
-      `&fields=files(id)` +
-      `&pageSize=1`;
-
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if (data.files && data.files.length > 0) {
-      return `https://lh3.googleusercontent.com/d/${data.files[0].id}`;
+  document.querySelectorAll(".card").forEach(card => {
+    if (!currentService || card.dataset.service === currentService) {
+      available.add(card.dataset.country);
     }
-  } catch (e) {
-    console.error(e);
-  }
+  });
 
-  return "placeholder.jpg";
+  document.querySelectorAll(".cat").forEach(button => {
+    const value = button.getAttribute("onclick")
+      ?.match(/'([^']+)'/)?.[1];
+
+    if (value === "all") {
+      allButton = button;
+      return;
+    }
+
+    if (value) button.style.display = available.has(value) ? "" : "none";
+  });
+
+  if (currentCountry !== "all" && !available.has(currentCountry)) {
+    currentCountry = "all";
+    document.querySelectorAll(".cat").forEach(button => button.classList.remove("active"));
+    allButton?.classList.add("active");
+  }
 }
+function getCardImageUrl(id) {
+  return `https://lh3.googleusercontent.com/d/${id}=w900`;
+}
+
+function updateCardImages() {
+  document.querySelectorAll("img[data-image-key]").forEach(img => {
+    const src = imageMap[img.dataset.imageKey];
+    if (src && !img.getAttribute("src")) img.src = src;
+  });
+}
+
 async function loadCardImages() {
 
     const query = encodeURIComponent(
@@ -1030,15 +1176,12 @@ async function loadCardImages() {
 
     const res = await fetch(url);
     const data = await res.json();
+    const files = Array.isArray(data.files) ? data.files : [];
 
-    console.log(data);
-
-    data.files.forEach(file => {
+    files.forEach(file => {
         imageMap[file.name.toLowerCase()] =
-            `https://lh3.googleusercontent.com/d/${file.id}`;
+            getCardImageUrl(file.id);
     });
-
-    console.log(imageMap);
 }
 
 </script>
