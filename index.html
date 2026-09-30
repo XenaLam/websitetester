@@ -53,6 +53,13 @@ body{background:#0f0f0f;color:#fff}
 .service-kicker{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#d97be5;margin-bottom:14px;}
 .service-title{font-size:clamp(30px,4vw,42px);font-weight:600;letter-spacing:-1.2px;margin-bottom:10px;}
 .service-intro{font-size:15px;line-height:1.7;color:#858585;margin-bottom:32px;}
+.whatsapp-invite{display:flex;align-items:center;gap:18px;width:fit-content;max-width:100%;margin:-8px 0 28px;padding:14px 18px;background:#151a17;border:1px solid #294235;border-radius:12px;}
+.whatsapp-qr{display:block;width:104px;height:104px;padding:5px;background:#fff;border-radius:6px;}
+.whatsapp-invite-copy{display:flex;flex-direction:column;align-items:flex-start;gap:8px;}
+.whatsapp-invite-title{font-size:15px;font-weight:600;color:#e8f3ec;}
+.whatsapp-invite-link{font-size:13px;font-weight:600;color:#70d39a;text-decoration:none;}
+.whatsapp-invite-link:hover{text-decoration:underline;}
+.whatsapp-invite-link:focus-visible{outline:2px solid #70d39a;outline-offset:3px;}
 .service-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
 .service-option{position:relative;isolation:isolate;overflow:hidden;min-height:300px;padding:26px;background:linear-gradient(145deg,#191719 0%,#111 62%);border:1px solid #30272a;border-radius:16px;color:#fff;text-align:left;cursor:pointer;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;font:inherit;display:flex;flex-direction:column;justify-content:space-between;}
 .service-option::before{content:"";position:absolute;z-index:-1;width:220px;height:220px;right:-85px;top:-105px;border-radius:50%;background:var(--service-glow);filter:blur(2px);opacity:.22;transition:transform .35s ease,opacity .35s ease;}
@@ -182,10 +189,11 @@ body{background:#0f0f0f;color:#fff}
 .badge-US{background:#2e2a1a;color:#8400ff;}
 .badge-MO{background:#2e2a1a;color:#01743a;}
 .badge-VN{background:#2e2a1a;color:#fffb00;}
+.badge-TW{background:#2e2a1a;color:#fc18d6;}
 
 @media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);padding:0 20px;}}
-@media(max-width:600px){.grid{grid-template-columns:1fr;padding:0 12px;}.header-inner{padding:14px 16px;}.brand-title{font-size:13px;}.service-page{min-height:calc(100vh - 49px);padding:40px 18px;align-items:flex-start;}.service-title{font-size:30px;}.service-intro{font-size:14px;margin-bottom:24px;}.service-options{grid-template-columns:1fr;gap:14px;}.service-option{min-height:245px;padding:22px;border-radius:14px;}.service-option-copy{margin:26px 0 24px;}.section{padding:24px 12px;}.section-heading{padding:0 12px;}.catalog-bar{padding:12px 16px;}.catalog-back{min-height:42px;padding:10px 16px;}}
+@media(max-width:600px){.grid{grid-template-columns:1fr;padding:0 12px;}.header-inner{padding:14px 16px;}.brand-title{font-size:13px;}.service-page{min-height:calc(100vh - 49px);padding:40px 18px;align-items:flex-start;}.service-title{font-size:30px;}.service-intro{font-size:14px;margin-bottom:24px;}.whatsapp-invite{gap:14px;padding:12px;margin:-4px 0 24px;}.whatsapp-qr{width:88px;height:88px;}.whatsapp-invite-title{font-size:14px;}.whatsapp-invite-link{font-size:12px;}.service-options{grid-template-columns:1fr;gap:14px;}.service-option{min-height:245px;padding:22px;border-radius:14px;}.service-option-copy{margin:26px 0 24px;}.section{padding:24px 12px;}.section-heading{padding:0 12px;}.catalog-bar{padding:12px 16px;}.catalog-back{min-height:42px;padding:10px 16px;}}
 
 /* SHEET OVERLAY */
 .sheet-page{display:none;position:fixed;inset:0;background:#0f0f0f;z-index:2000;flex-direction:column;}
@@ -240,6 +248,15 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
     <div class="service-kicker">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</div>
     <h1 class="service-title">Choose a ticket option</h1>
     <p class="service-intro">Tell us what you need. Choose a service to explore available events and tickets.</p>
+    <div class="whatsapp-invite">
+      <a href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank" rel="noopener noreferrer" aria-label="Join the WhatsApp group">
+        <img class="whatsapp-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=208x208&amp;data=https%3A%2F%2Fchat.whatsapp.com%2FHsm3IsDQV36Jobl4uyADhC" alt="QR code to join the WhatsApp group" width="104" height="104">
+      </a>
+      <div class="whatsapp-invite-copy">
+        <span class="whatsapp-invite-title">Join our WhatsApp group</span>
+        <a class="whatsapp-invite-link" href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank" rel="noopener noreferrer">Join WhatsApp group <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
     <div class="service-options">
       <button class="service-option htb" type="button" onclick="openService('htb')">
         <span class="service-option-top">
@@ -289,6 +306,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
     <div class="cat" onclick="setCountry('US',this)">United States</div>
     <div class="cat" onclick="setCountry('MO',this)">Macau</div>
     <div class="cat" onclick="setCountry('VN',this)">Vietnam</div>
+    <div class="cat" onclick="setCountry('TW',this)">Taiwan</div>
   </div>
 
   <div class="country-row">
@@ -892,6 +910,7 @@ function normalizeCountry(country) {
     "United States of America": "US",
     MACAU: "MO",
     VIETNAM: "VN",
+    TAIWAN: "TW",
   };
 
   return countryMap[upper] || upper;
