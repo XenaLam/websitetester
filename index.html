@@ -15,7 +15,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',Arial,sans-serif;}
-body{background:#0f0f0f;color:#fff}
+body{height:100vh;height:100svh;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;background:#0f0f0f;color:#fff}
 
 .header{
   background:rgba(0,0,0,0.9);
@@ -47,25 +47,29 @@ body{background:#0f0f0f;color:#fff}
 }
 .about-btn:hover{background:#e63946;color:#fff;}
 
-.service-page{min-height:calc(100vh - 53px);display:flex;align-items:center;padding:64px 40px;background:radial-gradient(ellipse at 50% 0%,rgba(181, 57, 230, 0.09),transparent 48%),#101010;}
+.service-page{flex:1;min-height:0;display:flex;align-items:center;overflow:hidden;padding:clamp(14px,3vh,32px) 40px;background:radial-gradient(ellipse at 50% 0%,rgba(54, 167, 106, 0.055),transparent 48%),#101010;}
 .service-page.hidden{display:none;}
-.service-inner{width:min(100%,1080px);margin:0 auto;}
-.service-kicker{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#d97be5;margin-bottom:14px;}
-.service-title{font-size:clamp(30px,4vw,42px);font-weight:600;letter-spacing:-1.2px;margin-bottom:10px;}
-.service-intro{font-size:15px;line-height:1.7;color:#858585;margin-bottom:32px;}
-.whatsapp-invite{display:flex;align-items:center;gap:18px;width:fit-content;max-width:100%;margin:-8px 0 28px;padding:14px 18px;background:#151a17;border:1px solid #294235;border-radius:12px;}
-.whatsapp-qr{display:block;width:104px;height:104px;padding:5px;background:#fff;border-radius:6px;}
-.whatsapp-invite-copy{display:flex;flex-direction:column;align-items:flex-start;gap:8px;}
-.whatsapp-invite-title{font-size:15px;font-weight:600;color:#e8f3ec;}
-.whatsapp-invite-link{font-size:13px;font-weight:600;color:#70d39a;text-decoration:none;}
+.service-inner{width:min(100%,960px);margin:0 auto;}
+.service-kicker{font-size:11px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:#aaa;margin-bottom:10px;}
+.service-title{font-size:clamp(30px,4vw,40px);font-weight:600;letter-spacing:-1px;margin-bottom:5px;}
+.service-intro{font-size:15px;line-height:1.6;color:#969696;margin-bottom:20px;}
+.whatsapp-invite{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:22px;width:100%;margin:0 auto 24px;padding:16px 20px;background:radial-gradient(ellipse at 50% 0%,rgba(54,167,106,.11),transparent 62%),linear-gradient(145deg,#151a17 0%,#111312 72%);border:1px solid #31533f;border-radius:14px;text-align:left;}
+.whatsapp-invite::before{position:absolute;z-index:-1;inset:0;border-radius:inherit;box-shadow:inset 0 0 34px rgba(54,167,106,.045);content:"";pointer-events:none;}
+.whatsapp-qr{display:block;width:112px;height:112px;padding:6px;background:#fff;border:1px solid rgba(255,255,255,.7);border-radius:8px;}
+.whatsapp-invite-copy{display:flex;flex-direction:column;align-items:flex-start;gap:7px;}
+.whatsapp-invite-action{display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;}
+.whatsapp-invite-eyebrow{font-size:10px;font-weight:700;letter-spacing:2.2px;color:#70d39a;}
+.whatsapp-invite-title{font-size:clamp(20px,2.5vw,25px);font-weight:600;color:#f2f6f3;}
+.whatsapp-invite-description{font-size:14px;line-height:1.6;color:#a5ada8;}
+.whatsapp-invite-link{font-size:12px;font-weight:600;letter-spacing:.2px;color:#70d39a;text-decoration:none;}
 .whatsapp-invite-link:hover{text-decoration:underline;}
 .whatsapp-invite-link:focus-visible{outline:2px solid #70d39a;outline-offset:3px;}
-.service-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
-.service-option{position:relative;isolation:isolate;overflow:hidden;min-height:300px;padding:26px;background:linear-gradient(145deg,#191719 0%,#111 62%);border:1px solid #30272a;border-radius:16px;color:#fff;text-align:left;cursor:pointer;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;font:inherit;display:flex;flex-direction:column;justify-content:space-between;}
+.service-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+.service-option{position:relative;isolation:isolate;overflow:hidden;min-height:clamp(170px,25vh,230px);padding:24px;background:linear-gradient(145deg,#191719 0%,#111 72%);border:1px solid #30272a;border-radius:14px;color:#fff;text-align:left;cursor:pointer;transition:transform .2s ease,border-color .2s ease;font:inherit;display:flex;flex-direction:column;justify-content:space-between;}
 .service-option::before{content:"";position:absolute;z-index:-1;width:220px;height:220px;right:-85px;top:-105px;border-radius:50%;background:var(--service-glow);filter:blur(2px);opacity:.22;transition:transform .35s ease,opacity .35s ease;}
 .service-option.htb{--service-accent:#f06b75;--service-glow:#e63946;border-color:#42272c;}
 .service-option.ready{--service-accent:#70d39a;--service-glow:#36a76a;border-color:#263b30;background:linear-gradient(145deg,#151a17 0%,#111 62%);}
-.service-option:hover{transform:translateY(-5px);border-color:var(--service-accent);box-shadow:0 20px 50px rgba(0,0,0,.32);}
+.service-option:hover{transform:translateY(-3px);border-color:var(--service-accent);}
 .service-option:hover::before{transform:scale(1.2);opacity:.34;}
 .service-option:focus-visible{outline:2px solid #fff;outline-offset:3px;}
 .service-option-top{display:flex;align-items:center;justify-content:flex-end;gap:16px;}
@@ -193,7 +197,9 @@ body{background:#0f0f0f;color:#fff}
 
 @media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);padding:0 20px;}}
-@media(max-width:600px){.grid{grid-template-columns:1fr;padding:0 12px;}.header-inner{padding:14px 16px;}.brand-title{font-size:13px;}.service-page{min-height:calc(100vh - 49px);padding:40px 18px;align-items:flex-start;}.service-title{font-size:30px;}.service-intro{font-size:14px;margin-bottom:24px;}.whatsapp-invite{gap:14px;padding:12px;margin:-4px 0 24px;}.whatsapp-qr{width:88px;height:88px;}.whatsapp-invite-title{font-size:14px;}.whatsapp-invite-link{font-size:12px;}.service-options{grid-template-columns:1fr;gap:14px;}.service-option{min-height:245px;padding:22px;border-radius:14px;}.service-option-copy{margin:26px 0 24px;}.section{padding:24px 12px;}.section-heading{padding:0 12px;}.catalog-bar{padding:12px 16px;}.catalog-back{min-height:42px;padding:10px 16px;}}
+@media(max-width:900px){.service-page{padding-right:24px;padding-left:24px;}.service-option{padding:20px;}}
+@media(max-width:600px){.grid{grid-template-columns:1fr;padding:0 12px;}.header-inner{padding:12px 14px;gap:12px;}.brand-title{font-size:12px;line-height:1.35;}.about-btn{flex:none;font-size:12px;padding:6px 11px;}.service-page{padding:12px 16px;}.service-inner{width:100%;}.service-kicker{font-size:9px;letter-spacing:1.2px;line-height:1.5;margin-bottom:7px;}.service-title{font-size:27px;}.service-intro{font-size:13px;margin-bottom:14px;}.whatsapp-invite{gap:12px;margin:0 auto 16px;padding:13px;border-radius:12px;}.whatsapp-qr{width:82px;height:82px;padding:4px;}.whatsapp-invite-copy{gap:5px;}.whatsapp-invite-eyebrow{font-size:8px;letter-spacing:1.5px;}.whatsapp-invite-title{font-size:17px;line-height:1.25;}.whatsapp-invite-description{font-size:11px;line-height:1.4;}.whatsapp-invite-link{font-size:10px;}.service-options{grid-template-columns:1fr;gap:10px;}.service-option{min-height:clamp(116px,17vh,142px);padding:16px;border-radius:11px;}.service-option-top{gap:8px;}.service-option-mark{width:34px;height:34px;border-radius:10px;font-size:17px;}.service-option-copy{margin:12px 0 10px;}.service-option-label{font-size:20px;margin-bottom:5px;}.service-option-description{font-size:13px;}.service-option-chinese{font-size:12px;}.service-option-count,.service-option-cta{font-size:10px;}.service-option-bottom{gap:8px;}.service-option-arrow{width:30px;height:30px;font-size:15px;}.section{padding:24px 12px;}.section-heading{padding:0 12px;}.catalog-bar{padding:12px 16px;}.catalog-back{min-height:42px;padding:10px 16px;}}
+@media(max-width:600px) and (max-height:700px){.service-page{padding-top:8px;padding-bottom:8px;}.service-kicker{font-size:8px;line-height:1.25;letter-spacing:.6px;margin-bottom:5px;}.service-title{font-size:24px;}.service-intro{margin-bottom:10px;}.whatsapp-invite{margin-bottom:12px;padding:10px;}.whatsapp-qr{width:70px;height:70px;}.whatsapp-invite-title{font-size:15px;}.whatsapp-invite-description{font-size:10px;}.service-options{gap:8px;}.service-option{min-height:104px;padding:12px;}.service-option-mark{width:28px;height:28px;font-size:15px;}.service-option-copy{margin:7px 0 5px;}.service-option-label{font-size:18px;margin-bottom:3px;}.service-option-description{font-size:12px;}.service-option-bottom{gap:6px;}.service-option-arrow{width:25px;height:25px;font-size:13px;}}
 
 /* SHEET OVERLAY */
 .sheet-page{display:none;position:fixed;inset:0;background:#0f0f0f;z-index:2000;flex-direction:column;}
@@ -245,18 +251,22 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
 
 <main class="service-page" id="service-page">
   <div class="service-inner">
+    <section class="whatsapp-invite" aria-labelledby="whatsapp-invite-title">
+      <div class="whatsapp-invite-copy">
+        <span class="whatsapp-invite-eyebrow">WHATSAPP COMMUNITY</span>
+        <h2 class="whatsapp-invite-title" id="whatsapp-invite-title">Join Our WhatsApp Community</h2>
+        <p class="whatsapp-invite-description">Ticket updates, availability and assistance — all in one place.</p>
+      </div>
+      <div class="whatsapp-invite-action">
+        <a href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank" rel="noopener noreferrer" aria-label="Scan the QR code or open the WhatsApp community">
+          <img class="whatsapp-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=208x208&amp;data=https%3A%2F%2Fchat.whatsapp.com%2FHsm3IsDQV36Jobl4uyADhC" alt="QR code to join the WhatsApp group" width="156" height="156">
+        </a>
+        <a class="whatsapp-invite-link" href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank" rel="noopener noreferrer">Scan to join <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
     <div class="service-kicker">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</div>
     <h1 class="service-title">Choose a ticket option</h1>
-    <p class="service-intro">Tell us what you need. Choose a service to explore available events and tickets.</p>
-    <div class="whatsapp-invite">
-      <a href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank" rel="noopener noreferrer" aria-label="Join the WhatsApp group">
-        <img class="whatsapp-qr" src="https://api.qrserver.com/v1/create-qr-code/?size=208x208&amp;data=https%3A%2F%2Fchat.whatsapp.com%2FHsm3IsDQV36Jobl4uyADhC" alt="QR code to join the WhatsApp group" width="104" height="104">
-      </a>
-      <div class="whatsapp-invite-copy">
-        <span class="whatsapp-invite-title">Join our WhatsApp Community</span>
-        <a class="whatsapp-invite-link" href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank" rel="noopener noreferrer">Join WhatsApp Community <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
+    <p class="service-intro">Select a service to continue.</p>
     <div class="service-options">
       <button class="service-option htb" type="button" onclick="openService('htb')">
         <span class="service-option-top">
