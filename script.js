@@ -193,10 +193,11 @@ function openSheet(key) {
     // GOOGLE SHEET
     viewer.style.display = 'none';
     viewer.innerHTML = '';
-    resetSheetZoom();
     frameWrap.style.display = 'flex';
     frame.style.display = 'block';
-    frame.src = data.url;
+    frameWrap.scrollLeft = 0;
+    frameWrap.scrollTop = 0;
+    frame.src = getSheetEmbedUrl(data.url);
   }
 }
 
@@ -408,28 +409,26 @@ function closeAbout(){
 
 let currentCountry="all";
 let currentService=null;
-let sheetZoom = 1;
 
-function setSheetZoom(value) {
-  const frame = document.getElementById("sheet-frame");
-  const wrap = document.getElementById("sheet-frame-wrap");
-  if (!frame || !wrap) return;
+function getSheetEmbedUrl(sheet) {
+  if (!sheet) return "";
 
-  sheetZoom = Math.min(Math.max(value, 0.55), 1.8);
-  frame.style.transform = `scale(${sheetZoom})`;
-  frame.style.width = `${100 / sheetZoom}%`;
-  frame.style.height = `${100 / sheetZoom}%`;
+  try {
+    const url = new URL(sheet);
+    if (!url.hostname.includes("docs.google.com") || !url.pathname.includes("/spreadsheets/")) {
+      return sheet;
+    }
 
-  const resetButton = document.querySelector(".sheet-zoom-btn[aria-label='Reset zoom']");
-  if (resetButton) resetButton.textContent = `${Math.round(sheetZoom * 100)}%`;
-}
+    url.searchParams.set("embedded", "true");
+    url.searchParams.set("rm", "minimal");
+    url.searchParams.set("widget", "true");
+    url.searchParams.set("headers", "false");
+    url.searchParams.delete("usp");
 
-function adjustSheetZoom(delta) {
-  setSheetZoom(sheetZoom + delta);
-}
-
-function resetSheetZoom() {
-  setSheetZoom(1);
+    return url.toString();
+  } catch (error) {
+    return sheet;
+  }
 }
 
 function openService(service) {
@@ -533,10 +532,11 @@ function openEventSheet(sheet, label) {
   const viewer = document.getElementById('photo-viewer');
   viewer.style.display = 'none';
   viewer.innerHTML = '';
-  resetSheetZoom();
   frameWrap.style.display = 'flex';
   frame.style.display = 'block';
-  frame.src = sheet;
+  frameWrap.scrollLeft = 0;
+  frameWrap.scrollTop = 0;
+  frame.src = getSheetEmbedUrl(sheet);
 }
 
 function renderEvent(event) {
