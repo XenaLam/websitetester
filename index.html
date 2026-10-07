@@ -9,239 +9,13 @@
 <link rel="preconnect" href="https://www.googleapis.com">
 <link rel="preconnect" href="https://lh3.googleusercontent.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <title>Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</title>
 <meta property="og:image" content="https://www.jticketing.com/tickets/gem-kl-26">
-
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',Arial,sans-serif;}
-body{height:100vh;height:100svh;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;background:#0f0f0f;color:#fff}
-
-.header{
-  background:rgba(0,0,0,0.9);
-  position:sticky;
-  top:0;
-  z-index:1000;
-  border-bottom:1px solid #222;
-  backdrop-filter:blur(6px);
-}
-.header-inner{
-  max-width:1500px;
-  margin:0 auto;
-  padding:14px 40px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.brand-title{font-weight:600;font-size:16px;letter-spacing:0.3px;}
-
-.about-btn{
-  font-size:13px;
-  padding:6px 16px;
-  border-radius:20px;
-  background:#1c1c1c;
-  color:#ccc;
-  cursor:pointer;
-  transition:all 0.2s ease;
-  border:none;
-}
-.about-btn:hover{background:#e63946;color:#fff;}
-
-.service-page{flex:1;min-height:0;display:flex;align-items:center;overflow:hidden;padding:clamp(14px,3vh,32px) 40px;background:radial-gradient(ellipse at 50% 0%,rgba(54, 167, 106, 0.055),transparent 48%),#101010;}
-.service-page.hidden{display:none;}
-.service-inner{width:min(100%,960px);margin:0 auto;}
-.service-kicker{font-size:11px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:#aaa;margin-bottom:10px;}
-.service-title{font-size:clamp(30px,4vw,40px);font-weight:600;letter-spacing:-1px;margin-bottom:5px;}
-.service-intro{font-size:15px;line-height:1.6;color:#969696;margin-bottom:20px;}
-.whatsapp-invite{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:22px;width:100%;margin:0 auto 24px;padding:16px 20px;background:radial-gradient(ellipse at 50% 0%,rgba(54,167,106,.11),transparent 62%),linear-gradient(145deg,#151a17 0%,#111312 72%);border:1px solid #31533f;border-radius:14px;text-align:left;}
-.whatsapp-invite::before{position:absolute;z-index:-1;inset:0;border-radius:inherit;box-shadow:inset 0 0 34px rgba(54,167,106,.045);content:"";pointer-events:none;}
-.whatsapp-qr{display:block;width:112px;height:112px;padding:6px;background:#fff;border:1px solid rgba(255,255,255,.7);border-radius:8px;}
-.whatsapp-invite-copy{display:flex;flex-direction:column;align-items:flex-start;gap:7px;}
-.whatsapp-invite-action{display:flex;flex-direction:column;align-items:center;gap:7px;flex:none;}
-.whatsapp-invite-eyebrow{font-size:10px;font-weight:700;letter-spacing:2.2px;color:#70d39a;}
-.whatsapp-invite-title{font-size:clamp(20px,2.5vw,25px);font-weight:600;color:#f2f6f3;}
-.whatsapp-invite-description{font-size:14px;line-height:1.6;color:#a5ada8;}
-.whatsapp-invite-link{font-size:12px;font-weight:600;letter-spacing:.2px;color:#70d39a;text-decoration:none;}
-.whatsapp-invite-link:hover{text-decoration:underline;}
-.whatsapp-invite-link:focus-visible{outline:2px solid #70d39a;outline-offset:3px;}
-.service-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
-.service-option{position:relative;isolation:isolate;overflow:hidden;min-height:clamp(170px,25vh,230px);padding:24px;background:linear-gradient(145deg,#191719 0%,#111 72%);border:1px solid #30272a;border-radius:14px;color:#fff;text-align:left;cursor:pointer;transition:transform .2s ease,border-color .2s ease;font:inherit;display:flex;flex-direction:column;justify-content:space-between;}
-.service-option::before{content:"";position:absolute;z-index:-1;width:220px;height:220px;right:-85px;top:-105px;border-radius:50%;background:var(--service-glow);filter:blur(2px);opacity:.22;transition:transform .35s ease,opacity .35s ease;}
-.service-option.htb{--service-accent:#f06b75;--service-glow:#e63946;border-color:#42272c;}
-.service-option.ready{--service-accent:#70d39a;--service-glow:#36a76a;border-color:#263b30;background:linear-gradient(145deg,#151a17 0%,#111 62%);}
-.service-option:hover{transform:translateY(-3px);border-color:var(--service-accent);}
-.service-option:hover::before{transform:scale(1.2);opacity:.34;}
-.service-option:focus-visible{outline:2px solid #fff;outline-offset:3px;}
-.service-option-top{display:flex;align-items:center;justify-content:flex-end;gap:16px;}
-.service-option-type{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border:1px solid color-mix(in srgb,var(--service-accent) 32%,transparent);border-radius:20px;color:var(--service-accent);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
-.service-option-mark{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid #393234;border-radius:14px;color:var(--service-accent);font-size:20px;}
-.service-option-copy{display:block;margin:34px 0 28px;}
-.service-option-label{display:block;font-size:clamp(24px,3vw,30px);font-weight:600;letter-spacing:-.5px;margin-bottom:10px;}
-.service-option-description{display:block;font-size:15px;color:#c5c0c1;line-height:1.6;}
-.service-option-chinese{display:block;margin-top:6px;color:#888;font-size:14px;letter-spacing:.3px;}
-.service-option-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;}
-.service-option-count{font-size:12px;color:#999;}
-.service-option-cta{display:inline-flex;align-items:center;gap:12px;color:#ddd;font-size:12px;font-weight:600;letter-spacing:.3px;}
-.service-option-arrow{width:36px;height:36px;border:1px solid #484043;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:17px;color:#fff;transition:background .2s ease,border-color .2s ease,transform .2s ease;}
-.service-option:hover .service-option-arrow{background:var(--service-accent);border-color:var(--service-accent);color:#111;transform:translateX(2px);}
-.catalog-shell{display:none;}
-.catalog-shell.open{display:block;}
-.catalog-bar{display:flex;align-items:center;gap:14px;padding:14px clamp(16px,6vw,140px);background:#111;border-bottom:1px solid #222;}
-.catalog-label{font-size:14px;font-weight:600;}
-.catalog-back{min-height:40px;padding:9px 16px;background:#e63946;border:1px solid #e63946;border-radius:8px;color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s ease,border-color .2s ease,transform .2s ease;}
-.catalog-back:hover{background:#c92f3b;border-color:#c92f3b;transform:translateY(-1px);}
-.catalog-back:focus-visible{outline:2px solid #fff;outline-offset:3px;}
-
-.filter-section{
-  background:#141414;
-  padding:16px clamp(16px,6vw,140px);
-  border-bottom:1px solid #222;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-#searchInput{
-  padding:11px 18px;
-  border-radius:30px;
-  border:1px solid #1e1e1e;
-  background:#1c1c1c;
-  color:#fff;
-  font-size:14px;
-  font-family:'Inter',sans-serif;
-  width:100%;
-  transition:border-color 0.2s;
-}
-#searchInput:focus{outline:none;border-color:#444;}
-#searchInput::placeholder{color:#555;}
-
-.country-row{display:flex;gap:10px;overflow-x:auto;}
-.cat{
-  background:#1c1c1c;
-  padding:8px 16px;
-  border-radius:20px;
-  font-size:13px;
-  font-weight:500;
-  white-space:nowrap;
-  cursor:pointer;
-  border:1px solid #2a2a2a;
-  transition:all 0.2s;
-  user-select:none;
-  color:#ccc;
-}
-.cat:hover{background:#2a2a2a;border-color:#444;}
-.cat.active{background:#e63946;color:#fff;border-color:#e63946;}
-
-.section{padding:28px 40px;}
-.section-heading{
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:#555;
-  margin-bottom:20px;
-  padding:0 100px;
-}
-
-.grid{
-  display:grid;
-  gap:16px;
-  grid-template-columns:repeat(auto-fill,minmax(350px,1fr));
-  padding:0 100px;
-}
-
-.card{
-  background:#111;
-  border-radius:10px;
-  overflow:hidden;
-  transition:transform 0.25s ease,border-color 0.25s ease;
-  cursor:pointer;
-  border:1px solid #1c1c1c;
-  content-visibility:auto;
-  contain-intrinsic-size:auto 320px;
-}
-.card:hover{transform:translateY(-4px);border-color:#333;}
-.card img{width:100%;height:170px;object-fit:cover;display:block;background:#1c1c1c;filter:brightness(0.9);transition:filter 0.25s ease;}
-.card:hover img{filter:brightness(1);}
-.card-content{padding:14px 16px;}
-.title2{font-size:14px;font-weight:600;margin-bottom:4px;letter-spacing:0.2px;}
-.title3{font-size:12px;margin-bottom:8px;color:#666;line-height:1.5;}
-.info{font-size:12px;color:#555;margin-bottom:3px;letter-spacing:0.2px;}
-
-/* country badge */
-.badge{
-  display:inline-block;
-  font-size:10px;
-  font-weight:600;
-  letter-spacing:0.8px;
-  padding:3px 8px;
-  border-radius:20px;
-  margin-bottom:8px;
-  text-transform:uppercase;
-}
-.badge-MY{background:#1a2e1a;color:#4caf50;}
-.badge-SG{background:#1a1a2e;color:#4c8af5;}
-.badge-TH{background:#2e2a1a;color:#f5c04c;}
-.badge-KR{background:#2e2a1a;color:#d322f7;}
-.badge-ID{background:#2e2a1a;color:#e64a4a;}
-.badge-PH{background:#2e2a1a;color:#e8e8e8;}
-.badge-FR{background:#2e2a1a;color:#04fad1;}
-.badge-HK{background:#2e2a1a;color:#ff0000;}
-.badge-Rent{background:#2e2a1a;color:#444343;}
-.badge-Currency{background:#2e2a1a;color:#d0f309;}
-.badge-Genting{background:#2e2a1a;color:#00b7ff;}
-.badge-AU{background:#2e2a1a;color:#5eff00;}
-.badge-US{background:#2e2a1a;color:#8400ff;}
-.badge-MO{background:#2e2a1a;color:#01743a;}
-.badge-VN{background:#2e2a1a;color:#fffb00;}
-.badge-TW{background:#2e2a1a;color:#fc18d6;}
-
-@media(max-width:1200px){.grid{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr);padding:0 20px;}}
-@media(max-width:900px){.service-page{padding-right:24px;padding-left:24px;}.service-option{padding:20px;}}
-@media(max-width:600px){.grid{grid-template-columns:1fr;padding:0 12px;}.header-inner{padding:12px 14px;gap:12px;}.brand-title{font-size:12px;line-height:1.35;}.about-btn{flex:none;font-size:12px;padding:6px 11px;}.service-page{padding:12px 16px;}.service-inner{width:100%;}.service-kicker{font-size:9px;letter-spacing:1.2px;line-height:1.5;margin-bottom:7px;}.service-title{font-size:27px;}.service-intro{font-size:13px;margin-bottom:14px;}.whatsapp-invite{gap:12px;margin:0 auto 16px;padding:13px;border-radius:12px;}.whatsapp-qr{width:82px;height:82px;padding:4px;}.whatsapp-invite-copy{gap:5px;}.whatsapp-invite-eyebrow{font-size:8px;letter-spacing:1.5px;}.whatsapp-invite-title{font-size:17px;line-height:1.25;}.whatsapp-invite-description{font-size:11px;line-height:1.4;}.whatsapp-invite-link{font-size:10px;}.service-options{grid-template-columns:1fr;gap:10px;}.service-option{min-height:clamp(116px,17vh,142px);padding:16px;border-radius:11px;}.service-option-top{gap:8px;}.service-option-mark{width:34px;height:34px;border-radius:10px;font-size:17px;}.service-option-copy{margin:12px 0 10px;}.service-option-label{font-size:20px;margin-bottom:5px;}.service-option-description{font-size:13px;}.service-option-chinese{font-size:12px;}.service-option-count,.service-option-cta{font-size:10px;}.service-option-bottom{gap:8px;}.service-option-arrow{width:30px;height:30px;font-size:15px;}.section{padding:24px 12px;}.section-heading{padding:0 12px;}.catalog-bar{padding:12px 16px;}.catalog-back{min-height:42px;padding:10px 16px;}}
-@media(max-width:600px) and (max-height:700px){.service-page{padding-top:8px;padding-bottom:8px;}.service-kicker{font-size:8px;line-height:1.25;letter-spacing:.6px;margin-bottom:5px;}.service-title{font-size:24px;}.service-intro{margin-bottom:10px;}.whatsapp-invite{margin-bottom:12px;padding:10px;}.whatsapp-qr{width:70px;height:70px;}.whatsapp-invite-title{font-size:15px;}.whatsapp-invite-description{font-size:10px;}.service-options{gap:8px;}.service-option{min-height:104px;padding:12px;}.service-option-mark{width:28px;height:28px;font-size:15px;}.service-option-copy{margin:7px 0 5px;}.service-option-label{font-size:18px;margin-bottom:3px;}.service-option-description{font-size:12px;}.service-option-bottom{gap:6px;}.service-option-arrow{width:25px;height:25px;font-size:13px;}}
-
-/* SHEET OVERLAY */
-.sheet-page{display:none;position:fixed;inset:0;background:#0f0f0f;z-index:2000;flex-direction:column;}
-.sheet-page.open{display:flex;}
-.sheet-page-header{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#000;border-bottom:1px solid #222;position:sticky;top:0;}
-.back-btn{background:#1c1c1c;border:none;color:#fff;padding:8px 14px;border-radius:20px;font-size:13px;cursor:pointer;}
-.back-btn:hover{background:#333;}
-.sheet-page iframe{flex:1;width:100%;border:none;background:#1a1a1a;}
-
-/* ABOUT OVERLAY */
-#about-page{
-  position:fixed;
-  inset:0;
-  background:#0a0a0a;
-  z-index:3000;
-  overflow-y:auto;
-  transform:translateX(-100%);
-  transition:transform 0.3s ease;
-}
-#about-page.open{transform:translateX(0);}
-
-.two-img{display:flex;gap:16px;}
-.two-img img{width:50%;height:300px;object-fit:cover;border-radius:10px;}
-
-/* FOOTER */
-footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margin-top:30px;}
-.footer-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
-.footer-brand{font-size:13px;font-weight:500;color:#555;}
-</style>
-</head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0CNDXRJ252"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-0CNDXRJ252');
-</script>
+<script src="script.js" defer></script>
+</head>
 <body>
-
-<!-- HEADER -->
 <div class="header">
   <div class="header-inner">
     <div class="brand-title">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</div>
@@ -255,7 +29,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       <div class="whatsapp-invite-copy">
         <span class="whatsapp-invite-eyebrow">WHATSAPP COMMUNITY</span>
         <h2 class="whatsapp-invite-title" id="whatsapp-invite-title">Join Our WhatsApp Community</h2>
-        <p class="whatsapp-invite-description">Ticket updates, availability and assistance — all in one place.</p>
+        <p class="whatsapp-invite-description">Ticket updates, availability and assistance - all in one place.</p>
       </div>
       <div class="whatsapp-invite-action">
         <a href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank" rel="noopener noreferrer" aria-label="Scan the QR code or open the WhatsApp community">
@@ -264,9 +38,11 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
         <a class="whatsapp-invite-link" href="https://chat.whatsapp.com/Hsm3IsDQV36Jobl4uyADhC" target="_blank" rel="noopener noreferrer">Scan to join <span aria-hidden="true">→</span></a>
       </div>
     </section>
+
     <div class="service-kicker">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</div>
     <h1 class="service-title">Choose a ticket option</h1>
     <p class="service-intro">Select a service to continue.</p>
+
     <div class="service-options">
       <button class="service-option htb" type="button" onclick="openService('htb')">
         <span class="service-option-top">
@@ -281,6 +57,7 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
           <span class="service-option-cta">Explore service <span class="service-option-arrow" aria-hidden="true">→</span></span>
         </span>
       </button>
+
       <button class="service-option ready" type="button" onclick="openService('ready')">
         <span class="service-option-top">
           <span class="service-option-mark" aria-hidden="true">✓</span>
@@ -299,80 +76,68 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
 </main>
 
 <div class="catalog-shell" id="catalog-shell">
-<!-- FILTER BAR -->
-<div class="filter-section">
-  <input type="text" id="searchInput" placeholder="Search artist, venue..." oninput="applyFilters()">
-  <div class="country-row">
-    <div class="cat active" onclick="setCountry('all',this)">All</div>
-    <div class="cat" onclick="setCountry('MY',this)">Malaysia</div>
-    <div class="cat" onclick="setCountry('SG',this)">Singapore</div>
-    <div class="cat" onclick="setCountry('TH',this)">Thailand</div>
-    <div class="cat" onclick="setCountry('KR',this)">Korea</div>
-    <div class="cat" onclick="setCountry('ID',this)">Indonesia</div>
-    <div class="cat" onclick="setCountry('PH',this)">Philippines</div>
-    <div class="cat" onclick="setCountry('FR',this)">France</div>
-    <div class="cat" onclick="setCountry('HK',this)">Hong Kong</div>
-    <div class="cat" onclick="setCountry('AU',this)">Australia</div>
-    <div class="cat" onclick="setCountry('US',this)">United States</div>
-    <div class="cat" onclick="setCountry('MO',this)">Macau</div>
-    <div class="cat" onclick="setCountry('VN',this)">Vietnam</div>
-    <div class="cat" onclick="setCountry('TW',this)">Taiwan</div>
-  </div>
-
-  <div class="country-row">
-    <div class="cat" onclick="setCountry('Rent',this)">Rent Phone</div>
-    <div class="cat" onclick="setCountry('Currency',this)">Currency Exchange</div>
-    <div class="cat" onclick="setCountry('Genting',this)">Genting Concert Tickets</div>
-  </div>
-</div>
-
-<div class="catalog-bar">
-  <button class="catalog-back" type="button" onclick="showServicePicker()">← Back to services</button>
-  <div class="catalog-label" id="catalog-label"></div>
-</div>
-
-<!-- EVENTS -->
-<div class="section">
-  <div class="section-heading">Events</div>
-  <div class="grid" id="eventsGrid">
+  <div class="filter-section">
+    <input type="text" id="searchInput" placeholder="Search artist, venue..." oninput="applyFilters()">
+    <div class="country-row">
+      <div class="cat active" onclick="setCountry('all',this)">All</div>
+      <div class="cat" onclick="setCountry('MY',this)">Malaysia</div>
+      <div class="cat" onclick="setCountry('SG',this)">Singapore</div>
+      <div class="cat" onclick="setCountry('TH',this)">Thailand</div>
+      <div class="cat" onclick="setCountry('KR',this)">Korea</div>
+      <div class="cat" onclick="setCountry('ID',this)">Indonesia</div>
+      <div class="cat" onclick="setCountry('PH',this)">Philippines</div>
+      <div class="cat" onclick="setCountry('FR',this)">France</div>
+      <div class="cat" onclick="setCountry('HK',this)">Hong Kong</div>
+      <div class="cat" onclick="setCountry('AU',this)">Australia</div>
+      <div class="cat" onclick="setCountry('US',this)">United States</div>
+      <div class="cat" onclick="setCountry('MO',this)">Macau</div>
+      <div class="cat" onclick="setCountry('VN',this)">Vietnam</div>
+      <div class="cat" onclick="setCountry('TW',this)">Taiwan</div>
     </div>
-</div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</div>
-    <div class="about-btn" onclick="openAbout()">About Us</div>
+    <div class="country-row">
+      <div class="cat" onclick="setCountry('Rent',this)">Rent Phone</div>
+      <div class="cat" onclick="setCountry('Currency',this)">Currency Exchange</div>
+      <div class="cat" onclick="setCountry('Genting',this)">Genting Concert Tickets</div>
+    </div>
   </div>
-</footer>
+
+  <div class="catalog-bar">
+    <button class="catalog-back" type="button" onclick="showServicePicker()">← Back to services</button>
+    <div class="catalog-label" id="catalog-label"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-heading">Events</div>
+    <div class="grid" id="eventsGrid"></div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">Ethen Chin Kar Hao Ticketing Service | 豪哥带你看演唱会票务</div>
+      <div class="about-btn" onclick="openAbout()">About Us</div>
+    </div>
+  </footer>
 </div>
 
-<!-- SHEET OVERLAY -->
 <div class="sheet-page" id="sheet-page">
   <div class="sheet-page-header">
     <button class="back-btn" onclick="closeSheet()">← Back</button>
     <span id="sheet-label" style="font-size:15px;font-weight:600;"></span>
   </div>
-  <!-- Google Sheet iframe -->
   <iframe id="sheet-frame" src="" style="flex:1;width:100%;border:none;background:#1a1a1a;display:none;"></iframe>
-  <!-- Photo viewer -->
   <div id="photo-viewer" style="display:none;flex:1;overflow-y:auto;background:#111;padding:20px;flex-direction:column;gap:16px;"></div>
-  <!-- Drive folder embed (used to scrape file IDs without API) -->
   <iframe id="drive-scraper" style="display:none;"></iframe>
 </div>
 
-<!-- ABOUT PAGE OVERLAY -->
 <div id="about-page">
-
   <div style="display:flex;align-items:center;gap:12px;padding:12px 20px;background:#000;border-bottom:1px solid #222;position:sticky;top:0;z-index:10;">
     <button onclick="closeAbout()" class="back-btn">← Back</button>
     <span style="font-size:15px;font-weight:600;">About Us</span>
   </div>
 
-  <!-- Legit Check Section -->
   <section style="padding:40px 20px;background:#0f0f0f;">
     <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:24px;">
-
       <h2 style="font-size:20px;font-weight:600;">Legit Check &amp; Community</h2>
 
       <div style="background:#111;border-radius:12px;padding:24px;border:1px solid #1c1c1c;display:flex;flex-direction:column;gap:14px;">
@@ -395,17 +160,13 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
           <img src="whatsappright.jpeg" loading="lazy" decoding="async">
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- Socials + Contact -->
   <div style="padding:30px 20px 60px;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:40px;">
-
     <div>
       <h2 style="font-size:20px;font-weight:600;margin-bottom:16px;">Connect With Us</h2>
       <div style="display:flex;gap:14px;flex-wrap:wrap;">
-
         <a href="https://www.facebook.com/chinethen" target="_blank" style="flex:1;min-width:180px;background:#111;padding:18px;border-radius:12px;text-decoration:none;color:#fff;border:1px solid #1c1c1c;">
           <div style="font-size:14px;font-weight:500;margin-bottom:5px;">📘 Facebook</div>
           <div style="color:#555;font-size:12px;">Ethen Chin Kar Hao</div>
@@ -430,7 +191,6 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
           <div style="font-size:14px;font-weight:500;margin-bottom:5px;">🟡 闲鱼</div>
           <div style="color:#555;font-size:12px;">豪哥带你看演唱会</div>
         </a>
-
       </div>
     </div>
 
@@ -439,797 +199,10 @@ footer{background:#000;padding:24px 40px 40px;border-top:1px solid #1a1a1a;margi
       <div style="background:#111;padding:24px;border-radius:12px;border:1px solid #1c1c1c;display:flex;flex-direction:column;gap:10px;">
         <div style="font-size:16px;font-weight:500;">💬 WhatsApp Support</div>
         <div style="color:#555;font-size:13px;">+60 16-642 8520</div>
-        <a href="https://wa.me/60166428520" target="_blank" style="margin-top:8px;display:inline-block;background:#25D366;color:#000;padding:11px 20px;border-radius:8px;font-weight:600;text-decoration:none;font-size:14px;width:fit-content;" onclick="gtag('event', 'whatsapp_click', {
-  event_category: 'contact',
-  event_label: 'main_whatsapp'
-});">Chat Now</a>
+        <a href="https://wa.me/60166428520" target="_blank" style="margin-top:8px;display:inline-block;background:#25D366;color:#000;padding:11px 20px;border-radius:8px;font-weight:600;text-decoration:none;font-size:14px;width:fit-content;" onclick="gtag('event', 'whatsapp_click', { event_category: 'contact', event_label: 'main_whatsapp' });">Chat Now</a>
       </div>
     </div>
-
   </div>
 </div>
-
-<script>
-const API_URL =
-"https://script.google.com/macros/s/AKfycbyFuh-_5l0A5XNOKQyepSYQkr8l6d9Ap7fXtEgwnZoghj8KT4GxSWZRv0gZSUDvKLM/exec";
-
-const CARD_IMAGE_FOLDER = "14f7DQ0_NgqwWsWodjsYPQPM2Frsz89YG";
-const imageMap = {};
-
-let sheetData={};
-
-const DRIVE_API_KEY = 'AIzaSyChKGiFIRlWRrarAZlbBaLQQJKCWIthN54';
-
-async function loadFolderPhotos(folderId, label) {
-  document.getElementById('sheet-label').textContent = label;
-  document.getElementById('sheet-page').classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  const frame = document.getElementById('sheet-frame');
-  const viewer = document.getElementById('photo-viewer');
-
-  frame.style.display = 'none';
-
-  // ✅ GRID LAYOUT (MAIN CHANGE)
-  if (window.innerWidth <= 600) {
-  // 📱 MOBILE → FULL WIDTH (NO GRID)
-  viewer.style.display = 'flex';
-  viewer.style.flexDirection = 'column';
-  viewer.style.gap = '16px';
-  viewer.style.padding = '12px 10px';
-} else {
-  // 💻 DESKTOP → GRID
-  viewer.style.display = 'grid';
-  viewer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(500px, 1fr))';
-  viewer.style.gap = '12px';
-  viewer.style.padding = '12px 16px';
-}
-  viewer.style.width = '100%';  
-  viewer.style.maxWidth = 'none';
-
-  viewer.innerHTML = '<div style="color:#555;text-align:center;padding:60px;">⏳ Loading photos...</div>';
-
-  try {
-    const query = encodeURIComponent(
-      `'${folderId}' in parents and mimeType contains 'image/' and trashed=false`
-    );
-
-    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&key=${DRIVE_API_KEY}&fields=files(id,name)&orderBy=createdTime desc&pageSize=50`;
-
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if (data.error) {
-      viewer.innerHTML = `<div style="color:#e63946;text-align:center;padding:60px;">
-        Error: ${data.error.message}
-      </div>`;
-      return;
-    }
-
-    const files = data.files;
-
-    if (!files || files.length === 0) {
-      viewer.innerHTML = '<div style="color:#555;text-align:center;padding:60px;">No photos found.</div>';
-      return;
-    }
-
-    viewer.innerHTML = '';
-
-    files.forEach((file, i) => {
-      const wrapper = document.createElement('div');
-
-      // ✅ CARD STYLE
-      wrapper.style.cssText = `
-        width:100%;
-        background:#0a0a0a;
-        border-radius:10px;
-        overflow:hidden;
-        position:relative;
-      `;
-
-      const img = document.createElement('img');
-      img.src = `https://lh3.googleusercontent.com/d/${file.id}`;
-
-      // ✅ IMAGE STYLE (GRID FRIENDLY)
-      img.style.cssText = `
-        width:100%;
-        object-fit:cover;
-        display:block;
-        transition:0.3s;
-        cursor:pointer;
-      `;
-
-      img.loading = 'lazy';
-      img.alt = file.name;
-
-      // 🔥 hover effect (makes it feel premium)
-      img.onmouseover = () => img.style.transform = 'scale(1.05)';
-      img.onmouseout = () => img.style.transform = 'scale(1)';
-
-      // 🔍 click to zoom
-      img.onclick = () => openImageZoom(img.src);
-
-      // ❌ hide broken images
-      img.onerror = () => wrapper.style.display = 'none';
-
-      // 📊 counter badge
-      const num = document.createElement('div');
-      num.style.cssText = `
-        position:absolute;
-        top:10px;
-        right:10px;
-        background:rgba(0,0,0,0.6);
-        color:#fff;
-        font-size:11px;
-        padding:4px 10px;
-        border-radius:20px;
-      `;
-      num.textContent = `${i + 1} / ${files.length}`;
-
-      wrapper.appendChild(img);
-      wrapper.appendChild(num);
-      viewer.appendChild(wrapper);
-    });
-
-  } catch (err) {
-    viewer.innerHTML = `<div style="color:#e63946;text-align:center;padding:60px;">
-      Failed to load photos<br>${err.message}
-    </div>`;
-  }
-}
-function openSheet(key) {
-  gtag('event', 'event_open', {
-  event_category: 'concert',
-  event_label: key
-});
-  const data = sheetData[key];
-  if (!data) return;
-
-  document.getElementById('sheet-label').textContent = data.label;
-  document.getElementById('sheet-page').classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  const frame = document.getElementById('sheet-frame');
-  const viewer = document.getElementById('photo-viewer');
-
-  if (data.folder) {
-    // FOLDER MODE — auto loads all photos from Drive folder
-    frame.style.display = 'none';
-    loadFolderPhotos(data.folder, data.label);
-
-  } else if (data.photos) {
-    // MANUAL PHOTOS array
-    frame.style.display = 'none';
-    viewer.style.display = 'grid';
-    viewer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(260px, 1fr))';
-    viewer.style.gap = '16px';
-    viewer.style.padding = '20px';
-    viewer.innerHTML = '';
-    data.photos.forEach((url, i) => {
-      const wrapper = document.createElement('div');
-      wrapper.style.cssText = `
-      width:100%;
-      background:#0a0a0a;
-      border-radius:10px;
-      overflow:hidden;
-      `;
-      const img = document.createElement('img');
-      img.src = url;
-      img.style.cssText = `
-      width:100%;
-      height:220px;
-      object-fit:cover;
-      display:block;
-      `;
-      img.loading = 'lazy';
-      const num = document.createElement('div');
-      num.style.cssText = 'position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.65);color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;';
-      num.textContent = `${i + 1} / ${data.photos.length}`;
-      wrapper.appendChild(img);
-      wrapper.appendChild(num);
-      viewer.appendChild(wrapper);
-    });
-
-  } else if (data.url) {
-    // GOOGLE SHEET
-    viewer.style.display = 'none';
-    viewer.innerHTML = '';
-    frame.style.display = 'flex';
-    frame.src = data.url;
-  }
-}
-
-function openImageZoom(src) {
-  const overlay = document.createElement("div");
-  overlay.style.cssText = `
-    position:fixed;inset:0;background:rgba(0,0,0,0.95);
-    display:flex;justify-content:center;align-items:center;
-    z-index:9999;overflow:hidden;touch-action:none;
-  `;
-
-  const closeBtn = document.createElement("div");
-  closeBtn.innerHTML = "✕";
-  closeBtn.style.cssText = `
-    position:absolute;top:12px;right:12px;
-    font-size:20px;color:#fff;cursor:pointer;
-    z-index:10000;
-    background:rgba(255,255,255,0.2);
-    width:52px;height:52px;
-    border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    -webkit-tap-highlight-color:transparent;
-    touch-action:manipulation;
-    border:2px solid rgba(255,255,255,0.3);
-  `;
-
-  // Make touch area even bigger with padding trick
-  closeBtn.addEventListener('touchstart', (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    closeOverlay();
-  }, { passive: false });
-
-  closeBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    closeOverlay();
-  });
-
-  const hint = document.createElement("div");
-  hint.innerHTML = "Scroll to zoom · Drag to pan · Double-click to reset";
-  hint.style.cssText = `
-    position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
-    font-size:11px;color:#777;white-space:nowrap;pointer-events:none;
-    transition:opacity 1s;z-index:10000;
-  `;
-  setTimeout(() => hint.style.opacity = '0', 2500);
-
-  const img = document.createElement("img");
-  img.alt = "Enlarged event image";
-  img.src = src;
-  img.style.cssText = `
-    max-width:90vw;max-height:90vh;
-    cursor:grab;user-select:none;-webkit-user-drag:none;
-    transform-origin:center center;
-    display:block;will-change:transform;
-  `;
-
-  let scale = 1, posX = 0, posY = 0;
-  let isDragging = false, lastX, lastY, lastDist = null;
-  let closed = false;
-
-  function clampPos() {
-    if (scale <= 1) { posX = 0; posY = 0; return; }
-    const rect = img.getBoundingClientRect();
-    const maxX = Math.max(0, (rect.width - window.innerWidth) / 2 + 40);
-    const maxY = Math.max(0, (rect.height - window.innerHeight) / 2 + 40);
-    posX = Math.max(-maxX, Math.min(maxX, posX));
-    posY = Math.max(-maxY, Math.min(maxY, posY));
-  }
-
-  function applyTransform(smooth = false) {
-    img.style.transition = smooth ? 'transform 0.25s ease' : 'none';
-    img.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
-  }
-
-  function closeOverlay() {
-    if (closed) return;
-    closed = true;
-    overlay.remove();
-    window.removeEventListener('mousemove', onMouseMove);
-    window.removeEventListener('mouseup', onMouseUp);
-  }
-
-  // WHEEL ZOOM
-  overlay.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    const factor = e.deltaY > 0 ? 0.92 : 1.08;
-    scale = Math.min(Math.max(1, scale * factor), 6);
-    clampPos();
-    applyTransform();
-  }, { passive: false });
-
-  // MOUSE DRAG
-  img.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-    if (scale <= 1) return;
-    isDragging = true;
-    lastX = e.clientX;
-    lastY = e.clientY;
-    img.style.cursor = 'grabbing';
-  });
-
-  function onMouseMove(e) {
-    if (!isDragging) return;
-    posX += e.clientX - lastX;
-    posY += e.clientY - lastY;
-    lastX = e.clientX;
-    lastY = e.clientY;
-    clampPos();
-    applyTransform();
-  }
-
-  function onMouseUp() {
-    isDragging = false;
-    img.style.cursor = scale > 1 ? 'grab' : 'default';
-  }
-
-  window.addEventListener('mousemove', onMouseMove);
-  window.addEventListener('mouseup', onMouseUp);
-
-  // DOUBLE CLICK RESET
-  img.addEventListener('dblclick', () => {
-    scale = 1; posX = 0; posY = 0;
-    applyTransform(true);
-    img.style.cursor = 'default';
-  });
-
-  // TOUCH PINCH + PAN
-  overlay.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    if (e.touches.length === 2) {
-      lastDist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-    } else if (e.touches.length === 1) {
-      isDragging = true;
-      lastX = e.touches[0].clientX;
-      lastY = e.touches[0].clientY;
-    }
-  }, { passive: false });
-
-  overlay.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    if (e.touches.length === 2 && lastDist !== null) {
-      const dist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      scale = Math.min(Math.max(1, scale * (dist / lastDist)), 6);
-      lastDist = dist;
-      clampPos();
-      applyTransform();
-    } else if (e.touches.length === 1 && isDragging) {
-      posX += e.touches[0].clientX - lastX;
-      posY += e.touches[0].clientY - lastY;
-      lastX = e.touches[0].clientX;
-      lastY = e.touches[0].clientY;
-      clampPos();
-      applyTransform();
-    }
-  }, { passive: false });
-
-  overlay.addEventListener('touchend', (e) => {
-    if (e.touches.length < 2) lastDist = null;
-    if (e.touches.length === 0) isDragging = false;
-  });
-
-  // CLOSE — stopPropagation prevents bubbling to overlay click
-  closeBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    closeOverlay();
-  });
-
-  // Click dark area to close (but NOT the image)
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeOverlay();
-  });
-
-  // ESC key to close
-  const onKeyDown = (e) => {
-    if (e.key === 'Escape') { closeOverlay(); document.removeEventListener('keydown', onKeyDown); }
-  };
-  document.addEventListener('keydown', onKeyDown);
-
-  overlay.appendChild(closeBtn);
-  overlay.appendChild(hint);
-  overlay.appendChild(img);
-  document.body.appendChild(overlay);
-}
-function closeSheet() {
-  document.getElementById('sheet-page').classList.remove('open');
-  document.getElementById('sheet-frame').src = '';
-  document.getElementById('sheet-frame').style.display = 'none';
-  document.getElementById('photo-viewer').style.display = 'none';
-  document.getElementById('photo-viewer').innerHTML = '';
-  document.body.style.overflow = '';
-}
-
-function openAbout(){
-  document.getElementById('about-page').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeAbout(){
-  document.getElementById('about-page').classList.remove('open');
-  document.body.style.overflow='';
-}
-
-let currentCountry="all";
-let currentService=null;
-
-function openService(service) {
-  currentService = service;
-  document.getElementById("service-page").classList.add("hidden");
-  document.getElementById("catalog-shell").classList.add("open");
-  document.getElementById("catalog-label").textContent = service === "htb" ? "Help to Buy" : "Ready Stock";
-  updateFilterButtons();
-  applyFilters();
-  window.scrollTo(0, 0);
-}
-
-function showServicePicker() {
-  currentService = null;
-  currentCountry = "all";
-  document.getElementById("searchInput").value = "";
-  document.querySelectorAll(".cat").forEach(button => button.classList.remove("active"));
-  document.querySelector(".cat")?.classList.add("active");
-  document.getElementById("catalog-shell").classList.remove("open");
-  document.getElementById("service-page").classList.remove("hidden");
-  updateFilterButtons();
-  window.scrollTo(0, 0);
-}
-
-function setCountry(country,el){
-  currentCountry=country;
-  document.querySelectorAll('.cat').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  applyFilters();
-}
-function applyFilters(){
-  const raw = document.getElementById('searchInput').value.toLowerCase().trim();
-  const terms = raw.split(/\s+/).filter(Boolean); // split by spaces
-
-  document.querySelectorAll('.card').forEach(card => {
-    const dataTitle = (card.dataset.title || "").toLowerCase();
-    const cardText = (card.innerText || card.textContent || "").toLowerCase();
-    const combined = dataTitle + " " + cardText;
-    const country = card.dataset.country || "";
-    const service = card.dataset.service || "";
-
-    // Every word must match somewhere in the combined text
-    const matchSearch = !raw || terms.every(term => combined.includes(term));
-    const matchCountry = (currentCountry === "all" || country === currentCountry);
-    const matchService = !currentService || service === currentService;
-    card.style.display = (matchSearch && matchCountry && matchService) ? "block" : "none";
-  });
-}
-
-setInterval(()=>{
-  const sp=document.getElementById("sheet-page");
-  const iframe=document.getElementById("sheet-frame");
-  if(sp.classList.contains("open")&&iframe.src){iframe.src=iframe.src;}
-},180000);
-
-function normalizeCountry(country) {
-  const value = String(country || "").trim();
-  const upper = value.toUpperCase();
-  const countryMap = {
-    MALAYSIA: "MY",
-    SINGAPORE: "SG",
-    THAILAND: "TH",
-    KOREA: "KR",
-    "SOUTH KOREA": "KR",
-    INDONESIA: "ID",
-    France: "FR",
-    PHILIPPINES: "PH",
-    "Hong Kong": "HK",
-    "Rent Phone": "Rent",
-    "Currency Exchange": "Currency",
-    "Genting Concert Tickets": "Genting",
-    AUSTRALIA: "AU",
-    "United States of America": "US",
-    MACAU: "MO",
-    VIETNAM: "VN",
-    TAIWAN: "TW",
-  };
-
-  return countryMap[upper] || upper;
-}
-
-function getEventService(event) {
-  const type = String(event.type || "").trim().toLowerCase();
-  return type === "htb" || type === "ready" ? type : "";
-}
-
-function openEventSheet(sheet, label) {
-  if (!sheet) return;
-
-  if (sheetData[sheet]) {
-    openSheet(sheet);
-    return;
-  }
-
-  document.getElementById('sheet-label').textContent = label || 'Event Details';
-  document.getElementById('sheet-page').classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  const frame = document.getElementById('sheet-frame');
-  const viewer = document.getElementById('photo-viewer');
-  viewer.style.display = 'none';
-  viewer.innerHTML = '';
-  frame.style.display = 'flex';
-  frame.src = sheet;
-}
-
-function renderEvent(event) {
-  const country = normalizeCountry(event.country);
-  const service = getEventService(event);
-  const title = event.title || "";
-  const description = event.description || "";
-  const date = event.date || "";
-  const venue = event.venue || "";
-  const image = event.image || "";
-  const label = event.label || title;
-  const sheet = event.sheet || "";
-
-  const card = document.createElement("div");
-  card.className = "card";
-  card.dataset.country = country;
-  card.dataset.service = service;
-  card.dataset.title = [
-    event.id,
-    title,
-    description,
-    country,
-    date,
-    venue,
-    label
-  ].filter(Boolean).join(" ").toLowerCase();
-  card.onclick = () => openEventSheet(sheet, label);
-
- const img = document.createElement("img");
-  img.alt = title;
-  img.loading = "lazy";
-  img.decoding = "async";
-
-  const key = (image || "").trim().toLowerCase();
-  img.dataset.imageKey = key;
-  if (imageMap[key]) img.src = imageMap[key];
-
-  const content = document.createElement("div");
-  content.className = "card-content";
-
-  const badge = document.createElement("span");
-  badge.className = `badge badge-${country}`;
-  badge.textContent = country;
-
-  const titleEl = document.createElement("div");
-  titleEl.className = "title2";
-  titleEl.textContent = title;
-
-  const descEl = document.createElement("div");
-  descEl.className = "title3";
-  descEl.textContent = description;
-
-  content.appendChild(badge);
-  content.appendChild(titleEl);
-  content.appendChild(descEl);
-
-  if (date) {
-    const dateEl = document.createElement("div");
-    dateEl.className = "info";
-    dateEl.textContent = `📅 ${date}`;
-    content.appendChild(dateEl);
-  }
-
-  if (venue) {
-    const venueEl = document.createElement("div");
-    venueEl.className = "info";
-    venueEl.textContent = `📍 ${venue}`;
-    content.appendChild(venueEl);
-  }
-
-  card.appendChild(img);
-  card.appendChild(content);
-
-  return card;
-}
-
-function getEventsFromResponse(data) {
-  if (Array.isArray(data)) return data;
-  if (Array.isArray(data.events)) return data.events;
-  if (Array.isArray(data.data)) return data.data;
-  if (Array.isArray(data.rows)) return data.rows;
-  return [];
-}
-
-const EVENTS_CACHE_KEY = "ticketing-events-v2";
-const EVENTS_CACHE_TTL = 10 * 60 * 1000;
-const EVENTS_REQUEST_TIMEOUT = 12 * 1000;
-
-function showEventsMessage(message, onRetry) {
-  const grid = document.getElementById("eventsGrid");
-  if (!grid) return;
-
-  grid.innerHTML = "";
-  const state = document.createElement("div");
-  state.style.cssText = "grid-column:1/-1;color:#777;text-align:center;padding:50px 16px;font-size:13px;line-height:1.6;";
-  state.textContent = message;
-  grid.appendChild(state);
-
-  if (onRetry) {
-    const retry = document.createElement("button");
-    retry.type = "button";
-    retry.className = "back-btn";
-    retry.textContent = "Retry";
-    retry.addEventListener("click", onRetry);
-    state.appendChild(document.createElement("br"));
-    state.appendChild(retry);
-  }
-}
-
-function getCachedEvents() {
-  try {
-    const cached = JSON.parse(localStorage.getItem(EVENTS_CACHE_KEY));
-    if (cached && Date.now() - cached.savedAt < EVENTS_CACHE_TTL && Array.isArray(cached.events)) {
-      return cached.events;
-    }
-  } catch (error) {
-    console.warn("Event cache could not be read.", error);
-  }
-  return null;
-}
-
-function cacheEvents(events) {
-  try {
-    localStorage.setItem(EVENTS_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), events }));
-  } catch (error) {
-    console.warn("Event cache could not be saved.", error);
-  }
-}
-
-function updateServiceCounts(events) {
-  const counts = { htb: 0, ready: 0 };
-  events.forEach(event => {
-    const service = getEventService(event);
-    if (service) counts[service] += 1;
-  });
-
-  Object.entries(counts).forEach(([service, count]) => {
-    const element = document.getElementById(`${service}-count`);
-    if (element) element.textContent = `${count} ${count === 1 ? "listing" : "listings"}`;
-  });
-}
-
-function renderEvents(events) {
-  const grid = document.getElementById("eventsGrid");
-  if (!grid) return;
-
-  grid.innerHTML = "";
-  sheetData = {};
-  updateServiceCounts(events);
-
-  if (!events.length) {
-    showEventsMessage("No events are available right now.");
-    return;
-  }
-
-  const cards = document.createDocumentFragment();
-  events.forEach(event => {
-    sheetData[event.id] = {
-      label: event.label,
-      url: event.sheet
-    };
-    cards.appendChild(renderEvent(event));
-  });
-
-  grid.appendChild(cards);
-  updateFilterButtons();
-  applyFilters();
-}
-
-async function loadEvents(){
-  const cardImagesPromise = loadCardImages().catch(error => {
-    console.warn("Card image map could not be loaded.", error);
-  });
-
-  const cachedEvents = getCachedEvents();
-  if (cachedEvents) {
-    renderEvents(cachedEvents);
-  } else {
-    showEventsMessage("Loading events...");
-  }
-
-  cardImagesPromise.then(updateCardImages);
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), EVENTS_REQUEST_TIMEOUT);
-
-  try {
-
-const response = await fetch(API_URL, {
-  method: "GET",
-  mode: "cors",
-  redirect: "follow",
-  signal: controller.signal
-});
-
-if (!response.ok) throw new Error(`Event API returned ${response.status}.`);
-
-const data = await response.json();
-const events = getEventsFromResponse(data);
-cacheEvents(events);
-
-renderEvents(events);
-updateCardImages();
-
-  } catch (error) {
-    console.error("Event API failed.", error);
-    if (!cachedEvents) {
-      const message = error.name === "AbortError"
-        ? "Events are taking too long to respond."
-        : "Events could not be loaded. Check your connection and try again.";
-      showEventsMessage(message, loadEvents);
-    }
-  } finally {
-    clearTimeout(timeout);
-  }
-
-}
-
-loadEvents();
-
-function updateFilterButtons() {
-  const available = new Set();
-  let allButton;
-
-  document.querySelectorAll(".card").forEach(card => {
-    if (!currentService || card.dataset.service === currentService) {
-      available.add(card.dataset.country);
-    }
-  });
-
-  document.querySelectorAll(".cat").forEach(button => {
-    const value = button.getAttribute("onclick")
-      ?.match(/'([^']+)'/)?.[1];
-
-    if (value === "all") {
-      allButton = button;
-      return;
-    }
-
-    if (value) button.style.display = available.has(value) ? "" : "none";
-  });
-
-  if (currentCountry !== "all" && !available.has(currentCountry)) {
-    currentCountry = "all";
-    document.querySelectorAll(".cat").forEach(button => button.classList.remove("active"));
-    allButton?.classList.add("active");
-  }
-}
-function getCardImageUrl(id) {
-  return `https://lh3.googleusercontent.com/d/${id}=w900`;
-}
-
-function updateCardImages() {
-  document.querySelectorAll("img[data-image-key]").forEach(img => {
-    const src = imageMap[img.dataset.imageKey];
-    if (src && !img.getAttribute("src")) img.src = src;
-  });
-}
-
-async function loadCardImages() {
-
-    const query = encodeURIComponent(
-        `'${CARD_IMAGE_FOLDER}' in parents and mimeType contains 'image/' and trashed=false`
-    );
-
-    const url =
-        `https://www.googleapis.com/drive/v3/files?q=${query}` +
-        `&key=${DRIVE_API_KEY}` +
-        `&fields=files(id,name)` +
-        `&pageSize=1000`;
-
-    const res = await fetch(url);
-    const data = await res.json();
-    const files = Array.isArray(data.files) ? data.files : [];
-
-    files.forEach(file => {
-        imageMap[file.name.toLowerCase()] =
-            getCardImageUrl(file.id);
-    });
-}
-
-</script>
 </body>
 </html>
