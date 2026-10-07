@@ -124,8 +124,15 @@
   <div class="sheet-page-header">
     <button class="back-btn" onclick="closeSheet()">← Back</button>
     <span id="sheet-label" style="font-size:15px;font-weight:600;"></span>
+    <div class="sheet-zoom-controls" aria-label="Sheet zoom controls">
+      <button class="sheet-zoom-btn" type="button" onclick="adjustSheetZoom(-0.1)" aria-label="Zoom out">−</button>
+      <button class="sheet-zoom-btn" type="button" onclick="resetSheetZoom()" aria-label="Reset zoom">100%</button>
+      <button class="sheet-zoom-btn" type="button" onclick="adjustSheetZoom(0.1)" aria-label="Zoom in">+</button>
+    </div>
   </div>
-  <iframe id="sheet-frame" src="" style="flex:1;width:100%;border:none;background:#1a1a1a;display:none;"></iframe>
+  <div class="sheet-frame-wrap" id="sheet-frame-wrap">
+    <iframe id="sheet-frame" src="" style="display:none;"></iframe>
+  </div>
   <div id="photo-viewer" style="display:none;flex:1;overflow-y:auto;background:#111;padding:20px;flex-direction:column;gap:16px;"></div>
   <iframe id="drive-scraper" style="display:none;"></iframe>
 </div>

@@ -20,8 +20,10 @@ async function loadFolderPhotos(folderId, label) {
   document.body.style.overflow = 'hidden';
 
   const frame = document.getElementById('sheet-frame');
+  const frameWrap = document.getElementById('sheet-frame-wrap');
   const viewer = document.getElementById('photo-viewer');
 
+  frameWrap.style.display = 'none';
   frame.style.display = 'none';
 
   // ✅ GRID LAYOUT (MAIN CHANGE)
@@ -144,15 +146,18 @@ function openSheet(key) {
   document.body.style.overflow = 'hidden';
 
   const frame = document.getElementById('sheet-frame');
+  const frameWrap = document.getElementById('sheet-frame-wrap');
   const viewer = document.getElementById('photo-viewer');
 
   if (data.folder) {
     // FOLDER MODE — auto loads all photos from Drive folder
+    frameWrap.style.display = 'none';
     frame.style.display = 'none';
     loadFolderPhotos(data.folder, data.label);
 
   } else if (data.photos) {
     // MANUAL PHOTOS array
+    frameWrap.style.display = 'none';
     frame.style.display = 'none';
     viewer.style.display = 'grid';
     viewer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(260px, 1fr))';
@@ -188,7 +193,9 @@ function openSheet(key) {
     // GOOGLE SHEET
     viewer.style.display = 'none';
     viewer.innerHTML = '';
-    frame.style.display = 'flex';
+    resetSheetZoom();
+    frameWrap.style.display = 'flex';
+    frame.style.display = 'block';
     frame.src = data.url;
   }
 }
@@ -384,6 +391,7 @@ function closeSheet() {
   document.getElementById('sheet-page').classList.remove('open');
   document.getElementById('sheet-frame').src = '';
   document.getElementById('sheet-frame').style.display = 'none';
+  document.getElementById('sheet-frame-wrap').style.display = 'none';
   document.getElementById('photo-viewer').style.display = 'none';
   document.getElementById('photo-viewer').innerHTML = '';
   document.body.style.overflow = '';
@@ -400,6 +408,29 @@ function closeAbout(){
 
 let currentCountry="all";
 let currentService=null;
+let sheetZoom = 1;
+
+function setSheetZoom(value) {
+  const frame = document.getElementById("sheet-frame");
+  const wrap = document.getElementById("sheet-frame-wrap");
+  if (!frame || !wrap) return;
+
+  sheetZoom = Math.min(Math.max(value, 0.55), 1.8);
+  frame.style.transform = `scale(${sheetZoom})`;
+  frame.style.width = `${100 / sheetZoom}%`;
+  frame.style.height = `${100 / sheetZoom}%`;
+
+  const resetButton = document.querySelector(".sheet-zoom-btn[aria-label='Reset zoom']");
+  if (resetButton) resetButton.textContent = `${Math.round(sheetZoom * 100)}%`;
+}
+
+function adjustSheetZoom(delta) {
+  setSheetZoom(sheetZoom + delta);
+}
+
+function resetSheetZoom() {
+  setSheetZoom(1);
+}
 
 function openService(service) {
   currentService = service;
@@ -498,10 +529,13 @@ function openEventSheet(sheet, label) {
   document.body.style.overflow = 'hidden';
 
   const frame = document.getElementById('sheet-frame');
+  const frameWrap = document.getElementById('sheet-frame-wrap');
   const viewer = document.getElementById('photo-viewer');
   viewer.style.display = 'none';
   viewer.innerHTML = '';
-  frame.style.display = 'flex';
+  resetSheetZoom();
+  frameWrap.style.display = 'flex';
+  frame.style.display = 'block';
   frame.src = sheet;
 }
 
