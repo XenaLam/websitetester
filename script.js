@@ -25,6 +25,7 @@ async function loadFolderPhotos(folderId, label) {
 
   frameWrap.style.display = 'none';
   frame.style.display = 'none';
+  document.getElementById('sheet-zoom-controls').classList.remove('active');
 
   // ✅ GRID LAYOUT (MAIN CHANGE)
   if (window.innerWidth <= 600) {
@@ -148,6 +149,8 @@ function openSheet(key) {
   const frame = document.getElementById('sheet-frame');
   const frameWrap = document.getElementById('sheet-frame-wrap');
   const viewer = document.getElementById('photo-viewer');
+  const zoomControls = document.getElementById('sheet-zoom-controls');
+  zoomControls.classList.remove('active');
 
   if (data.folder) {
     // FOLDER MODE — auto loads all photos from Drive folder
@@ -195,6 +198,8 @@ function openSheet(key) {
     viewer.innerHTML = '';
     frameWrap.style.display = 'flex';
     frame.style.display = 'block';
+    zoomControls.classList.add('active');
+    resetSheetZoom();
     frameWrap.scrollLeft = 0;
     frameWrap.scrollTop = 0;
     frame.src = data.url;
@@ -389,10 +394,14 @@ function openImageZoom(src) {
   document.body.appendChild(overlay);
 }
 function closeSheet() {
+  resetSheetZoom();
+  document.getElementById('sheet-frame-wrap').scrollLeft = 0;
+  document.getElementById('sheet-frame-wrap').scrollTop = 0;
   document.getElementById('sheet-page').classList.remove('open');
   document.getElementById('sheet-frame').src = '';
   document.getElementById('sheet-frame').style.display = 'none';
   document.getElementById('sheet-frame-wrap').style.display = 'none';
+  document.getElementById('sheet-zoom-controls').classList.remove('active');
   document.getElementById('photo-viewer').style.display = 'none';
   document.getElementById('photo-viewer').innerHTML = '';
   document.body.style.overflow = '';
@@ -409,6 +418,47 @@ function closeAbout(){
 
 let currentCountry="all";
 let currentService=null;
+let sheetZoom = 1;
+
+function setSheetZoom(value) {
+  const frame = document.getElementById("sheet-frame");
+  const wrap = document.getElementById("sheet-frame-wrap");
+  const content = document.getElementById("sheet-zoom-content");
+  const zoomLevel = document.querySelector(".sheet-zoom-level");
+
+  if (!frame || !wrap || !content) return;
+
+  sheetZoom = Math.min(Math.max(value, 0.5), 2.5);
+  const width = wrap.clientWidth;
+  const height = wrap.clientHeight;
+
+  content.style.width = `${width * sheetZoom}px`;
+  content.style.height = `${height * sheetZoom}px`;
+  frame.style.width = `${width}px`;
+  frame.style.height = `${height}px`;
+  frame.style.transformOrigin = "top left";
+  frame.style.transform = `scale(${sheetZoom})`;
+
+  if (zoomLevel) {
+    zoomLevel.textContent = `${Math.round(sheetZoom * 100)}%`;
+  }
+}
+
+function adjustSheetZoom(delta) {
+  setSheetZoom(sheetZoom + delta);
+}
+
+function resetSheetZoom() {
+  setSheetZoom(1);
+}
+
+window.adjustSheetZoom = adjustSheetZoom;
+window.resetSheetZoom = resetSheetZoom;
+
+window.addEventListener("resize", () => {
+  const wrap = document.getElementById("sheet-frame-wrap");
+  if (wrap.style.display === "flex") setSheetZoom(sheetZoom);
+});
 
 function openService(service) {
   currentService = service;
@@ -509,10 +559,12 @@ function openEventSheet(sheet, label) {
   const frame = document.getElementById('sheet-frame');
   const frameWrap = document.getElementById('sheet-frame-wrap');
   const viewer = document.getElementById('photo-viewer');
+  document.getElementById('sheet-zoom-controls').classList.add('active');
   viewer.style.display = 'none';
   viewer.innerHTML = '';
   frameWrap.style.display = 'flex';
   frame.style.display = 'block';
+  resetSheetZoom();
   frameWrap.scrollLeft = 0;
   frameWrap.scrollTop = 0;
   frame.src = sheet;
