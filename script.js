@@ -18,6 +18,7 @@ async function loadFolderPhotos(folderId, label) {
   document.getElementById('sheet-label').textContent = label;
   document.getElementById('sheet-page').classList.add('open');
   document.body.style.overflow = 'hidden';
+  setViewportZoomLock(true);
 
   const frame = document.getElementById('sheet-frame');
   const frameWrap = document.getElementById('sheet-frame-wrap');
@@ -144,6 +145,7 @@ function openSheet(key) {
   document.getElementById('sheet-label').textContent = data.label;
   document.getElementById('sheet-page').classList.add('open');
   document.body.style.overflow = 'hidden';
+  setViewportZoomLock(true);
 
   const frame = document.getElementById('sheet-frame');
   const frameWrap = document.getElementById('sheet-frame-wrap');
@@ -198,7 +200,7 @@ function openSheet(key) {
     resetSheetZoom();
     frameWrap.scrollLeft = 0;
     frameWrap.scrollTop = 0;
-    frame.src = getSheetEmbedUrl(data.url);
+    frame.src = data.url;
   }
 }
 
@@ -397,6 +399,7 @@ function closeSheet() {
   document.getElementById('photo-viewer').style.display = 'none';
   document.getElementById('photo-viewer').innerHTML = '';
   document.body.style.overflow = '';
+  setViewportZoomLock(false);
 }
 
 function openAbout(){
@@ -411,32 +414,30 @@ function closeAbout(){
 let currentCountry="all";
 let currentService=null;
 let sheetZoom = 1;
-let sheetGestureState = null;
+const DEFAULT_VIEWPORT_CONTENT = "width=device-width, initial-scale=1.0";
+const LOCKED_VIEWPORT_CONTENT = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 
-function getSheetEmbedUrl(sheet) {
-  if (!sheet) return "";
+function setViewportZoomLock(isLocked) {
+  const viewport = document.querySelector("meta[name='viewport']");
+  if (!viewport) return;
 
-  try {
-    const url = new URL(sheet);
-    if (!url.hostname.includes("docs.google.com") || !url.pathname.includes("/spreadsheets/")) {
-      return sheet;
-    }
+  viewport.setAttribute("content", isLocked ? LOCKED_VIEWPORT_CONTENT : DEFAULT_VIEWPORT_CONTENT);
+}
 
-    const idMatch = url.pathname.match(/\/spreadsheets\/d\/(e\/[^/]+|[^/]+)/);
-    const spreadsheetId = idMatch?.[1];
-    const gid = url.searchParams.get("gid") || url.hash.match(/gid=([^&]+)/)?.[1] || "0";
+function isSheetViewerOpen() {
+  return document.getElementById("sheet-page")?.classList.contains("open");
+}
 
-    if (!spreadsheetId) return sheet;
-
-    if (spreadsheetId.startsWith("e/")) {
-      return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/pubhtml?gid=${encodeURIComponent(gid)}&single=true&widget=false&headers=false`;
-    }
-
-    return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/htmlview?gid=${encodeURIComponent(gid)}&single=true&widget=false&headers=false&rm=minimal`;
-  } catch (error) {
-    return sheet;
+function preventPagePinchZoom(event) {
+  if (isSheetViewerOpen() && event.touches?.length > 1) {
+    event.preventDefault();
   }
 }
+
+document.addEventListener("touchmove", preventPagePinchZoom, { passive: false });
+document.addEventListener("gesturestart", (event) => {
+  if (isSheetViewerOpen()) event.preventDefault();
+});
 
 function setSheetZoom(value) {
   const frame = document.getElementById("sheet-frame");
@@ -490,65 +491,12 @@ function resetSheetZoom() {
   setSheetZoom(1);
 }
 
-function getTouchDistance(touches) {
-  return Math.hypot(
-    touches[0].clientX - touches[1].clientX,
-    touches[0].clientY - touches[1].clientY
-  );
-}
-
-function setupSheetZoomGestures() {
-  const wrap = document.getElementById("sheet-frame-wrap");
-  if (!wrap) return;
-
-  wrap.addEventListener("touchstart", (event) => {
-    if (event.touches.length === 2) {
-      event.preventDefault();
-      sheetGestureState = {
-        mode: "pinch",
-        startDistance: getTouchDistance(event.touches),
-        startZoom: sheetZoom
-      };
-      return;
-    }
-
-    if (event.touches.length === 1) {
-      sheetGestureState = {
-        mode: "pan",
-        startX: event.touches[0].clientX,
-        startY: event.touches[0].clientY,
-        scrollLeft: wrap.scrollLeft,
-        scrollTop: wrap.scrollTop
-      };
-    }
-  }, { passive: false });
-
-  wrap.addEventListener("touchmove", (event) => {
-    if (!sheetGestureState) return;
-
-    if (event.touches.length === 2 && sheetGestureState.mode === "pinch") {
-      event.preventDefault();
-      const nextDistance = getTouchDistance(event.touches);
-      if (sheetGestureState.startDistance > 0) {
-        setSheetZoom(sheetGestureState.startZoom * (nextDistance / sheetGestureState.startDistance));
-      }
-      return;
-    }
-
-    if (event.touches.length === 1 && sheetGestureState.mode === "pan") {
-      event.preventDefault();
-      wrap.scrollLeft = sheetGestureState.scrollLeft + sheetGestureState.startX - event.touches[0].clientX;
-      wrap.scrollTop = sheetGestureState.scrollTop + sheetGestureState.startY - event.touches[0].clientY;
-    }
-  }, { passive: false });
-
-  wrap.addEventListener("touchend", () => {
-    sheetGestureState = null;
-  });
-}
-
 window.adjustSheetZoom = adjustSheetZoom;
 window.resetSheetZoom = resetSheetZoom;
+
+window.addEventListener("resize", () => {
+  if (isSheetViewerOpen()) setSheetZoom(sheetZoom);
+});
 
 function openService(service) {
   currentService = service;
@@ -645,6 +593,7 @@ function openEventSheet(sheet, label) {
   document.getElementById('sheet-label').textContent = label || 'Event Details';
   document.getElementById('sheet-page').classList.add('open');
   document.body.style.overflow = 'hidden';
+  setViewportZoomLock(true);
 
   const frame = document.getElementById('sheet-frame');
   const frameWrap = document.getElementById('sheet-frame-wrap');
@@ -656,7 +605,7 @@ function openEventSheet(sheet, label) {
   resetSheetZoom();
   frameWrap.scrollLeft = 0;
   frameWrap.scrollTop = 0;
-  frame.src = getSheetEmbedUrl(sheet);
+  frame.src = sheet;
 }
 
 function renderEvent(event) {
@@ -875,7 +824,6 @@ updateCardImages();
 
 }
 
-setupSheetZoomGestures();
 loadEvents();
 
 function updateFilterButtons() {
