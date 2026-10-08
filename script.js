@@ -197,7 +197,6 @@ function openSheet(key) {
     viewer.innerHTML = '';
     frameWrap.style.display = 'flex';
     frame.style.display = 'block';
-    resetSheetZoom();
     frameWrap.scrollLeft = 0;
     frameWrap.scrollTop = 0;
     frame.src = data.url;
@@ -413,7 +412,6 @@ function closeAbout(){
 
 let currentCountry="all";
 let currentService=null;
-let sheetZoom = 1;
 const DEFAULT_VIEWPORT_CONTENT = "width=device-width, initial-scale=1.0";
 const LOCKED_VIEWPORT_CONTENT = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 
@@ -437,65 +435,6 @@ function preventPagePinchZoom(event) {
 document.addEventListener("touchmove", preventPagePinchZoom, { passive: false });
 document.addEventListener("gesturestart", (event) => {
   if (isSheetViewerOpen()) event.preventDefault();
-});
-
-function setSheetZoom(value) {
-  const frame = document.getElementById("sheet-frame");
-  const wrap = document.getElementById("sheet-frame-wrap");
-  const content = document.getElementById("sheet-zoom-content");
-
-  if (!frame || !wrap || !content) return;
-
-  const previousZoom = sheetZoom;
-
-  sheetZoom = Math.min(Math.max(value, 0.5), 2.5);
-
-  const baseWidth = wrap.clientWidth;
-  const baseHeight = wrap.clientHeight;
-
-  // The content area becomes larger as zoom increases,
-  // giving the wrapper real scrollable dimensions.
-  content.style.width = `${baseWidth * sheetZoom}px`;
-  content.style.height = `${baseHeight * sheetZoom}px`;
-
-  // Keep the iframe at its original viewport size.
-  frame.style.width = `${baseWidth}px`;
-  frame.style.height = `${baseHeight}px`;
-
-  // Scale the actual iframe visually.
-  frame.style.transformOrigin = "top left";
-  frame.style.transform = `scale(${sheetZoom})`;
-
-  const resetButton = document.querySelector(
-    ".sheet-zoom-btn[aria-label='Reset spreadsheet zoom']"
-  );
-
-  if (resetButton) {
-    resetButton.textContent = `${Math.round(sheetZoom * 100)}%`;
-  }
-
-  // Keep approximately the same visible position.
-  if (previousZoom !== sheetZoom && previousZoom > 0) {
-    const ratio = sheetZoom / previousZoom;
-
-    wrap.scrollLeft *= ratio;
-    wrap.scrollTop *= ratio;
-  }
-}
-
-function adjustSheetZoom(delta) {
-  setSheetZoom(sheetZoom + delta);
-}
-
-function resetSheetZoom() {
-  setSheetZoom(1);
-}
-
-window.adjustSheetZoom = adjustSheetZoom;
-window.resetSheetZoom = resetSheetZoom;
-
-window.addEventListener("resize", () => {
-  if (isSheetViewerOpen()) setSheetZoom(sheetZoom);
 });
 
 function openService(service) {
@@ -602,7 +541,6 @@ function openEventSheet(sheet, label) {
   viewer.innerHTML = '';
   frameWrap.style.display = 'flex';
   frame.style.display = 'block';
-  resetSheetZoom();
   frameWrap.scrollLeft = 0;
   frameWrap.scrollTop = 0;
   frame.src = sheet;

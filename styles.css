@@ -192,12 +192,8 @@ body{height:100vh;height:100svh;min-height:100vh;min-height:100svh;display:flex;
 .back-btn{background:#1c1c1c;border:none;color:#fff;padding:8px 14px;border-radius:20px;font-size:13px;cursor:pointer;}
 .back-btn:hover{background:#333;}
 .sheet-frame-wrap{display:none;position:relative;flex:1;min-height:0;width:100%;height:100%;overflow:auto;background:#fff;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-x pan-y;}
-.sheet-zoom-content{position:relative;width:100%;height:100%;min-width:100%;min-height:100%;}
-#sheet-frame{position:absolute;top:0;left:0;width:100%;height:100%;border:0;background:#fff;transform-origin:top left;pointer-events:none;}
-.sheet-zoom-controls{margin-left:auto;display:flex;align-items:center;gap:6px;}
-.sheet-zoom-btn{min-width:38px;height:34px;padding:0 10px;border:1px solid #333;border-radius:18px;background:#1c1c1c;color:#fff;font:inherit;font-size:12px;cursor:pointer;}
-.sheet-zoom-btn:hover{background:#333;}
-@media(max-width:600px){.sheet-page-header{gap:8px;padding:10px 8px;}.sheet-zoom-controls{gap:4px;}.sheet-zoom-btn{min-width:34px;height:32px;padding:0 8px;font-size:11px;}}
+#sheet-frame{display:block;width:100%;height:100%;border:0;background:#fff;}
+@media(max-width:600px){.sheet-page-header{gap:8px;padding:10px 8px;}}
 
 /* ABOUT OVERLAY */
 #about-page{
