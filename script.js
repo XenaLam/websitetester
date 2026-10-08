@@ -26,6 +26,7 @@ async function loadFolderPhotos(folderId, label) {
 
   frameWrap.style.display = 'none';
   frame.style.display = 'none';
+  document.getElementById('sheet-zoom-controls').classList.remove('active');
 
   // ✅ GRID LAYOUT (MAIN CHANGE)
   if (window.innerWidth <= 600) {
@@ -150,6 +151,8 @@ function openSheet(key) {
   const frame = document.getElementById('sheet-frame');
   const frameWrap = document.getElementById('sheet-frame-wrap');
   const viewer = document.getElementById('photo-viewer');
+  const zoomControls = document.getElementById('sheet-zoom-controls');
+  zoomControls.classList.remove('active');
 
   if (data.folder) {
     // FOLDER MODE — auto loads all photos from Drive folder
@@ -197,6 +200,8 @@ function openSheet(key) {
     viewer.innerHTML = '';
     frameWrap.style.display = 'flex';
     frame.style.display = 'block';
+    zoomControls.classList.add('active');
+    resetSheetZoom();
     frameWrap.scrollLeft = 0;
     frameWrap.scrollTop = 0;
     frame.src = data.url;
@@ -412,6 +417,7 @@ function closeAbout(){
 
 let currentCountry="all";
 let currentService=null;
+let sheetZoom = 1;
 const DEFAULT_VIEWPORT_CONTENT = "width=device-width, initial-scale=1.0";
 const LOCKED_VIEWPORT_CONTENT = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 
@@ -435,6 +441,43 @@ function preventPagePinchZoom(event) {
 document.addEventListener("touchmove", preventPagePinchZoom, { passive: false });
 document.addEventListener("gesturestart", (event) => {
   if (isSheetViewerOpen()) event.preventDefault();
+});
+
+function setSheetZoom(value) {
+  const frame = document.getElementById("sheet-frame");
+  const wrap = document.getElementById("sheet-frame-wrap");
+  const zoomLevel = document.querySelector(".sheet-zoom-level");
+
+  if (!frame || !wrap) return;
+
+  sheetZoom = Math.min(Math.max(value, 0.5), 2.5);
+
+  frame.style.width = `${wrap.clientWidth / sheetZoom}px`;
+  frame.style.height = `${wrap.clientHeight / sheetZoom}px`;
+  frame.style.transformOrigin = "top left";
+  frame.style.transform = `scale(${sheetZoom})`;
+
+  if (zoomLevel) {
+    zoomLevel.textContent = `${Math.round(sheetZoom * 100)}%`;
+  }
+}
+
+function adjustSheetZoom(delta) {
+  setSheetZoom(sheetZoom + delta);
+}
+
+function resetSheetZoom() {
+  setSheetZoom(1);
+}
+
+window.adjustSheetZoom = adjustSheetZoom;
+window.resetSheetZoom = resetSheetZoom;
+
+window.addEventListener("resize", () => {
+  const frameWrap = document.getElementById("sheet-frame-wrap");
+  if (isSheetViewerOpen() && frameWrap.style.display === "flex") {
+    setSheetZoom(sheetZoom);
+  }
 });
 
 function openService(service) {
@@ -537,10 +580,12 @@ function openEventSheet(sheet, label) {
   const frame = document.getElementById('sheet-frame');
   const frameWrap = document.getElementById('sheet-frame-wrap');
   const viewer = document.getElementById('photo-viewer');
+  document.getElementById('sheet-zoom-controls').classList.add('active');
   viewer.style.display = 'none';
   viewer.innerHTML = '';
   frameWrap.style.display = 'flex';
   frame.style.display = 'block';
+  resetSheetZoom();
   frameWrap.scrollLeft = 0;
   frameWrap.scrollTop = 0;
   frame.src = sheet;
