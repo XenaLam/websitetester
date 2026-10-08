@@ -195,6 +195,7 @@ function openSheet(key) {
     viewer.innerHTML = '';
     frameWrap.style.display = 'flex';
     frame.style.display = 'block';
+    resetSheetZoom();
     frameWrap.scrollLeft = 0;
     frameWrap.scrollTop = 0;
     frame.src = getSheetEmbedUrl(data.url);
@@ -409,6 +410,8 @@ function closeAbout(){
 
 let currentCountry="all";
 let currentService=null;
+let sheetZoom = 1;
+let sheetGestureState = null;
 
 function getSheetEmbedUrl(sheet) {
   if (!sheet) return "";
@@ -419,17 +422,119 @@ function getSheetEmbedUrl(sheet) {
       return sheet;
     }
 
-    url.searchParams.set("embedded", "true");
-    url.searchParams.set("rm", "minimal");
-    url.searchParams.set("widget", "true");
-    url.searchParams.set("headers", "false");
-    url.searchParams.delete("usp");
+    const idMatch = url.pathname.match(/\/spreadsheets\/d\/(e\/[^/]+|[^/]+)/);
+    const spreadsheetId = idMatch?.[1];
+    const gid = url.searchParams.get("gid") || url.hash.match(/gid=([^&]+)/)?.[1] || "0";
 
-    return url.toString();
+    if (!spreadsheetId) return sheet;
+
+    if (spreadsheetId.startsWith("e/")) {
+      return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/pubhtml?gid=${encodeURIComponent(gid)}&single=true&widget=false&headers=false`;
+    }
+
+    return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/htmlview?gid=${encodeURIComponent(gid)}&single=true&widget=false&headers=false&rm=minimal`;
   } catch (error) {
     return sheet;
   }
 }
+
+function setSheetZoom(value) {
+  const frame = document.getElementById("sheet-frame");
+  const wrap = document.getElementById("sheet-frame-wrap");
+  if (!frame || !wrap) return;
+
+  const previousZoom = sheetZoom;
+  const centerX = wrap.scrollLeft + wrap.clientWidth / 2;
+  const centerY = wrap.scrollTop + wrap.clientHeight / 2;
+
+  sheetZoom = Math.min(Math.max(value, 0.4), 2.5);
+  frame.style.transform = `scale(${sheetZoom})`;
+
+  if (sheetZoom < 1) {
+    frame.style.width = `${100 / sheetZoom}%`;
+    frame.style.height = `${100 / sheetZoom}%`;
+  } else {
+    frame.style.width = "100%";
+    frame.style.height = "100%";
+  }
+
+  const resetButton = document.querySelector(".sheet-zoom-btn[aria-label='Reset spreadsheet zoom']");
+  if (resetButton) resetButton.textContent = `${Math.round(sheetZoom * 100)}%`;
+
+  if (previousZoom > 0 && previousZoom !== sheetZoom) {
+    const ratio = sheetZoom / previousZoom;
+    wrap.scrollLeft = centerX * ratio - wrap.clientWidth / 2;
+    wrap.scrollTop = centerY * ratio - wrap.clientHeight / 2;
+  }
+}
+
+function adjustSheetZoom(delta) {
+  setSheetZoom(sheetZoom + delta);
+}
+
+function resetSheetZoom() {
+  setSheetZoom(1);
+}
+
+function getTouchDistance(touches) {
+  return Math.hypot(
+    touches[0].clientX - touches[1].clientX,
+    touches[0].clientY - touches[1].clientY
+  );
+}
+
+function setupSheetZoomGestures() {
+  const wrap = document.getElementById("sheet-frame-wrap");
+  if (!wrap) return;
+
+  wrap.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 2) {
+      event.preventDefault();
+      sheetGestureState = {
+        mode: "pinch",
+        startDistance: getTouchDistance(event.touches),
+        startZoom: sheetZoom
+      };
+      return;
+    }
+
+    if (event.touches.length === 1) {
+      sheetGestureState = {
+        mode: "pan",
+        startX: event.touches[0].clientX,
+        startY: event.touches[0].clientY,
+        scrollLeft: wrap.scrollLeft,
+        scrollTop: wrap.scrollTop
+      };
+    }
+  }, { passive: false });
+
+  wrap.addEventListener("touchmove", (event) => {
+    if (!sheetGestureState) return;
+
+    if (event.touches.length === 2 && sheetGestureState.mode === "pinch") {
+      event.preventDefault();
+      const nextDistance = getTouchDistance(event.touches);
+      if (sheetGestureState.startDistance > 0) {
+        setSheetZoom(sheetGestureState.startZoom * (nextDistance / sheetGestureState.startDistance));
+      }
+      return;
+    }
+
+    if (event.touches.length === 1 && sheetGestureState.mode === "pan") {
+      event.preventDefault();
+      wrap.scrollLeft = sheetGestureState.scrollLeft + sheetGestureState.startX - event.touches[0].clientX;
+      wrap.scrollTop = sheetGestureState.scrollTop + sheetGestureState.startY - event.touches[0].clientY;
+    }
+  }, { passive: false });
+
+  wrap.addEventListener("touchend", () => {
+    sheetGestureState = null;
+  });
+}
+
+window.adjustSheetZoom = adjustSheetZoom;
+window.resetSheetZoom = resetSheetZoom;
 
 function openService(service) {
   currentService = service;
@@ -534,6 +639,7 @@ function openEventSheet(sheet, label) {
   viewer.innerHTML = '';
   frameWrap.style.display = 'flex';
   frame.style.display = 'block';
+  resetSheetZoom();
   frameWrap.scrollLeft = 0;
   frameWrap.scrollTop = 0;
   frame.src = getSheetEmbedUrl(sheet);
@@ -755,6 +861,7 @@ updateCardImages();
 
 }
 
+setupSheetZoomGestures();
 loadEvents();
 
 function updateFilterButtons() {

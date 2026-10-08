@@ -1,0 +1,10 @@
+[33mcommit 20341dd021e6635e2724bcda1b14352280a173a5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Lam Juin Yang <hfyjl24@nottingham.edu.my>
+Date:   Thu Oct 8 00:55:56 2026 +0800
+
+    fix mobile zoom
+
+ index.html |  5 [31m-----[m
+ script.js  | 44 [32m++++++++++++++++++++++[m[31m----------------------[m
+ styles.css |  7 [32m++[m[31m-----[m
+ 3 files changed, 24 insertions(+), 32 deletions(-)
