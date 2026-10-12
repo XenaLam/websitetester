@@ -7,6 +7,9 @@ window.dataLayer = window.dataLayer || [];
 const API_URL =
 "https://script.google.com/macros/s/AKfycbyFuh-_5l0A5XNOKQyepSYQkr8l6d9Ap7fXtEgwnZoghj8KT4GxSWZRv0gZSUDvKLM/exec";
 
+const SUPABASE_URL = "https://jljdwyurmliijwyywtbb.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_GquNsyodyOM0KGC-h3qx0w_20KxKWpi";
+
 const CARD_IMAGE_FOLDER = "14f7DQ0_NgqwWsWodjsYPQPM2Frsz89YG";
 const imageMap = {};
 
@@ -463,10 +466,19 @@ window.addEventListener("resize", () => {
 function openService(service) {
   currentService = service;
   document.getElementById("service-page").classList.add("hidden");
+  document.getElementById("merch-page").classList.remove("open");
   document.getElementById("catalog-shell").classList.add("open");
   document.getElementById("catalog-label").textContent = service === "htb" ? "Help to Buy" : "Ready Stock";
   updateFilterButtons();
   applyFilters();
+  window.scrollTo(0, 0);
+}
+
+function openMerchandise() {
+  currentService = null;
+  document.getElementById("service-page").classList.add("hidden");
+  document.getElementById("catalog-shell").classList.remove("open");
+  document.getElementById("merch-page").classList.add("open");
   window.scrollTo(0, 0);
 }
 
@@ -477,6 +489,7 @@ function showServicePicker() {
   document.querySelectorAll(".cat").forEach(button => button.classList.remove("active"));
   document.querySelector(".cat")?.classList.add("active");
   document.getElementById("catalog-shell").classList.remove("open");
+  document.getElementById("merch-page").classList.remove("open");
   document.getElementById("service-page").classList.remove("hidden");
   updateFilterButtons();
   window.scrollTo(0, 0);
@@ -652,9 +665,207 @@ function getEventsFromResponse(data) {
   return [];
 }
 
+function normalizeProduct(product) {
+  if (!product || typeof product !== "object") return null;
+
+  const priceMinor = Number(product.priceMinor ?? product.price_minor);
+  const quantity = Number(product.quantity);
+  const currency = String(product.currency || "").trim().toUpperCase();
+  const id = String(product.id || "").trim();
+  const name = String(product.name || "").trim();
+
+  if (
+    !id ||
+    !name ||
+    !Number.isSafeInteger(priceMinor) ||
+    priceMinor < 0 ||
+    !Number.isSafeInteger(quantity) ||
+    quantity < 0 ||
+    !/^[A-Z]{3}$/.test(currency)
+  ) {
+    console.warn("A merchandise listing was skipped because its product data is invalid.", product);
+    return null;
+  }
+
+  const isActive = product.active !== false && String(product.active).toLowerCase() !== "false";
+  if (!isActive) return null;
+
+  return {
+    id,
+    name,
+    description: String(product.description || "").trim(),
+    priceMinor,
+    currency,
+    quantity,
+    imageUrl: getSafeMediaUrl(product.imageUrl ?? product.image_url),
+    videoUrl: getSafeMediaUrl(product.videoUrl ?? product.video_url)
+  };
+}
+
+function getSafeMediaUrl(value) {
+  const url = String(value || "").trim();
+  if (!url) return "";
+
+  try {
+    const parsedUrl = new URL(url);
+    return parsedUrl.protocol === "https:" || parsedUrl.protocol === "http:" ? url : "";
+  } catch (error) {
+    console.warn("A merchandise media URL was skipped because it is invalid.", error);
+    return "";
+  }
+}
+
+function formatProductPrice(product) {
+  try {
+    return new Intl.NumberFormat("en-MY", {
+      style: "currency",
+      currency: product.currency
+    }).format(product.priceMinor / 100);
+  } catch (error) {
+    console.warn("Product price could not be formatted using its currency.", error);
+    return `${product.currency} ${(product.priceMinor / 100).toFixed(2)}`;
+  }
+}
+
 const EVENTS_CACHE_KEY = "ticketing-events-v2";
 const EVENTS_CACHE_TTL = 10 * 60 * 1000;
 const EVENTS_REQUEST_TIMEOUT = 12 * 1000;
+const PRODUCTS_CACHE_KEY = "ticketing-products-v1";
+const PRODUCTS_API_URL = `${SUPABASE_URL}/rest/v1/products?select=id,name,description,price_minor,currency,quantity,image_url,video_url,active&active=eq.true&order=created_at.desc`;
+
+function showProductsMessage(message, onRetry) {
+  const grid = document.getElementById("productsGrid");
+  if (!grid) return;
+
+  grid.innerHTML = "";
+  const state = document.createElement("div");
+  state.className = "products-state";
+  state.textContent = message;
+  grid.appendChild(state);
+
+  if (onRetry) {
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.className = "back-btn";
+    retry.textContent = "Retry";
+    retry.addEventListener("click", onRetry);
+    state.appendChild(document.createElement("br"));
+    state.appendChild(retry);
+  }
+}
+
+function getCachedProducts() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(PRODUCTS_CACHE_KEY));
+    if (cached && Date.now() - cached.savedAt < EVENTS_CACHE_TTL && Array.isArray(cached.products)) {
+      return cached.products;
+    }
+  } catch (error) {
+    console.warn("Product cache could not be read.", error);
+  }
+  return null;
+}
+
+function cacheProducts(products) {
+  try {
+    localStorage.setItem(PRODUCTS_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), products }));
+  } catch (error) {
+    console.warn("Product cache could not be saved.", error);
+  }
+}
+
+function renderProducts(rawProducts) {
+  const grid = document.getElementById("productsGrid");
+  if (!grid) return;
+
+  const products = rawProducts.map(normalizeProduct).filter(Boolean);
+  const count = document.getElementById("merch-count");
+  if (count) count.textContent = `${products.length} ${products.length === 1 ? "product" : "products"}`;
+
+  grid.innerHTML = "";
+  if (!products.length) {
+    showProductsMessage("No merchandise is available right now. Please check back soon.");
+    return;
+  }
+
+  const cards = document.createDocumentFragment();
+  products.forEach(product => cards.appendChild(renderProduct(product)));
+  grid.appendChild(cards);
+}
+
+function renderProduct(product) {
+  const card = document.createElement("article");
+  card.className = "product-card";
+
+  const media = document.createElement("div");
+  media.className = "product-media";
+
+  if (product.imageUrl) {
+    const image = document.createElement("img");
+    image.src = product.imageUrl;
+    image.alt = product.name;
+    image.loading = "lazy";
+    image.decoding = "async";
+    media.appendChild(image);
+  } else {
+    const placeholder = document.createElement("div");
+    placeholder.className = "product-image-placeholder";
+    placeholder.textContent = "No image available";
+    media.appendChild(placeholder);
+  }
+
+  if (product.videoUrl) {
+    const video = document.createElement("video");
+    video.src = product.videoUrl;
+    video.controls = true;
+    video.preload = "metadata";
+    video.playsInline = true;
+    video.setAttribute("aria-label", `${product.name} product video`);
+    media.appendChild(video);
+  }
+
+  const content = document.createElement("div");
+  content.className = "product-content";
+
+  const name = document.createElement("h2");
+  name.className = "product-name";
+  name.textContent = product.name;
+  content.appendChild(name);
+
+  if (product.description) {
+    const description = document.createElement("p");
+    description.className = "product-description";
+    description.textContent = product.description;
+    content.appendChild(description);
+  }
+
+  const details = document.createElement("div");
+  details.className = "product-details";
+
+  const price = document.createElement("span");
+  price.className = "product-price";
+  price.textContent = formatProductPrice(product);
+
+  const stock = document.createElement("span");
+  stock.className = product.quantity > 0 ? "product-stock" : "product-stock sold-out";
+  stock.textContent = product.quantity > 0
+    ? `${product.quantity} in stock`
+    : "Out of stock";
+
+  details.append(price, stock);
+  content.appendChild(details);
+
+  const contact = document.createElement("a");
+  contact.className = "product-contact";
+  contact.href = `https://wa.me/60166428520?text=${encodeURIComponent(`Hi, I'm interested in ${product.name} (ID: ${product.id}).`)}`;
+  contact.target = "_blank";
+  contact.rel = "noopener noreferrer";
+  contact.textContent = "Ask about this item";
+  content.appendChild(contact);
+
+  card.append(media, content);
+  return card;
+}
 
 function showEventsMessage(message, onRetry) {
   const grid = document.getElementById("eventsGrid");
@@ -768,7 +979,6 @@ if (!response.ok) throw new Error(`Event API returned ${response.status}.`);
 const data = await response.json();
 const events = getEventsFromResponse(data);
 cacheEvents(events);
-
 renderEvents(events);
 updateCardImages();
 
@@ -786,7 +996,68 @@ updateCardImages();
 
 }
 
+async function loadProducts() {
+  const cachedProducts = getCachedProducts();
+  if (cachedProducts) {
+    renderProducts(cachedProducts);
+  } else {
+    showProductsMessage("Loading merchandise...");
+  }
+
+  if (
+    SUPABASE_URL.includes("YOUR_PROJECT_REF") ||
+    SUPABASE_PUBLISHABLE_KEY.includes("YOUR_SUPABASE")
+  ) {
+    if (!cachedProducts) {
+      const count = document.getElementById("merch-count");
+      if (count) count.textContent = "Setup required";
+      showProductsMessage("Add your Supabase project URL and publishable key in script.js to load products.");
+    }
+    return;
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), EVENTS_REQUEST_TIMEOUT);
+
+  try {
+    const headers = { apikey: SUPABASE_PUBLISHABLE_KEY };
+    if (SUPABASE_PUBLISHABLE_KEY.split(".").length === 3) {
+      headers.Authorization = `Bearer sb_publishable_GquNsyodyOM0KGC-h3qx0w_20KxKWpi`;
+    }
+
+    const response = await fetch(PRODUCTS_API_URL, {
+      method: "GET",
+      headers,
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      throw new Error(`Supabase products API returned ${response.status}: ${await response.text()}`);
+    }
+
+    const rawProducts = await response.json();
+    if (!Array.isArray(rawProducts)) {
+      throw new Error("Supabase products API did not return a product list.");
+    }
+
+    const products = rawProducts.map(normalizeProduct).filter(Boolean);
+    cacheProducts(products);
+    renderProducts(products);
+  } catch (error) {
+    console.error("Supabase merchandise request failed.", error);
+    if (!cachedProducts) {
+      const message = error.name === "AbortError"
+        ? "Merchandise is taking too long to load."
+        : "Merchandise could not be loaded. Check your Supabase URL, key, table permissions and connection.";
+      showProductsMessage(message, loadProducts);
+    }
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 loadEvents();
+loadProducts();
 
 function updateFilterButtons() {
   const available = new Set();
