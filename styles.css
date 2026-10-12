@@ -78,6 +78,7 @@ body{height:100vh;height:100svh;min-height:100vh;min-height:100svh;display:flex;
 .catalog-back:focus-visible{outline:2px solid #fff;outline-offset:3px;}
 .merch-page{display:none;min-height:calc(100vh - 58px);background:#0f0f0f;}
 .merch-page.open{display:block;}
+#merch-page[hidden]{display:none!important;}
 .merch-heading{max-width:1200px;margin:0 auto 20px;padding:0 100px;}
 .merch-heading .section-heading{padding:0;margin-bottom:8px;color:#ddd;}
 .merch-heading p{color:#888;font-size:13px;line-height:1.6;}

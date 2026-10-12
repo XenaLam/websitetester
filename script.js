@@ -466,6 +466,7 @@ window.addEventListener("resize", () => {
 function openService(service) {
   currentService = service;
   document.getElementById("service-page").classList.add("hidden");
+  document.getElementById("merch-page").hidden = true;
   document.getElementById("merch-page").classList.remove("open");
   document.getElementById("catalog-shell").classList.add("open");
   document.getElementById("catalog-label").textContent = service === "htb" ? "Help to Buy" : "Ready Stock";
@@ -478,6 +479,7 @@ function openMerchandise() {
   currentService = null;
   document.getElementById("service-page").classList.add("hidden");
   document.getElementById("catalog-shell").classList.remove("open");
+  document.getElementById("merch-page").hidden = false;
   document.getElementById("merch-page").classList.add("open");
   window.scrollTo(0, 0);
 }
@@ -489,6 +491,7 @@ function showServicePicker() {
   document.querySelectorAll(".cat").forEach(button => button.classList.remove("active"));
   document.querySelector(".cat")?.classList.add("active");
   document.getElementById("catalog-shell").classList.remove("open");
+  document.getElementById("merch-page").hidden = true;
   document.getElementById("merch-page").classList.remove("open");
   document.getElementById("service-page").classList.remove("hidden");
   updateFilterButtons();
