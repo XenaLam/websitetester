@@ -466,6 +466,7 @@ window.addEventListener("resize", () => {
 function openService(service) {
   currentService = service;
   document.getElementById("service-page").classList.add("hidden");
+  closeProductDetails();
   document.getElementById("merch-page").hidden = true;
   document.getElementById("merch-page").classList.remove("open");
   document.getElementById("catalog-shell").classList.add("open");
@@ -479,6 +480,7 @@ function openMerchandise() {
   currentService = null;
   document.getElementById("service-page").classList.add("hidden");
   document.getElementById("catalog-shell").classList.remove("open");
+  closeProductDetails();
   document.getElementById("merch-page").hidden = false;
   document.getElementById("merch-page").classList.add("open");
   window.scrollTo(0, 0);
@@ -487,6 +489,7 @@ function openMerchandise() {
 function showServicePicker() {
   currentService = null;
   currentCountry = "all";
+  closeProductDetails();
   document.getElementById("searchInput").value = "";
   document.querySelectorAll(".cat").forEach(button => button.classList.remove("active"));
   document.querySelector(".cat")?.classList.add("active");
@@ -701,8 +704,15 @@ function normalizeProduct(product) {
     currency,
     quantity,
     imageUrl: getSafeMediaUrl(product.imageUrl ?? product.image_url),
-    videoUrl: getSafeMediaUrl(product.videoUrl ?? product.video_url)
+    videoUrl: getSafeMediaUrl(product.videoUrl ?? product.video_url),
+    imageUrls: getSafeMediaUrls(product.imageUrls ?? product.image_urls),
+    videoUrls: getSafeMediaUrls(product.videoUrls ?? product.video_urls)
   };
+}
+
+function getSafeMediaUrls(value) {
+  const values = Array.isArray(value) ? value : value ? [value] : [];
+  return [...new Set(values.map(getSafeMediaUrl).filter(Boolean))];
 }
 
 function getSafeMediaUrl(value) {
@@ -734,7 +744,8 @@ const EVENTS_CACHE_KEY = "ticketing-events-v2";
 const EVENTS_CACHE_TTL = 10 * 60 * 1000;
 const EVENTS_REQUEST_TIMEOUT = 12 * 1000;
 const PRODUCTS_CACHE_KEY = "ticketing-products-v1";
-const PRODUCTS_API_URL = `${SUPABASE_URL}/rest/v1/products?select=id,name,description,price_minor,currency,quantity,image_url,video_url,active&active=eq.true&order=created_at.desc`;
+const PRODUCTS_API_URL = `${SUPABASE_URL}/rest/v1/products?select=id,name,description,price_minor,currency,quantity,image_url,video_url,image_urls,video_urls,active&active=eq.true&order=created_at.desc`;
+const PRODUCTS_API_BASIC_URL = `${SUPABASE_URL}/rest/v1/products?select=id,name,description,price_minor,currency,quantity,image_url,video_url,active&active=eq.true&order=created_at.desc`;
 
 function showProductsMessage(message, onRetry) {
   const grid = document.getElementById("productsGrid");
@@ -800,8 +811,14 @@ function renderProduct(product) {
   const card = document.createElement("article");
   card.className = "product-card";
 
+  const openButton = document.createElement("button");
+  openButton.type = "button";
+  openButton.className = "product-open-button";
+  openButton.setAttribute("aria-label", `View ${product.name} details`);
+  openButton.addEventListener("click", () => openProductDetails(product));
+
   const media = document.createElement("div");
-  media.className = "product-media";
+  media.className = "product-media product-cover";
 
   if (product.imageUrl) {
     const image = document.createElement("img");
@@ -817,30 +834,13 @@ function renderProduct(product) {
     media.appendChild(placeholder);
   }
 
-  if (product.videoUrl) {
-    const video = document.createElement("video");
-    video.src = product.videoUrl;
-    video.controls = true;
-    video.preload = "metadata";
-    video.playsInline = true;
-    video.setAttribute("aria-label", `${product.name} product video`);
-    media.appendChild(video);
-  }
-
   const content = document.createElement("div");
   content.className = "product-content";
 
-  const name = document.createElement("h2");
+  const name = document.createElement("span");
   name.className = "product-name";
   name.textContent = product.name;
   content.appendChild(name);
-
-  if (product.description) {
-    const description = document.createElement("p");
-    description.className = "product-description";
-    description.textContent = product.description;
-    content.appendChild(description);
-  }
 
   const details = document.createElement("div");
   details.className = "product-details";
@@ -858,16 +858,87 @@ function renderProduct(product) {
   details.append(price, stock);
   content.appendChild(details);
 
-  const contact = document.createElement("a");
-  contact.className = "product-contact";
-  contact.href = `https://wa.me/60166428520?text=${encodeURIComponent(`Hi, I'm interested in ${product.name} (ID: ${product.id}).`)}`;
-  contact.target = "_blank";
-  contact.rel = "noopener noreferrer";
-  contact.textContent = "Ask about this item";
-  content.appendChild(contact);
+  const prompt = document.createElement("span");
+  prompt.className = "product-view-prompt";
+  prompt.textContent = "View details →";
+  content.appendChild(prompt);
 
-  card.append(media, content);
+  openButton.append(media, content);
+  card.appendChild(openButton);
   return card;
+}
+
+function openProductDetails(product) {
+  const page = document.getElementById("product-detail-page");
+  const gallery = document.getElementById("product-gallery");
+  const images = getSafeMediaUrls([product.imageUrl, ...product.imageUrls]);
+  const videos = getSafeMediaUrls([product.videoUrl, ...product.videoUrls]);
+
+  gallery.innerHTML = "";
+  [...images.map(url => ({ url, type: "image" })), ...videos.map(url => ({ url, type: "video" }))]
+    .forEach((mediaItem, index) => {
+      if (mediaItem.type === "image") {
+        const image = document.createElement("img");
+        image.src = mediaItem.url;
+        image.alt = `${product.name} photo ${index + 1}`;
+        image.loading = index === 0 ? "eager" : "lazy";
+        image.decoding = "async";
+        gallery.appendChild(image);
+        return;
+      }
+
+      const video = document.createElement("video");
+      video.src = mediaItem.url;
+      video.controls = true;
+      video.preload = "metadata";
+      video.playsInline = true;
+      video.setAttribute("aria-label", `${product.name} video ${index + 1}`);
+      gallery.appendChild(video);
+    });
+
+  if (!gallery.childElementCount) {
+    const placeholder = document.createElement("div");
+    placeholder.className = "product-image-placeholder";
+    placeholder.textContent = "No product photos or videos available";
+    gallery.appendChild(placeholder);
+  }
+
+  document.getElementById("product-detail-name").textContent = product.name;
+  document.getElementById("product-detail-price").textContent = formatProductPrice(product);
+
+  const stock = document.getElementById("product-detail-stock");
+  stock.className = product.quantity > 0
+    ? "product-detail-stock"
+    : "product-detail-stock sold-out";
+  stock.textContent = product.quantity > 0
+    ? `${product.quantity} in stock`
+    : "Out of stock";
+
+  const description = document.getElementById("product-detail-description");
+  description.textContent = product.description;
+  description.hidden = !product.description;
+
+  const order = document.getElementById("product-detail-order");
+  order.href = `https://wa.me/60166428520?text=${encodeURIComponent(`Hi, I'd like to order ${product.name} (ID: ${product.id}).`)}`;
+  order.hidden = product.quantity < 1;
+
+  page.hidden = false;
+  page.classList.add("open");
+  document.body.style.overflow = "hidden";
+  window.scrollTo(0, 0);
+}
+
+function closeProductDetails() {
+  const page = document.getElementById("product-detail-page");
+  if (!page) return;
+
+  page.hidden = true;
+  page.classList.remove("open");
+  document.getElementById("product-gallery").innerHTML = "";
+  if (!document.getElementById("sheet-page").classList.contains("open") &&
+      !document.getElementById("about-page").classList.contains("open")) {
+    document.body.style.overflow = "";
+  }
 }
 
 function showEventsMessage(message, onRetry) {
@@ -1028,11 +1099,28 @@ async function loadProducts() {
       headers.Authorization = `Bearer sb_publishable_GquNsyodyOM0KGC-h3qx0w_20KxKWpi`;
     }
 
-    const response = await fetch(PRODUCTS_API_URL, {
+    let response = await fetch(PRODUCTS_API_URL, {
       method: "GET",
       headers,
       signal: controller.signal
     });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      if (
+        response.status === 400 &&
+        /column products\.(image_urls|video_urls) does not exist/.test(errorText)
+      ) {
+        console.warn("Product gallery columns are not set up yet; loading the cover media only.");
+        response = await fetch(PRODUCTS_API_BASIC_URL, {
+          method: "GET",
+          headers,
+          signal: controller.signal
+        });
+      } else {
+        throw new Error(`Supabase products API returned ${response.status}: ${errorText}`);
+      }
+    }
 
     if (!response.ok) {
       throw new Error(`Supabase products API returned ${response.status}: ${await response.text()}`);

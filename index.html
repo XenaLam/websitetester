@@ -103,6 +103,24 @@
   </section>
 </main>
 
+<section class="product-detail-page" id="product-detail-page" hidden aria-labelledby="product-detail-name">
+  <div class="catalog-bar">
+    <button class="catalog-back" type="button" onclick="closeProductDetails()">← Back to merchandise</button>
+  </div>
+  <div class="product-detail-layout">
+    <div class="product-gallery" id="product-gallery"></div>
+    <div class="product-detail-copy">
+      <div class="product-detail-kicker">Merchandise</div>
+      <h1 class="product-detail-name" id="product-detail-name"></h1>
+      <div class="product-detail-price" id="product-detail-price"></div>
+      <div class="product-detail-stock" id="product-detail-stock"></div>
+      <p class="product-detail-description" id="product-detail-description"></p>
+      <a class="product-contact" id="product-detail-order" target="_blank" rel="noopener noreferrer">Order via WhatsApp</a>
+      <p class="product-order-note">Online payment is not available yet. We’ll confirm availability and arrange your order by WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
 <div class="catalog-shell" id="catalog-shell">
   <div class="filter-section">
     <input type="text" id="searchInput" placeholder="Search artist, venue..." oninput="applyFilters()">
