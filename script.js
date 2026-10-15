@@ -873,17 +873,36 @@ function openProductDetails(product) {
   const gallery = document.getElementById("product-gallery");
   const images = getSafeMediaUrls([product.imageUrl, ...product.imageUrls]);
   const videos = getSafeMediaUrls([product.videoUrl, ...product.videoUrls]);
-
   gallery.innerHTML = "";
-  [...images.map(url => ({ url, type: "image" })), ...videos.map(url => ({ url, type: "video" }))]
-    .forEach((mediaItem, index) => {
+  const mediaItems = [
+    ...images.map(url => ({ url, type: "image" })),
+    ...videos.map(url => ({ url, type: "video" }))
+  ];
+
+  if (!mediaItems.length) {
+    const placeholder = document.createElement("div");
+    placeholder.className = "product-image-placeholder";
+    placeholder.textContent = "No product photos or videos available";
+    gallery.appendChild(placeholder);
+  } else {
+    const main = document.createElement("div");
+    main.className = "product-gallery-main";
+    const thumbnails = document.createElement("div");
+    thumbnails.className = "product-gallery-thumbnails";
+
+    function selectMedia(mediaItem, index) {
+      main.innerHTML = "";
+      thumbnails.querySelectorAll(".product-gallery-thumb").forEach((button, buttonIndex) => {
+        button.classList.toggle("active", buttonIndex === index);
+        button.setAttribute("aria-pressed", String(buttonIndex === index));
+      });
+
       if (mediaItem.type === "image") {
         const image = document.createElement("img");
         image.src = mediaItem.url;
         image.alt = `${product.name} photo ${index + 1}`;
-        image.loading = index === 0 ? "eager" : "lazy";
         image.decoding = "async";
-        gallery.appendChild(image);
+        main.appendChild(image);
         return;
       }
 
@@ -893,14 +912,57 @@ function openProductDetails(product) {
       video.preload = "metadata";
       video.playsInline = true;
       video.setAttribute("aria-label", `${product.name} video ${index + 1}`);
-      gallery.appendChild(video);
+      main.appendChild(video);
+    }
+
+    mediaItems.forEach((mediaItem, index) => {
+      const thumbnail = document.createElement("button");
+      thumbnail.type = "button";
+      thumbnail.className = "product-gallery-thumb";
+      thumbnail.setAttribute("aria-label", mediaItem.type === "image"
+        ? `Show product photo ${index + 1}`
+        : `Show product video ${index + 1}`);
+      thumbnail.setAttribute("aria-pressed", "false");
+      thumbnail.addEventListener("click", () => selectMedia(mediaItem, index));
+
+      if (mediaItem.type === "image") {
+        const image = document.createElement("img");
+        image.src = mediaItem.url;
+        image.alt = "";
+        image.loading = "lazy";
+        image.decoding = "async";
+        thumbnail.appendChild(image);
+      } else {
+        const videoLabel = document.createElement("span");
+        videoLabel.className = "product-gallery-video-thumb";
+        const preview = document.createElement("video");
+        preview.src = mediaItem.url;
+        preview.muted = true;
+        preview.playsInline = true;
+        preview.preload = "metadata";
+        preview.setAttribute("aria-hidden", "true");
+        preview.addEventListener("loadedmetadata", () => {
+          if (Number.isFinite(preview.duration) && preview.duration > 0) {
+            preview.currentTime = Math.min(0.1, preview.duration / 2);
+          }
+        });
+        preview.addEventListener("seeked", () => preview.pause(), { once: true });
+
+        const overlay = document.createElement("span");
+        overlay.className = "product-gallery-video-overlay";
+        const playIcon = document.createElement("span");
+        playIcon.setAttribute("aria-hidden", "true");
+        playIcon.textContent = "▶";
+        videoLabel.append(preview);
+        overlay.append(playIcon);
+        videoLabel.append(overlay);
+        thumbnail.appendChild(videoLabel);
+      }
+      thumbnails.appendChild(thumbnail);
     });
 
-  if (!gallery.childElementCount) {
-    const placeholder = document.createElement("div");
-    placeholder.className = "product-image-placeholder";
-    placeholder.textContent = "No product photos or videos available";
-    gallery.appendChild(placeholder);
+    gallery.append(main, thumbnails);
+    selectMedia(mediaItems[0], 0);
   }
 
   document.getElementById("product-detail-name").textContent = product.name;
