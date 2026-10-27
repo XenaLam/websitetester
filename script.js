@@ -689,7 +689,7 @@ function normalizeProduct(product) {
     quantity < 0 ||
     !/^[A-Z]{3}$/.test(currency)
   ) {
-    console.warn("A merchandise listing was skipped because its product data is invalid.", product);
+    console.warn("An item listing was skipped because its product data is invalid.", product);
     return null;
   }
 
@@ -725,7 +725,7 @@ function getSafeMediaUrl(value) {
     const parsedUrl = new URL(url);
     return parsedUrl.protocol === "https:" || parsedUrl.protocol === "http:" ? url : "";
   } catch (error) {
-    console.warn("A merchandise media URL was skipped because it is invalid.", error);
+    console.warn("An item media URL was skipped because it is invalid.", error);
     return "";
   }
 }
@@ -803,7 +803,7 @@ function renderProducts(rawProducts) {
 
   grid.innerHTML = "";
   if (!products.length) {
-    showProductsMessage("No merchandise is available right now. Please check back soon.");
+    showProductsMessage("No items are available right now. Please check back soon.");
     return;
   }
 
@@ -1204,7 +1204,7 @@ async function loadProducts() {
   if (cachedProducts) {
     renderProducts(cachedProducts);
   } else {
-    showProductsMessage("Loading merchandise...");
+    showProductsMessage("Loading items...");
   }
 
   if (
@@ -1262,11 +1262,11 @@ async function loadProducts() {
     cacheProducts(products);
     renderProducts(products);
   } catch (error) {
-    console.error("Supabase merchandise request failed.", error);
+    console.error("Supabase item catalog request failed.", error);
     if (!cachedProducts) {
       const message = error.name === "AbortError"
-        ? "Merchandise is taking too long to load."
-        : "Merchandise could not be loaded. Check your Supabase URL, key, table permissions and connection.";
+        ? "Items are taking too long to load."
+        : "Items could not be loaded. Check your Supabase URL, key, table permissions and connection.";
       showProductsMessage(message, loadProducts);
     }
   } finally {
