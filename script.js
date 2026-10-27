@@ -700,6 +700,8 @@ function normalizeProduct(product) {
     id,
     name,
     description: String(product.description || "").trim(),
+    country: String(product.country || "").trim(),
+    concert: String(product.concert || "").trim(),
     priceMinor,
     currency,
     quantity,
@@ -743,9 +745,11 @@ function formatProductPrice(product) {
 const EVENTS_CACHE_KEY = "ticketing-events-v2";
 const EVENTS_CACHE_TTL = 10 * 60 * 1000;
 const EVENTS_REQUEST_TIMEOUT = 12 * 1000;
-const PRODUCTS_CACHE_KEY = "ticketing-products-v1";
-const PRODUCTS_API_URL = `${SUPABASE_URL}/rest/v1/products?select=id,name,description,price_minor,currency,quantity,image_url,video_url,image_urls,video_urls,active&active=eq.true&order=created_at.desc`;
-const PRODUCTS_API_BASIC_URL = `${SUPABASE_URL}/rest/v1/products?select=id,name,description,price_minor,currency,quantity,image_url,video_url,active&active=eq.true&order=created_at.desc`;
+const PRODUCTS_CACHE_KEY = "ticketing-products-v2";
+const PRODUCTS_API_URL = `${SUPABASE_URL}/rest/v1/products?select=id,name,description,country,concert,price_minor,currency,quantity,image_url,video_url,image_urls,video_urls,active&active=eq.true&order=created_at.desc`;
+const PRODUCTS_API_BASIC_URL = `${SUPABASE_URL}/rest/v1/products?select=id,name,description,country,concert,price_minor,currency,quantity,image_url,video_url,active&active=eq.true&order=created_at.desc`;
+const PRODUCTS_API_MEDIA_ONLY_URL = `${SUPABASE_URL}/rest/v1/products?select=id,name,description,price_minor,currency,quantity,image_url,video_url,image_urls,video_urls,active&active=eq.true&order=created_at.desc`;
+const PRODUCTS_API_LEGACY_URL = `${SUPABASE_URL}/rest/v1/products?select=id,name,description,price_minor,currency,quantity,image_url,video_url,active&active=eq.true&order=created_at.desc`;
 
 function showProductsMessage(message, onRetry) {
   const grid = document.getElementById("productsGrid");
@@ -793,6 +797,7 @@ function renderProducts(rawProducts) {
   if (!grid) return;
 
   const products = rawProducts.map(normalizeProduct).filter(Boolean);
+  updateProductFilterOptions(products);
   const count = document.getElementById("merch-count");
   if (count) count.textContent = `${products.length} ${products.length === 1 ? "product" : "products"}`;
 
@@ -805,11 +810,58 @@ function renderProducts(rawProducts) {
   const cards = document.createDocumentFragment();
   products.forEach(product => cards.appendChild(renderProduct(product)));
   grid.appendChild(cards);
+  applyProductFilters();
+}
+
+function updateProductFilterOptions(products) {
+  [
+    { id: "product-country-filter", field: "country", label: "All countries" },
+    { id: "product-concert-filter", field: "concert", label: "All concerts and artists" }
+  ].forEach(({ id, field, label }) => {
+    const select = document.getElementById(id);
+    const selectedValue = select.value;
+    const values = [...new Set(products.map(product => product[field]).filter(Boolean))]
+      .sort((a, b) => a.localeCompare(b));
+
+    select.innerHTML = "";
+    const allOption = document.createElement("option");
+    allOption.value = "all";
+    allOption.textContent = label;
+    select.appendChild(allOption);
+
+    values.forEach(value => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value;
+      select.appendChild(option);
+    });
+
+    select.value = values.includes(selectedValue) ? selectedValue : "all";
+  });
+}
+
+function applyProductFilters() {
+  const query = document.getElementById("product-search").value.trim().toLowerCase();
+  const country = document.getElementById("product-country-filter").value;
+  const concert = document.getElementById("product-concert-filter").value;
+
+  document.querySelectorAll("#productsGrid .product-card").forEach(card => {
+    const searchableText = card.dataset.search || "";
+    const matchesQuery = !query || searchableText.includes(query);
+    const matchesCountry = country === "all" || card.dataset.country === country;
+    const matchesConcert = concert === "all" || card.dataset.concert === concert;
+    card.hidden = !(matchesQuery && matchesCountry && matchesConcert);
+  });
 }
 
 function renderProduct(product) {
   const card = document.createElement("article");
   card.className = "product-card";
+  card.dataset.country = product.country;
+  card.dataset.concert = product.concert;
+  card.dataset.search = [product.name, product.description, product.country, product.concert]
+    .join(" ")
+    .toLowerCase();
 
   const openButton = document.createElement("button");
   openButton.type = "button";
@@ -841,6 +893,14 @@ function renderProduct(product) {
   name.className = "product-name";
   name.textContent = product.name;
   content.appendChild(name);
+
+  const metadata = [product.concert, product.country].filter(Boolean);
+  if (metadata.length) {
+    const meta = document.createElement("span");
+    meta.className = "product-card-meta";
+    meta.textContent = metadata.join(" · ");
+    content.appendChild(meta);
+  }
 
   const details = document.createElement("div");
   details.className = "product-details";
@@ -966,6 +1026,13 @@ function openProductDetails(product) {
   }
 
   document.getElementById("product-detail-name").textContent = product.name;
+  const metadata = document.getElementById("product-detail-meta");
+  const metaItems = [
+    product.concert && `Concert / artist: ${product.concert}`,
+    product.country && `Country: ${product.country}`
+  ].filter(Boolean);
+  metadata.textContent = metaItems.join(" · ");
+  metadata.hidden = metaItems.length === 0;
   document.getElementById("product-detail-price").textContent = formatProductPrice(product);
 
   const stock = document.getElementById("product-detail-stock");
@@ -1161,31 +1228,29 @@ async function loadProducts() {
       headers.Authorization = `Bearer sb_publishable_GquNsyodyOM0KGC-h3qx0w_20KxKWpi`;
     }
 
-    let response = await fetch(PRODUCTS_API_URL, {
-      method: "GET",
-      headers,
-      signal: controller.signal
-    });
+    const productUrls = [
+      PRODUCTS_API_URL,
+      PRODUCTS_API_BASIC_URL,
+      PRODUCTS_API_MEDIA_ONLY_URL,
+      PRODUCTS_API_LEGACY_URL
+    ];
+    let response;
+    let lastError = "";
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      if (
-        response.status === 400 &&
-        /column products\.(image_urls|video_urls) does not exist/.test(errorText)
-      ) {
-        console.warn("Product gallery columns are not set up yet; loading the cover media only.");
-        response = await fetch(PRODUCTS_API_BASIC_URL, {
-          method: "GET",
-          headers,
-          signal: controller.signal
-        });
-      } else {
-        throw new Error(`Supabase products API returned ${response.status}: ${errorText}`);
+    for (const url of productUrls) {
+      response = await fetch(url, { method: "GET", headers, signal: controller.signal });
+      if (response.ok) break;
+
+      lastError = await response.text();
+      const missingOptionalColumn =
+        /column products\.(image_urls|video_urls|country|concert) does not exist/.test(lastError);
+      if (response.status !== 400 || !missingOptionalColumn) {
+        throw new Error(`Supabase products API returned ${response.status}: ${lastError}`);
       }
     }
 
     if (!response.ok) {
-      throw new Error(`Supabase products API returned ${response.status}: ${await response.text()}`);
+      throw new Error(`Supabase products API returned ${response.status}: ${lastError}`);
     }
 
     const rawProducts = await response.json();
@@ -1211,6 +1276,9 @@ async function loadProducts() {
 
 loadEvents();
 loadProducts();
+document.getElementById("product-search").addEventListener("input", applyProductFilters);
+document.getElementById("product-country-filter").addEventListener("change", applyProductFilters);
+document.getElementById("product-concert-filter").addEventListener("change", applyProductFilters);
 
 function updateFilterButtons() {
   const available = new Set();

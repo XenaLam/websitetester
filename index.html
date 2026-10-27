@@ -99,6 +99,15 @@
       <div class="section-heading" id="merch-heading">Merchandise</div>
       <p>Browse available items, prices and stock. Contact us to ask about a product.</p>
     </div>
+    <div class="product-filters" aria-label="Filter merchandise">
+      <input type="search" id="product-search" placeholder="Search products, concerts or artists" aria-label="Search products, concerts or artists">
+      <select id="product-country-filter" aria-label="Filter by country">
+        <option value="all">All countries</option>
+      </select>
+      <select id="product-concert-filter" aria-label="Filter by concert or artist">
+        <option value="all">All concerts and artists</option>
+      </select>
+    </div>
     <div class="product-grid" id="productsGrid" aria-live="polite"></div>
   </section>
 </main>
@@ -112,6 +121,7 @@
     <div class="product-detail-copy">
       <div class="product-detail-kicker">Official merchandise</div>
       <h1 class="product-detail-name" id="product-detail-name"></h1>
+      <div class="product-detail-meta" id="product-detail-meta" hidden></div>
       <div class="product-detail-price" id="product-detail-price"></div>
       <div class="product-detail-stock" id="product-detail-stock"></div>
       <p class="product-detail-description" id="product-detail-description"></p>
